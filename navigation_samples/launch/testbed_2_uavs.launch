@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- Include gazebo launch file -->
+	<include file="$(find uav)/launch/testbed_gazebo_2_quad.launch"/>
+
+
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_1/flying" value="1" />
+	<arg name="uav_2/flying" value="1" />
+
+	  <!-- maximum velocity and acceleration for each quadrotor -->
+	  <param name="uav_1/amax" value="16" type="double" />
+	  <param name="uav_1/vmax" value="2" type="double" />
+	  <param name="uav_1/anglemax" value="90" type="double" />
+	  <param name="uav_1/transition_time" value="15.0" type="double" />
+
+	  <param name="uav_2/amax" value="16" type="double" />
+	  <param name="uav_2/vmax" value="2" type="double" />
+	  <param name="uav_2/anglemax" value="90" type="double" />
+	  <param name="uav_2/transition_time" value="15.0" type="double" />
+
+
+	<!-- The configuration parameters are given their values -->
+	<param name="uav_1/flying" value="$(arg uav_1/flying)" type="bool" />
+	<param name="uav_2/flying" value="$(arg uav_2/flying)" type="bool" />
+
+	<!-- Nodes will start if their /uav_i/flying parameter is true  -->
+	<node name="uav_1" pkg="uav" type="uav_gazebo" args="1 1" if="$(arg uav_1/flying)">
+	     <remap from="uav_1/control_references_rw" to="/path_follower_1/control_references_rw" />	
+	</node>
+	
+	<!-- Path Follower Node. -->
+	<node name="simple_follower1" pkg="path_follower" type="simple_follower" args="1 1.0">
+	     <remap from="/path_follower_1/way_point_callback" to="/path_planner_1/out_waypoint" />	
+	</node>
+	
+	<!-- Path Planner Node. -->
+	<node name="path_planner_1" pkg="path_planner" type="local_planner" args="1">
+	    <remap from="/path_planner_1/in_waypoint" to="/temporal_wpa_1/way_point_callback" />
+	</node>
+
+	<node name="temporal_wpa1" pkg="temporal_wpa" type="temporal_wpa" args="1" >
+		<remap from="/temporal_wpa_1/ual_state" to="/uav_1/ual_state" />	
+	</node> 
+
+
+	<!-- UAV 2 -->
+
+	<node name="uav_2" pkg="uav" type="uav_gazebo" args="2 1" if="$(arg uav_1/flying)">
+	     <remap from="uav_2/control_references_rw" to="/path_follower_2/control_references_rw" />	
+	</node>
+	
+	<!-- Path Follower Node. -->
+	<node name="simple_follower2" pkg="path_follower" type="simple_follower" args="2 1.0">
+	     <remap from="/path_follower_2/way_point_callback" to="/path_planner_2/out_waypoint" />	
+	</node>
+	
+	<!-- Path Planner Node. -->
+	<node name="path_planner_2" pkg="path_planner" type="local_planner" args="2">
+	    <remap from="/path_planner_2/in_waypoint" to="/temporal_wpa_2/way_point_callback" />
+	</node>
+
+	<node name="temporal_wpa_2" pkg="temporal_wpa" type="temporal_wpa" args="2" >
+		<remap from="/temporal_wpa_2/ual_state" to="/uav_2/ual_state" />	
+	</node> 
+
+	
+	
+	<!-- Command Dispatcher Node -->
+	  <node name="command_dispatcher1" pkg="command_dispatcher" type="cmd_dispatcher_file" args="1 $(find command_dispatcher)/waypoints/way1.conf" />
+
+	<!-- Command Dispatcher Node -->
+	 <node name="command_dispatcher2" pkg="command_dispatcher" type="cmd_dispatcher_file" args="2 $(find command_dispatcher)/waypoints/way2.conf" />
+	
+	<node name="rviz" pkg="rviz" type="rviz" args="">
+	</node>
+
+</launch>
+

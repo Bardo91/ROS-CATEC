@@ -1,0 +1,21 @@
+<package>
+  <description brief="temporal_wpa">
+
+     temporal_wpa
+
+  </description>
+  <author>CATEC-ROS</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/temporal_wpa</url>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+  <depend package="actionlib"/>
+  <depend package="actionlib_msgs"/>
+  <depend package="catec_msgs"/>
+  <depend package="catec_actions_msgs"/>
+  <depend package="uav"/>
+
+</package>
+
+

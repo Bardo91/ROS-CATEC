@@ -1,0 +1,10 @@
+#goal definition
+
+---
+#result definition
+uint32 battery_level
+---
+#feedback definition
+uint8 MINIMUM_BATTERY_RECHARGE=1
+uint8 EXTRA_BATTERY_RECHARGE=2
+uint8 state

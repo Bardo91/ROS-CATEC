@@ -1,0 +1,20 @@
+<package>
+  <description brief="path_planner">
+
+     path_planner
+
+  </description>
+  <author>catec</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/path_planner</url>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="catec_msgs"/>
+  <depend package="matlab"/>
+  <depend package="geometry_msgs" />
+  <depend package="visualization_msgs" />
+
+</package>
+
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+build_dir() {
+	cd $1
+	if [ -f ./CMakeLists.txt ]; then
+		echo "rosmake " $($1)
+		rosmake
+	fi;
+}
+
+
+build_dir $1	

@@ -1,0 +1,21 @@
+<package>
+  <description brief="command_dispatcher">
+
+     command_dispatcher
+
+  </description>
+  <author>CATEC-ROS</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/command_dispatcher</url>
+  <depend package="actionlib" />
+  <depend package="actionlib_msgs" />
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="std_msgs"/>
+  <depend package="catec_msgs"/>
+  <depend package="catec_actions_msgs"/>
+
+</package>
+
+

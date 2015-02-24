@@ -1,0 +1,10 @@
+#goal definition
+uint8 number_of_images
+---
+#result definition
+uint8 total_images
+uint32 total_bytes
+---
+#feedback definition
+uint8  remaining_images
+uint32 actual_bytes

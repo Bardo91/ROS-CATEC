@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+xmlns:xacro="http://ros.org/wiki/xacro"
+>
+
+ <!-- <include filename="$(find hector_sensors_description)/urdf/sonar_sensor.urdf.xacro" />-->
+  <include filename="$(find hector_quadrotor_controller)/urdf/quadrotor_plugins.urdf.xacro" />
+  <property name="pi" value="3.1415926535897931" />
+
+  <!-- Main quadrotor link -->
+  <xacro:macro name="quadrotor_base_macro">
+    <link name="base_link">
+      <inertial>
+        <mass value="1.487" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.01152" ixy="0.0" ixz="0.0" iyy="0.01152" iyz="0.0" izz="0.0218" />
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://uav/Media/models/bonebraker/bonebraker.dae"/>
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://uav/Media/models/bonebraker/bonebraker.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="brazo_0" gravity="0">
+    <inertial mass="0.2">
+      <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
+    </inertial>
+     <origin pose='0.0625 0.065 0.203 0.0 0.0 -2.3561925'/>
+    <collision name="collision">
+      <geometry>
+        <mesh filename="bonebraker/brazo0.dae"/>
+      </geometry>
+
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <mesh filename="bonebraker/brazo0.dae"/>
+      </geometry>
+    </visual>
+  </link>
+ 
+
+    <!-- Sonar height sensor 
+    <sonar_sensor name="sonar" parent="base_link" ros_topic="sonar_height" update_rate="10" min_range="0.03" max_range="3.0" field_of_view="40" ray_count="3">
+      <origin xyz="0.12 0.0 -0.012" rpy="0 ${90*pi/180} 0"/>
+    </sonar_sensor>-->
+
+    <gazebo reference="base_link">
+      <turnGravityOff>false</turnGravityOff>
+    </gazebo>
+
+    <!-- Gazebo Plugins -->
+    <quadrotor_plugins/>
+  </xacro:macro>
+</robot>

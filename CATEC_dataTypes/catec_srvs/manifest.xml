@@ -1,0 +1,16 @@
+<package>
+  <description brief="catec_srvs">
+
+     catec_srvs
+
+  </description>
+  <author>Jonathan Ruiz Páez</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/catec_srvs</url>
+  <depend package="std_srvs"/>
+  <depend package="catec_msgs"/>
+
+</package>
+
+

@@ -1,0 +1,33 @@
+
+(cl:in-package :asdf)
+
+(defsystem "uav-msg"
+  :depends-on (:roslisp-msg-protocol :roslisp-utils :geometry_msgs-msg
+               :std_msgs-msg
+)
+  :components ((:file "_package")
+    (:file "Data_Header" :depends-on ("_package_Data_Header"))
+    (:file "_package_Data_Header" :depends-on ("_package"))
+    (:file "Battery" :depends-on ("_package_Battery"))
+    (:file "_package_Battery" :depends-on ("_package"))
+    (:file "FlightPlan" :depends-on ("_package_FlightPlan"))
+    (:file "_package_FlightPlan" :depends-on ("_package"))
+    (:file "Goal" :depends-on ("_package_Goal"))
+    (:file "_package_Goal" :depends-on ("_package"))
+    (:file "Velocity" :depends-on ("_package_Velocity"))
+    (:file "_package_Velocity" :depends-on ("_package"))
+    (:file "Error" :depends-on ("_package_Error"))
+    (:file "_package_Error" :depends-on ("_package"))
+    (:file "Space_Configuration" :depends-on ("_package_Space_Configuration"))
+    (:file "_package_Space_Configuration" :depends-on ("_package"))
+    (:file "Rotation" :depends-on ("_package_Rotation"))
+    (:file "_package_Rotation" :depends-on ("_package"))
+    (:file "Monitor" :depends-on ("_package_Monitor"))
+    (:file "_package_Monitor" :depends-on ("_package"))
+    (:file "CommandFlags" :depends-on ("_package_CommandFlags"))
+    (:file "_package_CommandFlags" :depends-on ("_package"))
+    (:file "Path" :depends-on ("_package_Path"))
+    (:file "_package_Path" :depends-on ("_package"))
+    (:file "Position" :depends-on ("_package_Position"))
+    (:file "_package_Position" :depends-on ("_package"))
+  ))

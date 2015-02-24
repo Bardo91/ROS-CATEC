@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.70.5 commit date:2014-05-20, commit time:22:04, hash:0865b4f</authoring_tool>
+    </contributor>
+    <created>2014-08-27T14:50:31</created>
+    <modified>2014-08-27T14:50:31</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images>
+    <image id="testbedFloorLona_jpg" name="testbedFloorLona_jpg">
+      <init_from>testbedFloorLona.jpg</init_from>
+    </image>
+    <image id="testbedFloorLona_jpg_001" name="testbedFloorLona_jpg_001">
+      <init_from>testbedFloorLona.jpg</init_from>
+    </image>
+    <image id="LonaTex2014_png" name="LonaTex2014_png">
+      <init_from>LonaTex2014.png</init_from>
+    </image>
+    <image id="LonaTex2014_png_001" name="LonaTex2014_png_001">
+      <init_from>LonaTex2014.png</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="Material__26-effect">
+      <profile_COMMON>
+        <newparam sid="testbedFloorLona_jpg-surface">
+          <surface type="2D">
+            <init_from>testbedFloorLona_jpg</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="testbedFloorLona_jpg-sampler">
+          <sampler2D>
+            <source>testbedFloorLona_jpg-surface</source>
+          </sampler2D>
+        </newparam>
+        <newparam sid="testbedFloorLona_jpg_001-surface">
+          <surface type="2D">
+            <init_from>testbedFloorLona_jpg_001</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="testbedFloorLona_jpg_001-sampler">
+          <sampler2D>
+            <source>testbedFloorLona_jpg_001-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <texture texture="testbedFloorLona_jpg-sampler" texcoord="UVMap"/>
+            </ambient>
+            <diffuse>
+              <texture texture="testbedFloorLona_jpg_001-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">5</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">1</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material__28-effect">
+      <profile_COMMON>
+        <newparam sid="LonaTex2014_png-surface">
+          <surface type="2D">
+            <init_from>LonaTex2014_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="LonaTex2014_png-sampler">
+          <sampler2D>
+            <source>LonaTex2014_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <newparam sid="LonaTex2014_png_001-surface">
+          <surface type="2D">
+            <init_from>LonaTex2014_png_001</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="LonaTex2014_png_001-sampler">
+          <sampler2D>
+            <source>LonaTex2014_png_001-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <texture texture="LonaTex2014_png-sampler" texcoord="UVMap"/>
+            </ambient>
+            <diffuse>
+              <texture texture="LonaTex2014_png_001-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0 0 0 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">5</float>
+            </shininess>
+            <transparency>
+              <float sid="transparency">1</float>
+            </transparency>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="Material__26-material" name="Material__26">
+      <instance_effect url="#Material__26-effect"/>
+    </material>
+    <material id="Material__28-material" name="Material__28">
+      <instance_effect url="#Material__28-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="ARCAS_PipesScenario-mesh" name="ARCAS_PipesScenario">
+      <mesh>
+        <source id="ARCAS_PipesScenario-mesh-positions">
+          <float_array id="ARCAS_PipesScenario-mesh-positions-array" count="108">7.4867 0 8.010601 7.4867 0 -7.4894 7.4867 0 -7.9894 7.4867 0 7.5106 7.4867 0 0.2606 7.4867 0 -0.2394 7.9867 0 -7.4894 7.9867 0 -0.2394 -7.5133 0 -7.4894 -7.0133 0 7.0106 -5.0133 0 -4.9894 -7.0133 0 8.010601 -5.0133 0 5.0106 -0.2633 0 8.010601 -0.2633 0 -7.9894 -0.2633 0 7.5106 4.9834 0 5.0106 0.2366999 0 8.010601 4.9834 0 -4.9894 0.2366999 0 -7.4894 -0.2633 0 -7.4894 0.2366999 0 7.5106 -7.5133 0 8.010601 -7.5133 0 0.2606 -8.0133 0 7.0106 -7.5133 0 -7.9894 -7.5133 0 -0.2394 -8.0133 0 -7.4894 -7.5133 0 7.5106 -8.0133 0 7.5106 0.2366999 0 -7.9894 -8.0133 0 -0.2394 -8.0133 0 0.2606 7.7367 0 0.2606 7.9867 0 7.5106 7.9867 0 0.2606</float_array>
+          <technique_common>
+            <accessor source="#ARCAS_PipesScenario-mesh-positions-array" count="36" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="ARCAS_PipesScenario-mesh-normals">
+          <float_array id="ARCAS_PipesScenario-mesh-normals-array" count="117">0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 0 0 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#ARCAS_PipesScenario-mesh-normals-array" count="39" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="ARCAS_PipesScenario-mesh-map-0">
+          <float_array id="ARCAS_PipesScenario-mesh-map-0-array" count="234">0.9636 0.006399989 0.9636 0.9639 0.9636 0.9948 0.9636 0.006399989 0.9636 0.03729999 0.9636 0.4852 0.9636 0.006399989 0.9636 0.516 0.9636 0.9639 0.9636 0.006399989 0.9636 0.4852 0.9636 0.516 0.9636 0.516 0.9945 0.9639 0.9636 0.9639 0.9636 0.516 0.9945 0.516 0.9945 0.9639 0.037 0.9639 0.0679 0.06819999 0.1914 0.8095 0.0679 0.006399989 0.1914 0.1917 0.1914 0.8095 0.0679 0.006399989 0.4848 0.006399989 0.1914 0.1917 0.4848 0.9948 0.037 0.9639 0.1914 0.8095 0.4848 0.03729999 0.8089 0.1917 0.1914 0.1917 0.5157 0.006399989 0.9636 0.006399989 0.8089 0.1917 0.9636 0.006399989 0.9636 0.9948 0.8089 0.1917 0.9636 0.9948 0.8089 0.8095 0.8089 0.1917 0.9636 0.9948 0.5157 0.9639 0.8089 0.8095 0.4848 0.9639 0.1914 0.8095 0.8089 0.8095 0.4848 0.006399989 0.4848 0.03729999 0.1914 0.1917 0.4848 0.03729999 0.5157 0.03729999 0.8089 0.1917 0.0679 0.06819999 0.0679 0.006399989 0.1914 0.8095 0.0679 0.06819999 0.037 0.006399989 0.0679 0.006399989 0.037 0.9639 0.037 0.4852 0.0679 0.06819999 0.037 0.4852 0.006099998 0.06819999 0.0679 0.06819999 0.4848 0.9948 0.037 0.9948 0.037 0.9639 0.037 0.516 0.037 0.9639 0.006099998 0.9639 0.0679 0.06819999 0.037 0.03729999 0.037 0.006399989 0.0679 0.06819999 0.006099998 0.03729999 0.037 0.03729999 0.5157 0.03729999 0.5157 0.006399989 0.8089 0.1917 0.9636 0.9948 0.5157 0.9948 0.5157 0.9639 0.006099998 0.9639 0.006099998 0.516 0.037 0.516 0.037 0.4852 0.006099998 0.4852 0.006099998 0.06819999 0.1914 0.8095 0.4848 0.9639 0.4848 0.9948 0.8089 0.8095 0.5157 0.9639 0.4848 0.9639 0.0679 0.06819999 0.006099998 0.06819999 0.006099998 0.03729999 0.9636 0.03729999 0.979 0.4852 0.9636 0.4852 0.9945 0.03729999 0.9945 0.4852 0.979 0.4852 0.9636 0.03729999 0.9945 0.03729999 0.979 0.4852 0.037 0.516 0.037 0.4852 0.037 0.9639 0.8089 0.8095 0.1914 0.8095 0.1914 0.1917 0.8089 0.1917 0.8089 0.8095 0.1914 0.1917</float_array>
+          <technique_common>
+            <accessor source="#ARCAS_PipesScenario-mesh-map-0-array" count="117" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="ARCAS_PipesScenario-mesh-vertices">
+          <input semantic="POSITION" source="#ARCAS_PipesScenario-mesh-positions"/>
+        </vertices>
+        <polylist material="Material__26-material" count="39">
+          <input semantic="VERTEX" source="#ARCAS_PipesScenario-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#ARCAS_PipesScenario-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#ARCAS_PipesScenario-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>0 0 0 1 0 1 2 0 2 0 1 3 3 1 4 4 1 5 0 2 6 5 2 7 1 2 8 0 3 9 4 3 10 5 3 11 5 4 12 6 4 13 1 4 14 5 5 15 7 5 16 6 5 17 8 6 18 9 6 19 10 6 20 11 7 21 12 7 22 10 7 23 11 8 24 13 8 25 12 8 26 14 9 27 8 9 28 10 9 29 15 10 30 16 10 31 12 10 32 17 11 33 0 11 34 16 11 35 0 12 36 2 12 37 16 12 38 2 13 39 18 13 40 16 13 41 2 14 42 19 14 43 18 14 44 20 15 45 10 15 46 18 15 47 13 16 48 15 16 49 12 16 50 15 17 51 21 17 52 16 17 53 9 18 54 11 18 55 10 18 56 9 19 57 22 19 58 11 19 59 8 20 60 23 20 61 9 20 62 23 21 63 24 21 64 9 21 65 14 22 66 25 22 67 8 22 68 26 23 69 8 23 70 27 23 71 9 24 72 28 24 73 22 24 74 9 25 75 29 25 76 28 25 77 21 26 78 17 26 79 16 26 80 2 27 81 30 27 82 19 27 83 27 28 84 31 28 85 26 28 86 23 29 87 32 29 88 24 29 89 10 30 90 20 30 91 14 30 92 18 31 93 19 31 94 20 31 95 9 32 96 24 32 97 29 32 98 3 33 99 33 33 100 4 33 101 34 34 102 35 34 103 33 34 104 3 35 105 34 35 106 33 35 107 26 36 108 23 36 109 8 36 110 18 37 111 10 37 112 12 37 113 16 38 114 18 38 115 12 38 116</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane001-mesh" name="Plane001">
+      <mesh>
+        <source id="Plane001-mesh-positions">
+          <float_array id="Plane001-mesh-positions-array" count="75">-6.015 0.00999999 6.0106 -3.015 0.00999999 6.0106 -3.015 0.00999999 3.0106 -6.015 0.00999999 3.0106 -0.01499998 0.00999999 6.0106 -0.01499998 0.00999999 3.0106 2.985 0.00999999 6.0106 2.985 0.00999999 3.0106 5.985 0.00999999 6.0106 5.985 0.00999999 3.0106 -3.015 0.00999999 0.01059997 -6.015 0.00999999 0.01059997 -0.01499998 0.00999999 0.01059997 2.985 0.00999999 0.01059997 5.985 0.00999999 0.01059997 -3.015 0.00999999 -2.9894 -6.015 0.00999999 -2.9894 -0.01499998 0.00999999 -2.9894 2.985 0.00999999 -2.9894 5.985 0.00999999 -2.9894 -3.015 0.00999999 -5.9894 -6.015 0.00999999 -5.9894 -0.01499998 0.00999999 -5.9894 2.985 0.00999999 -5.9894 5.985 0.00999999 -5.9894</float_array>
+          <technique_common>
+            <accessor source="#Plane001-mesh-positions-array" count="25" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane001-mesh-normals">
+          <float_array id="Plane001-mesh-normals-array" count="96">0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane001-mesh-normals-array" count="32" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane001-mesh-map-0">
+          <float_array id="Plane001-mesh-map-0-array" count="192">1 0 1 0.25 0.75 0.25 0.75 0 1 0 0.75 0.25 1 0.25 1 0.5 0.75 0.5 0.75 0.5 0.75 0.25 1 0.25 1 0.5 1 0.75 0.75 0.75 0.75 0.75 0.75 0.5 1 0.5 1 0.75 1 1 0.75 1 0.75 1 0.75 0.75 1 0.75 0.75 0 0.75 0.25 0.5 0.25 0.5 0.25 0.5 0 0.75 0 0.75 0.25 0.75 0.5 0.5 0.5 0.5 0.5 0.5 0.25 0.75 0.25 0.75 0.5 0.75 0.75 0.5 0.75 0.5 0.75 0.5 0.5 0.75 0.5 0.75 0.75 0.75 1 0.5 1 0.5 1 0.5 0.75 0.75 0.75 0.5 0 0.5 0.25 0.25 0.25 0.25 0.25 0.25 0 0.5 0 0.5 0.25 0.5 0.5 0.25 0.5 0.25 0.5 0.25 0.25 0.5 0.25 0.5 0.5 0.5 0.75 0.25 0.75 0.25 0.75 0.25 0.5 0.5 0.5 0.5 0.75 0.5 1 0.25 1 0.25 1 0.25 0.75 0.5 0.75 0.25 0 0.25 0.25 0 0.25 0 0.25 0 0 0.25 0 0.25 0.25 0.25 0.5 0 0.5 0 0.5 0 0.25 0.25 0.25 0.25 0.5 0.25 0.75 0 0.75 0 0.75 0 0.5 0.25 0.5 0.25 0.75 0.25 1 0 1 0 1 0 0.75 0.25 0.75</float_array>
+          <technique_common>
+            <accessor source="#Plane001-mesh-map-0-array" count="96" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane001-mesh-vertices">
+          <input semantic="POSITION" source="#Plane001-mesh-positions"/>
+        </vertices>
+        <polylist material="Material__28-material" count="32">
+          <input semantic="VERTEX" source="#Plane001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane001-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane001-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>0 0 0 1 0 1 2 0 2 3 1 3 0 1 4 2 1 5 1 2 6 4 2 7 5 2 8 5 3 9 2 3 10 1 3 11 4 4 12 6 4 13 7 4 14 7 5 15 5 5 16 4 5 17 6 6 18 8 6 19 9 6 20 9 7 21 7 7 22 6 7 23 3 8 24 2 8 25 10 8 26 10 9 27 11 9 28 3 9 29 2 10 30 5 10 31 12 10 32 12 11 33 10 11 34 2 11 35 5 12 36 7 12 37 13 12 38 13 13 39 12 13 40 5 13 41 7 14 42 9 14 43 14 14 44 14 15 45 13 15 46 7 15 47 11 16 48 10 16 49 15 16 50 15 17 51 16 17 52 11 17 53 10 18 54 12 18 55 17 18 56 17 19 57 15 19 58 10 19 59 12 20 60 13 20 61 18 20 62 18 21 63 17 21 64 12 21 65 13 22 66 14 22 67 19 22 68 19 23 69 18 23 70 13 23 71 16 24 72 15 24 73 20 24 74 20 25 75 21 25 76 16 25 77 15 26 78 17 26 79 22 26 80 22 27 81 20 27 82 15 27 83 17 28 84 18 28 85 23 28 86 23 29 87 22 29 88 17 29 89 18 30 90 19 30 91 24 30 92 24 31 93 23 31 94 18 31 95</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="ARCAS_PipesScenario" name="ARCAS_PipesScenario" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 -1.62921e-7 -1 0 0 1 -1.62921e-7 0 0 0 0 1</matrix>
+        <instance_geometry url="#ARCAS_PipesScenario-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material__26-material" target="#Material__26-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Plane001" name="Plane001" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 -1.62921e-7 -1 0 0 1 -1.62921e-7 0 0 0 0 1</matrix>
+        <instance_geometry url="#Plane001-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material__28-material" target="#Material__28-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

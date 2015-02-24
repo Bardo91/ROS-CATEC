@@ -1,0 +1,11 @@
+#goal definition
+catec_msgs/WayPointWithCruiseStamped[] way_points
+uint32 size
+---
+#reult definition
+catec_msgs/PositionWithCheckStamped final_position
+---
+#feedback definition
+float32 distance_to_goal
+float32 distance_to_next_waypoint
+catec_msgs/WayPointWithCruiseStamped way_point

@@ -1,0 +1,8 @@
+#goal definition
+uint8 target_type
+---
+#result definition
+catec_msgs/TargetsDetectedStamped targets
+---
+#feedback definition
+catec_msgs/TargetsDetectedStamped targets

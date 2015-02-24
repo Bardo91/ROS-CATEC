@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot name="Tube1">
+  <link name="Tube1_link">
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="0.1" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="1.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.57 0"/>
+      <geometry>
+        <cylinder radius="0.03" length="1.3"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.57 0"/>
+      <geometry>
+        <cylinder radius="0.03" length="1.3"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="Tube1_link">
+    <material>PR2/Black</material>
+    <turnGravityOff>true</turnGravityOff>
+        <static>true</static>
+  </gazebo>
+</robot>
