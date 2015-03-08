@@ -12,7 +12,7 @@
 	 <arg name="topic_intruder1" value="/uav_5/ual_state"/> <!-- Position of intruder 1-->
 	 <arg name="topic_intruder2" value="/uav_6/ual_state"/> <!-- Position of intruder 2-->
 
-	<node name="prueba2_test" pkg="command_dispatcher" type="prueba2" args="$(arg id_uav1) $(arg id_uav2) $(arg hdes1) $(arg hdes2) $(arg x_off) $(arg y_off) $(arg range) $(arg topic_intruder1) $(arg topic_intruder2)" />
+	<node name="prueba2_test" pkg="command_dispatcher" type="prueba2" args="$(arg id_uav1) $(arg id_uav2) $(arg hdes1) $(arg hdes2) $(arg x_off) $(arg y_off) $(arg range)" output="screen"/>
 
 		
 </launch>

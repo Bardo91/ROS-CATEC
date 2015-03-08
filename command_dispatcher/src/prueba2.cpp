@@ -448,6 +448,9 @@ int main(int argc, char** argv)
 
 	char nombre[50];
 
+	for(unsigned i = 0; i < argc; i++){
+		cout << "Argument number " << i << "is: " << argv[i] << endl;
+	}
 
 	//-------------------------------------------------------------------------------------------------------------
 	std::cout << "Initializing output files" << std::endl;
@@ -534,6 +537,9 @@ int main(int argc, char** argv)
 
 		topicname=uav_full_id[0];
 		topicname.append("/ual_state");
+
+		cout << "MAIN: Subscribing to: " << topicname << endl;
+
 		sub[0] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack0);
 		topicname=uav_full_id[1];
 		topicname.append("/ual_state");
