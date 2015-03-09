@@ -5,10 +5,6 @@
 
 
 	<!-- Here it is configured which quadrotors are going to be used -->
-	<arg name="uav_1/flying" value="0" />
-	<arg name="uav_2/flying" value="0" />
-	<arg name="uav_4/flying" value="0" />
-	<arg name="uav_7/flying" value="0" />
     <arg name="uav_8/flying" value="1" />
 	<arg name="uav_3/flying" value="1" />
 	<arg name="uav_5/flying" value="1" />
@@ -36,10 +32,10 @@
 	  <param name="uav_6/transition_time" value="15.0" type="double" />
 
 	<!-- The configuration parameters are given their values -->
-	<param name="uav_8/flying" value="$(arg uav_1/flying)" type="bool" />
-	<param name="uav_3/flying" value="$(arg uav_2/flying)" type="bool" />
-	<param name="uav_5/flying" value="$(arg uav_3/flying)" type="bool" />
-	<param name="uav_6/flying" value="$(arg uav_4/flying)" type="bool" />
+	<param name="uav_8/flying" value="$(arg uav_8/flying)" type="bool" />
+	<param name="uav_3/flying" value="$(arg uav_3/flying)" type="bool" />
+	<param name="uav_5/flying" value="$(arg uav_5/flying)" type="bool" />
+	<param name="uav_6/flying" value="$(arg uav_6/flying)" type="bool" />
 
 	<!-- Nodes will start if their /uav_i/flying parameter is true  -->
 	<node name="uav_8" pkg="uav" type="uav_gazebo" args="8 1" if="$(arg uav_8/flying)">

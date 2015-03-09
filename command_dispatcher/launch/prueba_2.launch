@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-	 id_uav1 id_uav2 hdes1 hdes2 x_off x_off range topic_intruder1 topic_intruder2 topic_intruder3
-	
+
 	 <arg name="id_uav1" value="3"/> <!-- Agent 1-->
 	 <arg name="id_uav2" value="8"/> <!-- Agent 2-->
 	 <arg name="hdes1" value="1.5"/>

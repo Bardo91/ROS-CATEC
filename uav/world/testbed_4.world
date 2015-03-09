@@ -48,14 +48,10 @@
          <direction xyz="-1 0 0"/>
       </light>
 
-	<include filename="quadrotor_nog.model" model_pose="-7 -7 0.2 0 0 0" model_name="uav_1" link_gravity="false"/>
-	<include filename="quadrotor_nog.model" model_pose="-7 -5 0.2 0 0 0" model_name="uav_2" link_gravity="false"/>
 	<include filename="quadrotor_nog.model" model_pose="-7 -3 0.2 0 0 0" model_name="uav_3" link_gravity="false"/>
-	<include filename="quadrotor_nog.model" model_pose="-7 -1 0.2 0 0 0" model_name="uav_4" link_gravity="false"/>
-	<include filename="quadrotor_nog.model" model_pose="-5 -7 0.2 0 0 0" model_name="uav_5" link_gravity="false"/>
-	<include filename="quadrotor_nog.model" model_pose="-5 -5 0.2 0 0 0" model_name="uav_6" link_gravity="false"/>
-	<include filename="quadrotor_nog.model" model_pose="-5 -3 0.2 0 0 0" model_name="uav_7" link_gravity="false"/>
-	<include filename="quadrotor_nog.model" model_pose="-5 -1 0.2 0 0 0" model_name="uav_8" link_gravity="false"/>
+	<include filename="quadrotor_nog.model" model_pose="-7 -7 0.2 0 0 0" model_name="uav_5" link_gravity="false"/>
+	<include filename="quadrotor_nog.model" model_pose="-7 -5 0.2 0 0 0" model_name="uav_6" link_gravity="false"/>
+	<include filename="quadrotor_nog.model" model_pose="-7 -1 0.2 0 0 0" model_name="uav_8" link_gravity="false"/>
 
 	<model name="testbed_floor" static="true">
 	     <link name="test_bed_floor">

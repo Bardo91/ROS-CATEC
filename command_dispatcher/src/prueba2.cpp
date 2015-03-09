@@ -530,63 +530,64 @@ int main(int argc, char** argv)
 
 
 	std::cout << "Main loop" << std::endl;
-	for (int i=0; i<MAX_TASKS; i++)
-		for (int j=0; j<TAM_TASKS; j++)
+	for (int i=0; i<MAX_TASKS; i++){
+		for (int j=0; j<TAM_TASKS; j++){
 			tasks_in[i][j]=-1;
-
-
-		topicname=uav_full_id[0];
-		topicname.append("/ual_state");
-
-		cout << "MAIN: Subscribing to: " << topicname << endl;
-
-		sub[0] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack0);
-		topicname=uav_full_id[1];
-		topicname.append("/ual_state");
-		sub[1] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack1);
-
-		/*topicname=string(argv[num_ag+6]);
-		//topicname.append("/ual_state");
-		intruders[0]=n.subscribe(topicname.c_str(), 0,Intruder0_StateCallBack);
-		pos_intruders[0].open("intruder0_pos", ofstream::out);
-		if (!pos_intruders[0])
-		{
-			ROS_INFO("Error al abrir fichero de salida");
-			return -1;
 		}
-		topicname=string(argv[num_ag+7]);
-		//topicname.append("/ual_state");
-		intruders[1]=n.subscribe(topicname.c_str(), 0,Intruder1_StateCallBack);
-		pos_intruders[1].open("intruder1_pos", ofstream::out);
-		if (!pos_intruders[1])
-		{
-			ROS_INFO("Error al abrir fichero de salida");
-			return -1;
-		}
-		topicname=string(argv[num_ag+8]);
-		//topicname.append("/ual_state");
-		intruders[2]=n.subscribe(topicname.c_str(), 0,Intruder2_StateCallBack);
-		pos_intruders[2].open("intruder2_pos", ofstream::out);
-		if (!pos_intruders[2])
-		{
-			ROS_INFO("Error al abrir fichero de salida");
-			return -1;
-		}*/
+	}
 
-		
-		topicname = uav_full_id[0];
+	topicname=uav_full_id[0];
+	topicname.append("/ual_state");
+
+	cout << "MAIN: Subscribing to: " << topicname << endl;
+
+	sub[0] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack0);
+	topicname=uav_full_id[1];
+	topicname.append("/ual_state");
+	sub[1] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack1);
+
+	/*topicname=string(argv[num_ag+6]);
+	//topicname.append("/ual_state");
+	intruders[0]=n.subscribe(topicname.c_str(), 0,Intruder0_StateCallBack);
+	pos_intruders[0].open("intruder0_pos", ofstream::out);
+	if (!pos_intruders[0])
+	{
+		ROS_INFO("Error al abrir fichero de salida");
+		return -1;
+	}
+	topicname=string(argv[num_ag+7]);
+	//topicname.append("/ual_state");
+	intruders[1]=n.subscribe(topicname.c_str(), 0,Intruder1_StateCallBack);
+	pos_intruders[1].open("intruder1_pos", ofstream::out);
+	if (!pos_intruders[1])
+	{
+		ROS_INFO("Error al abrir fichero de salida");
+		return -1;
+	}
+	topicname=string(argv[num_ag+8]);
+	//topicname.append("/ual_state");
+	intruders[2]=n.subscribe(topicname.c_str(), 0,Intruder2_StateCallBack);
+	pos_intruders[2].open("intruder2_pos", ofstream::out);
+	if (!pos_intruders[2])
+	{
+		ROS_INFO("Error al abrir fichero de salida");
+		return -1;
+	}*/
+
+	
+	topicname = uav_full_id[0];
+	topicname.append("/land_action");
+	cLand0 = new LandClient(topicname,true);
+	topicname = uav_full_id[0];
+	topicname.append("/take_off_action");
+	cTakeOff0 = new TakeOffClient(topicname,true);
+	
+	topicname = uav_full_id[1];
 		topicname.append("/land_action");
-		cLand0 = new LandClient(topicname,true);
-		topicname = uav_full_id[0];
-		topicname.append("/take_off_action");
-		cTakeOff0 = new TakeOffClient(topicname,true);
-		
-		topicname = uav_full_id[1];
- 		topicname.append("/land_action");
-		cLand1 = new LandClient(topicname,true);
-		topicname = uav_full_id[1];
-		topicname.append("/take_off_action");
-		cTakeOff1 = new TakeOffClient(topicname,true);       
+	cLand1 = new LandClient(topicname,true);
+	topicname = uav_full_id[1];
+	topicname.append("/take_off_action");
+	cTakeOff1 = new TakeOffClient(topicname,true);       
 		
 
 
