@@ -1,0 +1,67 @@
+<gazebo version="1.0">
+<model name="quadrotor" static="false">
+  <link name="link" gravity="false">
+    <inertial mass="1.316">
+      <inertia ixx="0.0128" ixy="0" ixz="0" iyy="0.0128" iyz="0" izz="0.0218"/>
+    </inertial>
+
+    <collision name="collision">
+      <geometry>
+        <mesh filename="quadrotor/quadrotor_base.dae"/>
+      </geometry>
+    </collision>
+
+    <visual name="visual">
+      <geometry>
+        <mesh filename="quadrotor/quadrotor_base.dae"/>
+      </geometry>
+    </visual>
+
+     <sensor name='camera' type='camera' always_on='1' update_rate='30' visualize='true'>
+	<origin pose='0.2 0 -0.16 0 0.2 0'/>
+        <camera>
+          <horizontal_fov angle='1.07079633'/>
+          <image width='640' height='480' format='R8G8B8'/>
+          <clip near='0.1' far='100'/>
+        </camera>
+        <plugin name="camera_plugin" filename="libgazebo_ros_camera.so">
+            <alwaysOn>true</alwaysOn>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <updateRate>30.0</updateRate>
+            <cameraName>overhead_camera</cameraName>
+            <frameName>overhead_camera_frame</frameName>
+            <CxPrime>320.5</CxPrime>
+            <Cx>320.5</Cx>
+            <Cy>240.5</Cy>
+            <hackBaseline>0</hackBaseline>
+            <focalLength>539.455048</focalLength>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+      <sensor name='ray_sensor' type='ray' always_on='1' update_rate='10' visualize='false'>
+          <origin pose='0.0 0.0 -0.1 0.0 1.10 0.0' />
+	  <ray>
+		<scan>
+		   <horizontal samples='3' min_angle='-0.067' max_angle='0.067' />
+		</scan>
+		<range min='0.05' max='4.0' />
+	  </ray>
+          <plugin name ="ros_ray_sensor_controller" filename="libgazebo_ros_laser.so">
+            <gaussianNoise>0.005</gaussianNoise>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>15.0</updateRate>
+            <topicName>ray_scan</topicName>
+            <frameName>ray_model</frameName>
+          </plugin>
+        </sensor>
+
+  </link>
+
+</model>
+
+</gazebo>

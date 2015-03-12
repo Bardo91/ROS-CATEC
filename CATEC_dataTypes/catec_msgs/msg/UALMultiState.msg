@@ -1,4 +1,0 @@
-uint8 uav_id
-Position actual_position
-Position next_position
-uint8 blocked

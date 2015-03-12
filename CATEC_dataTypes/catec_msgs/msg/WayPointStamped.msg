@@ -1,2 +1,0 @@
-Header header
-WayPoint way_point

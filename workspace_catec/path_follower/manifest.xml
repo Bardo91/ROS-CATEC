@@ -1,0 +1,18 @@
+<package>
+  <description brief="path_follower">
+
+     path_follower
+
+  </description>
+  <author>CATEC-ROS</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/path_follower</url>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+  <depend package="std_msgs"/>
+  <depend package="catec_msgs"/>
+
+</package>
+
+

@@ -1,0 +1,19 @@
+<package>
+  <description brief="matlab">
+
+     matlab
+
+  </description>
+  <author>catec</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/matlab</url>
+  <depend package="std_msgs"/>
+  <depend package="roscpp"/>
+  <depend package="geometry_msgs"/>
+  <depend package="nav_msgs"/>
+  <depend package="visualization_msgs"/>
+
+</package>
+
+

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<gazebo version="1.0">
+  <world name="default">
+	<scene>
+		<shadows enabled="true" />
+	</scene>
+	<model name="testbed_floor" static="true">
+	     <link name="test_bed_floor">
+		<visual name="visual" cast_shadows="true">
+		   <geometry>
+			<mesh filename="trackingScenario/TrackingScenarioFromBlender.dae" />
+		   </geometry>
+		</visual>
+		<collision name="collision">
+		   <geometry>
+		         <mesh filename="trackingScenario/TrackingScenarioFromBlender.dae" />
+		   </geometry>
+		</collision>
+	     </link>	     
+	</model> 
+
+	<include filename="quadrotor_nog_red.model" model_pose="4.5 -2.0 3.0 0 0 0" model_name="uav_1" link_gravity="false"/>
+	<include filename="quadrotor_nog_purple.model" model_pose="0.5 2.0 3.0 0 0 0" model_name="uav_2" link_gravity="false"/>
+	<!--<include filename="quadrotor_nog_green.model" model_pose="-0.5 2.0 0.2 0 0 0" model_name="uav_3" link_gravity="false"/>-->
+	<include filename="quadrotor_nog_green.model" model_pose="-1.5 -2.0 3.0 0 0 0" model_name="uav_3" link_gravity="false"/>
+	<include filename="quadrotor_nog_yellow.model" model_pose="3.5 -1.0 3.0 0 0 0" model_name="uav_4" link_gravity="false"/>
+
+  </world>
+</sdf>

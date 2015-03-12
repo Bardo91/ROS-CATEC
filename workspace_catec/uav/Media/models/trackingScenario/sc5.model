@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<gazebo version="1.0">
+ 
+	<model name="testbed_floor" static="true">
+	     <link name="test_bed_floor">
+		<visual name="visual" cast_shadows="true">
+		   <geometry>
+			<mesh filename="TrackingScenarioFromBlender.dae" />
+		   </geometry>
+		</visual>
+		<collision name="collision">
+		   <geometry>
+		         <mesh filename="TrackingScenarioFromBlender.dae" />
+		   </geometry>
+		</collision>
+	     </link>	     
+	</model>
+
+
+</gazebo>

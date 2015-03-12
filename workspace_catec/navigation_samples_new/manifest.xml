@@ -1,0 +1,16 @@
+<package>
+  <description brief="navigation_samples">
+
+     navigation_samples
+
+  </description>
+  <author>catec</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/navigation_samples</url>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+
+</package>
+
+

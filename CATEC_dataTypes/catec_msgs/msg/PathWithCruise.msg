@@ -1,1 +1,0 @@
-WayPointWithCruise[] wp

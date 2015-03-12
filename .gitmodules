@@ -1,0 +1,3 @@
+[submodule "lib/roscpp"]
+	path = lib/roscpp
+	url = https://github.com/ros/ros_comm.git

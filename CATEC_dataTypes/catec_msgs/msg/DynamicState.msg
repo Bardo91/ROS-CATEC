@@ -1,3 +1,0 @@
-PositionWithCheck position
-OrientationWithCheck orientation
-VelocityWithCheck velocity

@@ -1,2 +1,0 @@
-Header header
-WayPointWithCruise way_point

@@ -1,12 +1,1 @@
-/.rosinstall
-/setup.bash
-/setup.sh
-/setup.zsh
-*build/
-*msg/
-*msg_gen/
-*srv/
-*srv_gen/
-*bin/
-*build/
-*so
+*.svn

@@ -1,9 +1,0 @@
-#goal definition
-catec_msgs/Position initial_position
-catec_msgs/Position final_position
----
-#result definition
-float64 path_length
----
-#feedback definition
-#No feedback
