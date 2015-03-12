@@ -5,13 +5,72 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="launch">
+      <UniqueIdentifier>{0b500477-7a05-4824-b4b1-a5b78a609a75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="make">
+      <UniqueIdentifier>{df6ee74a-4e4e-4b22-ab6e-9d785fdfa4b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="srv">
+      <UniqueIdentifier>{172fbab7-de93-45ae-b202-5e6be15f9251}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cmd_dispatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cmd_dispatcher_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\patrolling_and_tracking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\prueba2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\quad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\radiosim.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\quad.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\radio.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\strings_tools.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt">
+      <Filter>make</Filter>
+    </Text>
+    <Text Include="CMakeLists2.txt">
+      <Filter>make</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile">
+      <Filter>make</Filter>
+    </None>
+    <None Include="launch\prueba_2.launch">
+      <Filter>launch</Filter>
+    </None>
+    <None Include="srv\servicio_nuevo.srv">
+      <Filter>srv</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="manifest.xml">
+      <Filter>make</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
