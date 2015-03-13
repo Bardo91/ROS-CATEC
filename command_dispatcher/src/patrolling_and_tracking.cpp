@@ -381,6 +381,10 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+	for(unsigned i = 0; i < argc; i++){
+			cout << "Argument number " << i << "is: " << argv[i] << endl;
+	}
+
 	ifstream uavs_file(string(argv[1]).c_str());
 	num_ag=0;
 	if(uavs_file.is_open())
