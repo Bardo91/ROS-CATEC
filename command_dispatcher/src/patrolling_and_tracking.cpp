@@ -35,7 +35,7 @@ string node_name;
 string uav_full_id[5];
 string intruder_full_id[5];
 int uav_id[2];
-class_quad *agente[2];
+QuadPatrolling *agente[2];
 class_radio *radio;
 double t;
 double dt=1.0/10.0;
@@ -155,10 +155,10 @@ void sendControlReferences(const ros::TimerEvent& te)
 	int id_cont;
 	int quad_cont[AG_MAX];
 	double tasks_before[AG_MAX][MAX_TASKS][TAM_TASKS];
-	struct agente agentes_before[AG_MAX];
+	struct Agente agentes_before[AG_MAX];
 	int tam_plan=0;
 	bool listo=true;
-	struct mensaje mensaje_rcv;
+	struct Mensaje mensaje_rcv;
 
 
 	t=t+dt;
