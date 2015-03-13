@@ -1,16 +1,25 @@
 <?xml version="1.0"?>
 <launch>
 
-	 <arg name="id_uav1" value="3"/> <!-- Agent 1-->
-	 <arg name="id_uav2" value="8"/> <!-- Agent 2-->
-	 <arg name="hdes1" value="1.5"/>
-	 <arg name="hdes2" value="2"/>
-	 <arg name="x_off" value="0.5"/>
-	 <arg name="y_off" value="0.5"/>
-	 <arg name="range" value="10"/>
-	 <arg name="topic_intruder1" value="/uav_5/ual_state"/> <!-- Position of intruder 1-->
-	 <arg name="topic_intruder2" value="/uav_6/ual_state"/> <!-- Position of intruder 2-->
+	 <arg name="idFile" 		value="$(find command_dispatcher)/launch/uavIds"/> 
+	 <arg name="dirFile" 		value="$(find command_dispatcher)/launch/uavDirs"/>
+	 <arg name="speedFile" 		value="$(find command_dispatcher)/launch/uavSpeeds"/>
+	 <arg name="hFile" 			value="$(find command_dispatcher)/launch/uavHs"/>
+	 <arg name="radioRange" 	value="10"/>
+	 <arg name="intruderIdFile" value="$(find command_dispatcher)/launch/uavIntruderId"/>
+	 <arg name="waypointsFile" 	value="$(find command_dispatcher)/launch/uavWaypts"/>
 
-	<node name="patrolling_and_tracking_test" pkg="command_dispatcher" type="patrolling_and_tracking" args="$(arg id_uav1) $(arg id_uav2) $(arg hdes1) $(arg hdes2) $(arg x_off) $(arg y_off) $(arg range)" output="screen"/>
+	<node 
+		name="patrolling_and_tracking_test" 
+		pkg="command_dispatcher" 
+		type="patrolling_and_tracking" 
+		args="	$(arg idFile) 
+				$(arg dirFile) 
+				$(arg speedFile) 
+				$(arg hFile) 
+				$(arg radioRange) 
+				$(arg intruderIdFile) 
+				$(arg waypointsFile)" 
+		output="screen"/>
 		
 </launch>
