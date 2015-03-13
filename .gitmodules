@@ -1,6 +1,0 @@
-[submodule "lib/roscpp"]
-	path = lib/roscpp
-	url = https://github.com/ros/ros_comm.git
-[submodule "lib/actionlib"]
-	path = lib/actionlib
-	url = https://github.com/ros/actionlib.git
