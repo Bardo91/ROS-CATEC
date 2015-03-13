@@ -374,103 +374,65 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state)
 int main(int argc, char** argv)
 {
 	ROS_INFO("  arguments [%d]", argc);
-	if (argc < 7)
-	{
-		cout << "This program should have at least eight input parameter.\n"<< endl <<
-				"The parameter format is: uavs_file dir_file speed_file height_file range_file intruder_file path_file mode" << endl;
+	if (argc < 7){
+		cout << "This program should have at least eight input parameter.\n"<< endl << "The parameter format is: uavs_file dir_file speed_file height_file range_file intruder_file path_file mode" << endl;
 		return -1;
 	}
-
 	for(unsigned i = 0; i < argc; i++){
 			cout << "Argument number " << i << "is: " << argv[i] << endl;
 	}
-
 	ifstream uavs_file(string(argv[1]).c_str());
 	num_ag=0;
-	if(uavs_file.is_open())
-	{
-		while(uavs_file.good())
-		{
+	if(uavs_file.is_open()) {
+		while(uavs_file.good()) {
 			uavs_file >> uav_full_id[num_ag];
 			num_ag++;
 		}
-			
-	}
-	else
-	{
+	} else {
 		cout << "Error, cannot open the file: " << argv[1] << endl;
 		return -1;
 	}
 
-
-	num_ag=0;
 	ifstream dir_file(string(argv[2]).c_str());
-	if(dir_file.is_open())
-	{
-		while(dir_file.good())
-		{
+	if(dir_file.is_open()){
+		while(dir_file.good())	{
 			dir_file >> dir_ini[num_ag];
 			num_ag++;
 		}
-			
-	}
-	else
-	{
+	} else{
 		cout << "Error, cannot open the file: " << argv[2] << endl;
 		return -1;
 	}
-
-	
-	num_ag=0;
 	ifstream speed_file(string(argv[3]).c_str());
-	if(speed_file.is_open())
-	{
-		while(speed_file.good())
-		{
+	if(speed_file.is_open()){
+		while(speed_file.good()){
 			speed_file >> speed_max[num_ag];
 			num_ag++;
 		}
-			
-	}
-	else
-	{
+	} else {
 		cout << "Error, cannot open the file: " << argv[3] << endl;
 		return -1;
 	}
-
-	num_ag=0;
 	ifstream height_file(string(argv[4]).c_str());
-	if(height_file.is_open())
-	{
-		while(height_file.good())
-		{
+	if(height_file.is_open()){
+		while(height_file.good()){
 			height_file >> h_des[num_ag];
 			num_ag++;
 		}
-			
-	}
-	else
-	{
+	} else {
 		cout << "Error, cannot open the file: " << argv[4] << endl;
 		return -1;
 	}
-		
 	range=atof(argv[5]);
-
 	
 	num_intruders=0;
 	ifstream intruder_file(string(argv[6]).c_str());
-	if(intruder_file.is_open())
-	{
-		while(intruder_file.good())
-		{
+	if(intruder_file.is_open()){
+		while(intruder_file.good()){
 			intruder_file >> intruder_full_id[num_intruders];
 			num_intruders++;
 		}
-			
-	}
-	else
-	{
+	} else {
 		cout << "Error, cannot open the file: " << argv[6] << endl;
 		return -1;
 	}
@@ -479,18 +441,13 @@ int main(int argc, char** argv)
 
 	int tam_path=0;
 	ifstream path_file(string(argv[7]).c_str());
-	if(path_file.is_open())
-	{
-		while(path_file.good())
-		{
+	if(path_file.is_open()) {
+		while(path_file.good()) {
 			path_file >> path[tam_path][0];
 			path_file >> path[tam_path][1];
 			tam_path++;
 		}
-			
-	}
-	else
-	{
+	} else {
 		cout << "Error, cannot open the file: " << argv[7] << endl;
 		return -1;
 	}
@@ -499,45 +456,41 @@ int main(int argc, char** argv)
 
 	char nombre[50];
 
-	for (int i=0; i<num_ag; i++)
-	{
+	for (int i=0; i<num_ag; i++) {
 		sprintf(nombre,"%s_pos",uav_full_id[i].c_str());
 		pos_quads[i].open(nombre, ofstream::out);
-		if (!pos_quads[i])
-		{
+		if (!pos_quads[i]) {
 			ROS_INFO("Error, cannot open the output file %s",nombre);
 			return -1;
 		}
 		sprintf(nombre,"%s_tasks",uav_full_id[i].c_str());
 		task_assigned[i].open(nombre, ofstream::out);
-		if (!task_assigned[i])
-		{
+		if (!task_assigned[i]) {
 			ROS_INFO("Error, cannot open the output file %s",nombre);
 			return -1;
 		}
 		sprintf(nombre,"%s_costs",uav_full_id[i].c_str());
 		costes_totales[i].open(nombre, ofstream::out);
-		if (!costes_totales[i])
-		{
+		if (!costes_totales[i]) {
 			ROS_INFO("Error, cannot open the output file %s",nombre);
 			return -1;
 		}		
 	}
 
-	for (int i=0; i<num_intruders; i++)
-	{
+	for (int i=0; i<num_intruders; i++) {
 		sprintf(nombre,"%s_pos",intruder_full_id[i].c_str());
 		pos_intruders[i].open(nombre, ofstream::out);
-		if (!pos_intruders[i])
-		{
+		if (!pos_intruders[i]) {
 			ROS_INFO("Error, cannot open the output file %s",nombre);
 			return -1;
 		}
 	}
 
-	for (int i=0; i<MAX_TASKS; i++)
-		for (int j=0; j<TAM_TASKS; j++)
+	for (int i=0; i<MAX_TASKS; i++){
+		for (int j=0; j<TAM_TASKS; j++){
 			tasks_in[i][j]=-1;
+		}
+	}
 
 	node_name = "patrolling_and_tracking";
 	ros::init(argc,argv,node_name);
@@ -549,15 +502,13 @@ int main(int argc, char** argv)
 
 	radio = new class_radio(0, 10.0, num_ag);
 
-	for (int i=0; i<num_intruders; i++)
-	{
+	for (int i=0; i<num_intruders; i++) {
 		topicname=intruder_full_id[i];
 		topicname.append("/ual_state");
 		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
 	}
 
-	for (int i=0; i<num_ag; i++)
-	{	
+	for (int i=0; i<num_ag; i++) {
 		topicname= node_name;
 		topicname.append("/out_waypoint_");
 		topicname.append(uav_full_id[i]);
@@ -582,23 +533,22 @@ int main(int argc, char** argv)
 	}
 	
 	ROS_INFO("Waiting for all servers...");	
-	for (int i=0; i<num_ag; i++)
-	{
+	for (int i=0; i<num_ag; i++) {
 		cLand[i]->waitForServer();
 		cTakeOff[i]->waitForServer();	
-        }
+	}
 	ROS_INFO("All servers OK.");	
 
-	for (int i=0; i<num_ag; i++)
-	{
+	for (int i=0; i<num_ag; i++) {
 		cTakeOff[i]->sendGoal(tOff_goal[0], &tOff_Done_CB, &tOff_Active_CB, &tOff_Feedback_CB);
 		pos_inicial[i][0]=last_ual_state[i].ual_state.dynamic_state.position.x;
 		pos_inicial[i][1]=last_ual_state[i].ual_state.dynamic_state.position.y;	
 		sleep(10);
 	}
 		
-	for (int i=0; i<num_ag; i++)
+	for (int i=0; i<num_ag; i++){
 		TakeOffGoalSended[i] = true;
+	}
 
 	ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
 
@@ -606,8 +556,7 @@ int main(int argc, char** argv)
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
-	while(ros::ok())
-	{
+	while(ros::ok()) {
 		sleep(5);
 	}
 }
