@@ -471,15 +471,13 @@ void QuadPatrolling::monitoring_tasks (double tasks_in [MAX_TASKS][TAM_TASKS], d
 	 }
 
 
-void QuadPatrolling::incr_cont (double dT)
-{
+void QuadPatrolling::incr_cont (double dT) {
      for (int i=0;i<MAX_AGENTES;i++)
 		 contactados[i]=contactados[i]+dT;
 }
 
   		
-int QuadPatrolling::decide_cont (int msg_rcv[MAX_AGENTES][MSG_LENGTH], int tam)
-{
+int QuadPatrolling::decide_cont (int msg_rcv[MAX_AGENTES][MSG_LENGTH], int tam) {
 		 double tpo_max=tpo_min_cont;
 		 int id_cont=-1;
 		 for (int i=0; i<tam; i++)
@@ -502,8 +500,7 @@ int QuadPatrolling::decide_cont (int msg_rcv[MAX_AGENTES][MSG_LENGTH], int tam)
 }
 
   
-struct Agente QuadPatrolling::calculaAgente()
-{
+struct Agente QuadPatrolling::calculaAgente() {
 	struct Agente a;
 	for (int i=0; i<N_CAP;i++){
 	a.capacidades[i]=capacidades[i];
@@ -527,8 +524,7 @@ struct Agente QuadPatrolling::calculaAgente()
 }
 
   		
-void QuadPatrolling::autoplan (double now)
-{
+void QuadPatrolling::autoplan (double now) {
             struct Agente agente1=calculaAgente();
             int plan_basic[MAX_TASKS];
             int plan_total[MAX_COMB][MAX_TASKS];
@@ -585,14 +581,12 @@ void QuadPatrolling::autoplan (double now)
             }
 }
 
-double QuadPatrolling::norma(double x, double y)
-{
+double QuadPatrolling::norma(double x, double y) {
 	return sqrt(x*x+y*y);
 }
 
 
-int QuadPatrolling::combinaciones(int n, int C[MAX_TASKS], int C_out[MAX_COMB][MAX_TASKS])
-{
+int QuadPatrolling::combinaciones(int n, int C[MAX_TASKS], int C_out[MAX_COMB][MAX_TASKS]) {
     int i;
     int inc = 0;
     int it = n * (n - 1);
@@ -623,8 +617,7 @@ int QuadPatrolling::combinaciones(int n, int C[MAX_TASKS], int C_out[MAX_COMB][M
     return inc;      
 }
   
-struct Costes QuadPatrolling::calcula_coste (int plan [MAX_TASKS], double tasks_cont [MAX_TASKS][TAM_TASKS], struct Agente a)
-{
+struct Costes QuadPatrolling::calcula_coste (int plan [MAX_TASKS], double tasks_cont [MAX_TASKS][TAM_TASKS], struct Agente a) {
  int i=0;
  int j=0;
  struct Costes c;
@@ -683,8 +676,7 @@ struct Costes QuadPatrolling::calcula_coste (int plan [MAX_TASKS], double tasks_
  return c;
 }
 
-void QuadPatrolling::init_cont(int num, double tpo)
-{
+void QuadPatrolling::init_cont(int num, double tpo) {
 	tpo_min_cont=tpo;
 
 	for (int i=0; i<num; i++)
@@ -692,8 +684,7 @@ void QuadPatrolling::init_cont(int num, double tpo)
 
 }
 
-void QuadPatrolling::camino()
-{
+void QuadPatrolling::camino() {
 	if (norma(x-path[ind][0],y-path[ind][1])<1.0)
 		ind=ind+dir;
 }

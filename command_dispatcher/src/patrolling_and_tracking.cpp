@@ -570,7 +570,7 @@ int main(int argc, char** argv)
 		topicname.append("/take_off_action");
 		cTakeOff[i] = new TakeOffClient(topicname,true);
 		sleep(5);
-		agente[i]= new class_quad(i, last_ual_state[i].ual_state.dynamic_state.position.x, last_ual_state[i].ual_state.dynamic_state.position.y, 0.0, speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
+		agente[i]= new QuadPatrolling(i, last_ual_state[i].ual_state.dynamic_state.position.x, last_ual_state[i].ual_state.dynamic_state.position.y, 0.0, speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
 		agente[i]->init_cont(num_ag, 1.0);
 		volando[i]=false;
 		cambio[i]=0;

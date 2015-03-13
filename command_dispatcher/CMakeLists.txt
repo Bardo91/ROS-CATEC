@@ -30,5 +30,5 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #target_link_libraries(example ${PROJECT_NAME})
 
 rosbuild_add_boost_directories()
-rosbuild_add_executable(patrolling_and_tracking src/patrolling_and_tracking.cpp)
+rosbuild_add_executable(patrolling_and_tracking src/patrolling_and_tracking.cpp src/radio.cpp src/quad.cpp)
 rosbuild_link_boost(patrolling_and_tracking thread signals system)
