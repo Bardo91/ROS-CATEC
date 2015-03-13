@@ -371,8 +371,9 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state)
 	}
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
+	//-----------------------------------------------------------------------------------------------------------------
+	// Initialization
 	ROS_INFO("  arguments [%d]", argc);
 	if (argc < 7){
 		cout << "This program should have at least eight input parameter.\n"<< endl << "The parameter format is: uavs_file dir_file speed_file height_file range_file intruder_file path_file mode" << endl;
@@ -454,8 +455,9 @@ int main(int argc, char** argv)
 
 	mode=atoi(argv[8]);
 
+	//-----------------------------------------------------------------------------------------------------------------
+	// OutputFiles
 	char nombre[50];
-
 	for (int i=0; i<num_ag; i++) {
 		sprintf(nombre,"%s_pos",uav_full_id[i].c_str());
 		pos_quads[i].open(nombre, ofstream::out);
@@ -486,12 +488,17 @@ int main(int argc, char** argv)
 		}
 	}
 
+	//-----------------------------------------------------------------------------------------------------------------
+	// Initializing tasks
 	for (int i=0; i<MAX_TASKS; i++){
 		for (int j=0; j<TAM_TASKS; j++){
 			tasks_in[i][j]=-1;
 		}
 	}
 
+	//-----------------------------------------------------------------------------------------------------------------
+	// Real main
+	cout << "Initalizing main node" << endl;
 	node_name = "patrolling_and_tracking";
 	ros::init(argc,argv,node_name);
 	ros::NodeHandle n;
@@ -500,14 +507,20 @@ int main(int argc, char** argv)
 	ros::Subscriber agente_sub[2];
 	ros::Subscriber intruder_sub[3];
 
+	// Init radio
+	cout << "Initalizing radio" << endl;
 	radio = new class_radio(0, 10.0, num_ag);
 
+	// Subscribing to uav states
+	cout << "Subscribing to uav states" << endl;
 	for (int i=0; i<num_intruders; i++) {
 		topicname=intruder_full_id[i];
 		topicname.append("/ual_state");
 		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
 	}
 
+	// Taking off and related...
+	cout << "Start moving agents" << endl;
 	for (int i=0; i<num_ag; i++) {
 		topicname= node_name;
 		topicname.append("/out_waypoint_");
@@ -532,6 +545,8 @@ int main(int argc, char** argv)
 		indice[i]=i+1;
 	}
 	
+	// Waiting take off actions
+	cout << "Waiting takking off actions" << endl;
 	ROS_INFO("Waiting for all servers...");	
 	for (int i=0; i<num_ag; i++) {
 		cLand[i]->waitForServer();
