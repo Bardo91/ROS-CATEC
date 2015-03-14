@@ -69,6 +69,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\cmd_dispatcher.cpp" />
+    <ClCompile Include="src\cmd_dispatcher_file.cpp" />
+    <ClCompile Include="src\patrolling_and_tracking.cpp" />
+    <ClCompile Include="src\prueba2.cpp" />
+    <ClCompile Include="src\quad.cpp" />
+    <ClCompile Include="src\radio.cpp" />
+    <ClCompile Include="src\radiosim.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\quad.h" />
+    <ClInclude Include="src\radio.h" />
+    <ClInclude Include="src\strings_tools.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="launch\patrolling_and_tracking.launch" />
+    <None Include="launch\prueba_2.launch" />
+    <None Include="launch\uavDirs" />
+    <None Include="launch\uavHs" />
+    <None Include="launch\uavIds" />
+    <None Include="launch\uavIntruderId" />
+    <None Include="launch\uavSpeeds" />
+    <None Include="launch\uavWaypts" />
+    <None Include="mainpage.dox" />
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="manifest.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

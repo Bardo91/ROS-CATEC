@@ -1,17 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="make">
+      <UniqueIdentifier>{5176f219-e49a-4586-95ed-1b20b88f9ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="launch">
+      <UniqueIdentifier>{8c05fa33-0054-4394-a251-c9dfd6b346d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,23 +47,41 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="CMakeLists.txt">
-      <Filter>make</Filter>
-    </Text>
-    <Text Include="CMakeLists2.txt">
-      <Filter>make</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Makefile">
-      <Filter>make</Filter>
+    <None Include="launch\patrolling_and_tracking.launch">
+      <Filter>launch</Filter>
     </None>
     <None Include="launch\prueba_2.launch">
       <Filter>launch</Filter>
     </None>
-    <None Include="srv\servicio_nuevo.srv">
-      <Filter>srv</Filter>
+    <None Include="launch\uavDirs">
+      <Filter>launch</Filter>
     </None>
+    <None Include="launch\uavHs">
+      <Filter>launch</Filter>
+    </None>
+    <None Include="launch\uavIds">
+      <Filter>launch</Filter>
+    </None>
+    <None Include="launch\uavIntruderId">
+      <Filter>launch</Filter>
+    </None>
+    <None Include="launch\uavSpeeds">
+      <Filter>launch</Filter>
+    </None>
+    <None Include="launch\uavWaypts">
+      <Filter>launch</Filter>
+    </None>
+    <None Include="mainpage.dox">
+      <Filter>make</Filter>
+    </None>
+    <None Include="Makefile">
+      <Filter>make</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt">
+      <Filter>make</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="manifest.xml">
