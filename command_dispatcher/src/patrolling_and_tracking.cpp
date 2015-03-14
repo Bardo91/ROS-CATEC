@@ -393,7 +393,7 @@ int main(int argc, char** argv) {
 		cout << "Error, cannot open the file: " << argv[1] << endl;
 		return -1;
 	}
-
+	num_ag=0;
 	ifstream dir_file(string(argv[2]).c_str());
 	if(dir_file.is_open()){
 		while(dir_file.good())	{
@@ -404,6 +404,7 @@ int main(int argc, char** argv) {
 		cout << "Error, cannot open the file: " << argv[2] << endl;
 		return -1;
 	}
+	num_ag=0;
 	ifstream speed_file(string(argv[3]).c_str());
 	if(speed_file.is_open()){
 		while(speed_file.good()){
@@ -414,6 +415,7 @@ int main(int argc, char** argv) {
 		cout << "Error, cannot open the file: " << argv[3] << endl;
 		return -1;
 	}
+	num_ag=0;
 	ifstream height_file(string(argv[4]).c_str());
 	if(height_file.is_open()){
 		while(height_file.good()){
@@ -442,11 +444,14 @@ int main(int argc, char** argv) {
 
 	int tam_path=0;
 	ifstream path_file(string(argv[7]).c_str());
+	cout << "Getting waypoints" << endl;
 	if(path_file.is_open()) {
 		while(path_file.good()) {
+			cout << "yeah is good" << endl;
 			path_file >> path[tam_path][0];
 			path_file >> path[tam_path][1];
 			tam_path++;
+			cout << "inc path size" << endl;
 		}
 	} else {
 		cout << "Error, cannot open the file: " << argv[7] << endl;
@@ -457,6 +462,7 @@ int main(int argc, char** argv) {
 
 	//-----------------------------------------------------------------------------------------------------------------
 	// OutputFiles
+	cout << "Opening output files" << endl;
 	char nombre[50];
 	for (int i=0; i<num_ag; i++) {
 		sprintf(nombre,"%s_pos",uav_full_id[i].c_str());
