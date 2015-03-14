@@ -101,92 +101,31 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
 int main(int argc, char** argv) {
 	//-----------------------------------------------------------------------------------------------------------------
-	// Initialization
-	ROS_INFO("  arguments [%d]", argc);
-	if (argc < 7){
-		cout << "This program should have at least eight input parameter.\n"<< endl << "The parameter format is: uavs_file dir_file speed_file height_file range_file intruder_file path_file mode" << endl;
-		return -1;
-	}
-	for(unsigned i = 0; i < argc; i++){
-			cout << "Argument number " << i << "is: " << argv[i] << endl;
-	}
-	ifstream uavs_file(string(argv[1]).c_str());
-	num_ag=0;
-	if(uavs_file.is_open()) {
-		while(uavs_file.good()) {
-			uavs_file >> uav_full_id[num_ag];
-			num_ag++;
-		}
-	} else {
-		cout << "Error, cannot open the file: " << argv[1] << endl;
-		return -1;
-	}
-	num_ag=0;
-	ifstream dir_file(string(argv[2]).c_str());
-	if(dir_file.is_open()){
-		while(dir_file.good())	{
-			dir_file >> dir_ini[num_ag];
-			num_ag++;
-		}
-	} else{
-		cout << "Error, cannot open the file: " << argv[2] << endl;
-		return -1;
-	}
-	num_ag=0;
-	ifstream speed_file(string(argv[3]).c_str());
-	if(speed_file.is_open()){
-		while(speed_file.good()){
-			speed_file >> speed_max[num_ag];
-			num_ag++;
-		}
-	} else {
-		cout << "Error, cannot open the file: " << argv[3] << endl;
-		return -1;
-	}
-	num_ag=0;
-	ifstream height_file(string(argv[4]).c_str());
-	if(height_file.is_open()){
-		while(height_file.good()){
-			height_file >> h_des[num_ag];
-			num_ag++;
-		}
-	} else {
-		cout << "Error, cannot open the file: " << argv[4] << endl;
-		return -1;
-	}
-	range=atof(argv[5]);
+	// Manual Initialization
+	// Agent data;
+	num_ag = 2;
+	uav_full_id[0] = "uav_3";
+	uav_full_id[1] = "uav_8";
+	
+	dir_ini[0] = 1;
+	dir_ini[1] = -1;
 
-	num_intruders=0;
-	ifstream intruder_file(string(argv[6]).c_str());
-	if(intruder_file.is_open()){
-		while(intruder_file.good()){
-			intruder_file >> intruder_full_id[num_intruders];
-			num_intruders++;
-		}
-	} else {
-		cout << "Error, cannot open the file: " << argv[6] << endl;
-		return -1;
-	}
+	speed_max[0] = 0.5;
+	speed_max[1] = 0.7;
 
-	t=0.0;
+	h_des[0] = 1.5;
+	h_des[1] = 2;
 
-	/*int tam_path=0;
-	ifstream path_file(string(argv[7]).c_str());
-	cout << "Getting waypoints" << endl;
-	if(path_file.is_open()) {
-		while(path_file.good()) {
-			cout << "yeah is good" << endl;
-			path_file >> path[tam_path][0];
-			path_file >> path[tam_path][1];
-			tam_path++;
-			cout << "inc path size" << endl;
-		}
-	} else {
-		cout << "Error, cannot open the file: " << argv[7] << endl;
-		return -1;
-	}*/
+	range = 10;
 
-	mode=atoi(argv[8]);
+	// Waypoints are defined previously
+
+	// Intruder Data
+	num_intruders=2;
+	intruder_full_id[0] = "uav_5";
+	intruder_full_id[1] = "uav_6";
+
+	mode = 1;
 
 	//-----------------------------------------------------------------------------------------------------------------
 	// OutputFiles
@@ -195,31 +134,18 @@ int main(int argc, char** argv) {
 	for (int i=0; i<num_ag; i++) {
 		sprintf(nombre,"%s_pos",uav_full_id[i].c_str());
 		pos_quads[i].open(nombre, ofstream::out);
-		if (!pos_quads[i]) {
-			ROS_INFO("Error, cannot open the output file %s",nombre);
-			return -1;
-		}
+		if (!pos_quads[i]) { return -1; }
 		sprintf(nombre,"%s_tasks",uav_full_id[i].c_str());
 		task_assigned[i].open(nombre, ofstream::out);
-		if (!task_assigned[i]) {
-			ROS_INFO("Error, cannot open the output file %s",nombre);
-			return -1;
-		}
+		if (!task_assigned[i]) { return -1; }
 		sprintf(nombre,"%s_costs",uav_full_id[i].c_str());
 		costes_totales[i].open(nombre, ofstream::out);
-		if (!costes_totales[i]) {
-			ROS_INFO("Error, cannot open the output file %s",nombre);
-			return -1;
-		}
+		if (!costes_totales[i]) { return -1; }
 	}
-
 	for (int i=0; i<num_intruders; i++) {
 		sprintf(nombre,"%s_pos",intruder_full_id[i].c_str());
 		pos_intruders[i].open(nombre, ofstream::out);
-		if (!pos_intruders[i]) {
-			ROS_INFO("Error, cannot open the output file %s",nombre);
-			return -1;
-		}
+		if (!pos_intruders[i]) { return -1; }
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------
