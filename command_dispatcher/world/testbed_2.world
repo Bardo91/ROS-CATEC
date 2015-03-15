@@ -48,9 +48,9 @@
          <direction xyz="-1 0 0"/>
       </light>
 
-	<include filename="quadrotor_nog.model" model_pose="-7 -3 0.2 0 0 0" model_name="uav_3" link_gravity="false"/>
-	<include filename="quadrotor_nog.model" model_pose="-7 -1 0.2 0 0 0" model_name="uav_8" link_gravity="false"/>
-
+	<include filename="quadrotor_nog_camera_laser.model" model_pose="-7 -3 0.2 0 0 0" model_name="uav_3" link_gravity="false"/>
+	<include filename="quadrotor_nog_camera_laser.model" model_pose="-7 -1 0.2 0 0 0" model_name="uav_8" link_gravity="false"/>
+	
 	<model name="testbed_floor" static="true">
 	     <link name="test_bed_floor">
 		<visual name="visual" cast_shadows="true">

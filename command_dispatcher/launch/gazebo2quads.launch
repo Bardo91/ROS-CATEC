@@ -2,7 +2,7 @@
 <launch>
 	<!-- Include gazebo launch file -->
 	<param name="/use_sim_time" value="true" />
-	<node name="gazebo" pkg="gazebo" type="gazebo" args="$(find command_dispatcher)/world/testbed_4.world" respawn="false" output="screen">
+	<node name="gazebo" pkg="gazebo" type="gazebo" args="$(find command_dispatcher)/world/testbed_2.world" respawn="false" output="screen">
 	   <env name="GAZEBO_RESOURCE_PATH" value="$(find uav)/models" />
 	</node>
 	
