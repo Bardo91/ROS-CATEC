@@ -26,25 +26,11 @@
 	<!-- The configuration parameters are given their values -->
 	<param name="uav_8/flying" value="$(arg uav_8/flying)" type="bool" />
 	<param name="uav_3/flying" value="$(arg uav_3/flying)" type="bool" />
-	
-	<!-- Nodes will start if their /uav_i/flying parameter is true  -->
-	<node name="uav_8" pkg="uav" type="uav_gazebo" args="8 1" if="$(arg uav_8/flying)">
-	     <remap from="uav_8/control_references_rw" to="/path_follower_8/control_references_rw" />	
-	</node>
-	
-	<!-- Path Follower Node. -->
-	<node name="simple_follower8" pkg="path_follower" type="simple_follower" args="8 1.0">
-	     <remap from="/path_follower_8/way_point_callback" to="/prueba_test/out_waypoint_8" />	
-	</node>
 
 
-	<node name="uav_3" pkg="uav" type="uav_gazebo" args="3 1" if="$(arg uav_3/flying)">
-	     <remap from="uav_3/control_references_rw" to="/path_follower_3/control_references_rw" />	
-	</node>
+	<node name="uav_3" pkg="uav" type="uav_gazebo" args="3 1" if="$(arg uav_3/flying)"/>
 	
 	<!-- Path Follower Node. -->
-	<node name="simple_follower3" pkg="path_follower" type="simple_follower" args="3 1.0">
-	     <remap from="/path_follower_3/way_point_callback" to="/prueba_test/out_waypoint_3" />	
-	</node>
+	<node name="simple_follower3" pkg="path_follower" type="simple_follower" args="3 1.0"/>
 </launch>
 
