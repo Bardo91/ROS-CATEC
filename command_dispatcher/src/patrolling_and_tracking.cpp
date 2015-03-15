@@ -232,7 +232,8 @@ int main(int argc, char** argv) {
 	ros::init(argc,argv,node_name);
 	ros::NodeHandle n;
 
-	UavCatecROS uav("3");
+	UavCatecROS uav("1");
+	cout << "Create uav with id 1" << endl;
 
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
@@ -243,7 +244,7 @@ int main(int argc, char** argv) {
 		}else{
 			ControlReferenceRwStamped reference = uav.reference();
 
-			reference.c_reference_rw.position.x = 5.0;
+			reference.c_reference_rw.position.x = 0.0;
 			reference.c_reference_rw.position.y = 0.0;
 			reference.c_reference_rw.position.z = 1.5;
 
