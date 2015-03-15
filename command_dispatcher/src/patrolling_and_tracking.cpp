@@ -20,8 +20,6 @@
 #include <string.h>
 
 
-
-
 using namespace std;
 using namespace catec_actions_msgs;
 using namespace catec_msgs;
@@ -233,13 +231,16 @@ int main(int argc, char** argv) {
 	ros::NodeHandle n;
 
 	UavCatecROS uav1("3");
+	UavCatecROS uav2("8");
 
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
 	while(ros::ok()) {
 		if(!uav1.hasTakeOff()){
+			cout << "Taking off drone 1" << endl;
 			uav1.takeOff();
+			cout << "Drone 1 took off" << endl;
 		}else{
 			ControlReferenceRwStamped reference = uav1.reference();
 
@@ -248,6 +249,20 @@ int main(int argc, char** argv) {
 			reference.c_reference_rw.position.z = 1.5;
 
 			uav1.move(reference);
+		}
+
+		if(!uav2.hasTakeOff()){
+			cout << "Taking off drone 2" << endl;
+			uav2.takeOff();
+			cout << "Drone 2 took off" << endl;
+		}else{
+			ControlReferenceRwStamped reference = uav2.reference();
+
+			reference.c_reference_rw.position.x = 2.5;
+			reference.c_reference_rw.position.y = 0.0;
+			reference.c_reference_rw.position.z = 1.5;
+
+			uav2.move(reference);
 		}
 		sleep(10);
 	}

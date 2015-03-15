@@ -80,13 +80,13 @@ void UavCatecROS::land(){
 void UavCatecROS::ualStateCallback(const catec_msgs::UALStateStamped::ConstPtr& s){
 	mLastUalState = *s;
 
-		if (!mFirstIter) {
-			mFirstIter = true;
-			mReference.c_reference_rw.position.x	= mLastUalState.ual_state.dynamic_state.position.x;
-			mReference.c_reference_rw.position.y	= mLastUalState.ual_state.dynamic_state.position.y;
-			mReference.c_reference_rw.position.z	= mLastUalState.ual_state.dynamic_state.position.z;
-			mReference.c_reference_rw.heading		= mLastUalState.ual_state.dynamic_state.orientation.z;
-		}
+	if (!mFirstIter) {
+		mFirstIter = true;
+		mReference.c_reference_rw.position.x	= mLastUalState.ual_state.dynamic_state.position.x;
+		mReference.c_reference_rw.position.y	= mLastUalState.ual_state.dynamic_state.position.y;
+		mReference.c_reference_rw.position.z	= mLastUalState.ual_state.dynamic_state.position.z;
+		mReference.c_reference_rw.heading		= mLastUalState.ual_state.dynamic_state.orientation.z;
+	}
 }
 
 

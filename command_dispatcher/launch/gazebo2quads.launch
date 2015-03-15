@@ -29,8 +29,7 @@
 
 
 	<node name="uav_3" pkg="uav" type="uav_gazebo" args="3 1" if="$(arg uav_3/flying)"/>
+	<node name="uav_8" pkg="uav" type="uav_gazebo" args="8 1" if="$(arg uav_8/flying)"/>
 	
-	<!-- Path Follower Node. -->
-	<node name="simple_follower3" pkg="path_follower" type="simple_follower" args="3 1.0"/>
 </launch>
 
