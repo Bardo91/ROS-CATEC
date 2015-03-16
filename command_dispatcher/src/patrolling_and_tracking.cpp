@@ -50,7 +50,7 @@ int num_ag;
 int num_intruders;
 int cambio[2];
 // double path[4][2]; <--- Changed
-double path[][2] = {{0.0, 0.0},{5.0, 0.0},{5.0, 5.0},{0.0, 5.0}};
+double path[][2] = {{0.0, 0.0},{5.0, 0.0},{5.0, 5.0},{0.0, 5.0}, {0.0, 0.0},{5.0, 0.0},{5.0, 5.0},{0.0, 5.0}, {0.0, 0.0},{5.0, 0.0},{5.0, 5.0},{0.0, 5.0}, {0.0, 0.0},{5.0, 0.0},{5.0, 5.0},{0.0, 5.0}};
 int tam_path = 4;
 int indice[2];
 double tasks_in [MAX_TASKS][TAM_TASKS];
