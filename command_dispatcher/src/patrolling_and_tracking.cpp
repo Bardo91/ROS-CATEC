@@ -11,7 +11,7 @@
 #include <catec_msgs/WayPointWithCruise.h>
 #include <catec_msgs/WayPointWithCruiseStamped.h>
 #include <catec_msgs/Position.h>
-
+#include <cassert>
 #include <geometry_msgs/Point.h>
 
 #include <ros/ros.h>
@@ -84,124 +84,10 @@ void sendControlReferences(const ros::TimerEvent& te);
 void UAV_StateCallBack(const UALStateStamped::ConstPtr& state);
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
+void init(int _argc, char **_argv);
+
 int main(int argc, char** argv) {
-	//-----------------------------------------------------------------------------------------------------------------
-	// Manual Initialization
-	// Agent data;
-	/*num_ag = 2;
-	uav_full_id[0] = "uav_3";
-	uav_full_id[1] = "uav_8";
-
-	dir_ini[0] = 1;
-	dir_ini[1] = -1;
-
-	speed_max[0] = 0.5;
-	speed_max[1] = 0.7;
-
-	h_des[0] = 1.5;
-	h_des[1] = 2;
-
-	range = 10;
-
-	// Waypoints were defined previously
-
-	// Intruder Data
-	num_intruders=2;
-	intruder_full_id[0] = "uav_5";
-	intruder_full_id[1] = "uav_6";
-
-	mode = 1;
-
-	//-----------------------------------------------------------------------------------------------------------------
-	// OutputFiles
-	cout << "Opening output files" << endl;
-	char nombre[50];
-	for (int i=0; i<num_ag; i++) {
-		sprintf(nombre,"%s_pos",uav_full_id[i].c_str());
-		pos_quads[i].open(nombre, ofstream::out);
-		if (!pos_quads[i]) { return -1; }
-		sprintf(nombre,"%s_tasks",uav_full_id[i].c_str());
-		task_assigned[i].open(nombre, ofstream::out);
-		if (!task_assigned[i]) { return -1; }
-		sprintf(nombre,"%s_costs",uav_full_id[i].c_str());
-		costes_totales[i].open(nombre, ofstream::out);
-		if (!costes_totales[i]) { return -1; }
-	}
-	for (int i=0; i<num_intruders; i++) {
-		sprintf(nombre,"%s_pos",intruder_full_id[i].c_str());
-		pos_intruders[i].open(nombre, ofstream::out);
-		if (!pos_intruders[i]) { return -1; }
-	}
-
-	//-----------------------------------------------------------------------------------------------------------------
-	// Initializing tasks
-	for (int i=0; i<MAX_TASKS; i++){
-		for (int j=0; j<TAM_TASKS; j++){
-			tasks_in[i][j]=-1;
-		}
-	}
-
-	//-----------------------------------------------------------------------------------------------------------------
-	// Real main
-	cout << "Initalizing main node" << endl;
-	node_name = "Patrolling_and_tracking";
-	ros::init(argc,argv,node_name);
-	ros::NodeHandle n;
-
-	string topicname;
-	ros::Subscriber agente_sub[2];
-	ros::Subscriber intruder_sub[3];
-
-	// Init radio
-	cout << "Initalizing radio" << endl;
-	radio = new class_radio(0, 10.0, num_ag);
-
-	// Subscribing to uav states
-	cout << "Subscribing to uav states" << endl;
-	for (int i=0; i<num_intruders; i++) {
-		topicname=intruder_full_id[i];
-		topicname.append("/ual_state");
-		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
-	}
-
-	// Taking off and related...
-	cout << "Configuring quads" << endl;
-	for (int i=0; i<num_ag; i++) {
-		topicname= node_name;
-		topicname.append("/out_waypoint_");
-		topicname.append(uav_full_id[i]);
-		my_waypoint_pub[i] = n.advertise<WayPointWithCruiseStamped> (topicname.c_str(), 0);
-		topicname=uav_full_id[i];
-		topicname.append("/ual_state");
-		agente_sub[i] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack);
-		topicname = uav_full_id[i];
-		topicname.append("/land_action");
-		cLand[i] = new LandClient(topicname,true);
-		topicname = uav_full_id[i];
-		topicname.append("/take_off_action");
-		cTakeOff[i] = new TakeOffClient(topicname,true);
-		sleep(5);
-		agente[i]= new QuadPatrolling(i, last_ual_state[i].ual_state.dynamic_state.position.x, last_ual_state[i].ual_state.dynamic_state.position.y, 0.0, speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
-		agente[i]->init_cont(num_ag, 1.0);
-		volando[i]=false;
-		cambio[i]=0;
-		indice[i]=i+1;
-	}
-
-	// Waiting take off actions
-	cout << "Waiting taking off actions" << endl;
-	for (int i=0; i<num_ag; i++) {
-		cLand[i]->waitForServer();
-		cTakeOff[i]->waitForServer();
-	}
-
-	for (int i=0; i<1num_ag; i++) {
-		cTakeOff[i]->sendGoal(tOff_goal[0], &tOff_Done_CB, &tOff_Active_CB, &tOff_Feedback_CB);
-		pos_inicial[i][0]=last_ual_state[i].ual_state.dynamic_state.position.x;
-		pos_inicial[i][1]=last_ual_state[i].ual_state.dynamic_state.position.y;
-		sleep(10);
-	}
-
+	/*
 	//ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
 	*/
 
@@ -236,6 +122,123 @@ int main(int argc, char** argv) {
 		}
 		sleep(10);
 	}
+}
+
+void init(int _argc, char **_argv){
+	num_ag = 2;
+		uav_full_id[0] = "uav_3";
+		uav_full_id[1] = "uav_8";
+
+		dir_ini[0] = 1;
+		dir_ini[1] = -1;
+
+		speed_max[0] = 0.5;
+		speed_max[1] = 0.7;
+
+		h_des[0] = 1.5;
+		h_des[1] = 2;
+
+		range = 10;
+
+		// Waypoints were defined previously
+
+		// Intruder Data
+		num_intruders=2;
+		intruder_full_id[0] = "uav_5";
+		intruder_full_id[1] = "uav_6";
+
+		mode = 1;
+
+		//-----------------------------------------------------------------------------------------------------------------
+		// OutputFiles
+		cout << "Opening output files" << endl;
+		char nombre[50];
+		for (int i=0; i<num_ag; i++) {
+			sprintf(nombre,"%s_pos",uav_full_id[i].c_str());
+			pos_quads[i].open(nombre, ofstream::out);
+			assert(pos_quads[i]);
+			sprintf(nombre,"%s_tasks",uav_full_id[i].c_str());
+			task_assigned[i].open(nombre, ofstream::out);
+			assert(task_assigned[i]);
+			sprintf(nombre,"%s_costs",uav_full_id[i].c_str());
+			costes_totales[i].open(nombre, ofstream::out);
+			assert(costes_totales[i]);
+		}
+		for (int i=0; i<num_intruders; i++) {
+			sprintf(nombre,"%s_pos",intruder_full_id[i].c_str());
+			pos_intruders[i].open(nombre, ofstream::out);
+			if (!pos_intruders[i]) { return -1; }
+		}
+
+		//-----------------------------------------------------------------------------------------------------------------
+		// Initializing tasks
+		for (int i=0; i<MAX_TASKS; i++){
+			for (int j=0; j<TAM_TASKS; j++){
+				tasks_in[i][j]=-1;
+			}
+		}
+
+		//-----------------------------------------------------------------------------------------------------------------
+		// Real main
+		cout << "Initalizing main node" << endl;
+		node_name = "Patrolling_and_tracking";
+		ros::init(_argc,_argv,node_name);
+		ros::NodeHandle n;
+
+		string topicname;
+		ros::Subscriber agente_sub[2];
+		ros::Subscriber intruder_sub[3];
+
+		// Init radio
+		cout << "Initalizing radio" << endl;
+		radio = new class_radio(0, 10.0, num_ag);
+
+		// Subscribing to uav states
+		cout << "Subscribing to uav states" << endl;
+		for (int i=0; i<num_intruders; i++) {
+			topicname=intruder_full_id[i];
+			topicname.append("/ual_state");
+			intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
+		}
+
+		// Taking off and related...
+		cout << "Configuring quads" << endl;
+		for (int i=0; i<num_ag; i++) {
+			topicname= node_name;
+			topicname.append("/out_waypoint_");
+			topicname.append(uav_full_id[i]);
+			my_waypoint_pub[i] = n.advertise<WayPointWithCruiseStamped> (topicname.c_str(), 0);
+			topicname=uav_full_id[i];
+			topicname.append("/ual_state");
+			agente_sub[i] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack);
+			topicname = uav_full_id[i];
+			topicname.append("/land_action");
+			cLand[i] = new LandClient(topicname,true);
+			topicname = uav_full_id[i];
+			topicname.append("/take_off_action");
+			cTakeOff[i] = new TakeOffClient(topicname,true);
+			sleep(5);
+			agente[i]= new QuadPatrolling(i, last_ual_state[i].ual_state.dynamic_state.position.x, last_ual_state[i].ual_state.dynamic_state.position.y, 0.0, speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
+			agente[i]->init_cont(num_ag, 1.0);
+			volando[i]=false;
+			cambio[i]=0;
+			indice[i]=i+1;
+		}
+
+		// Waiting take off actions
+		cout << "Waiting taking off actions" << endl;
+		for (int i=0; i<num_ag; i++) {
+			cLand[i]->waitForServer();
+			cTakeOff[i]->waitForServer();
+		}
+
+		for (int i=0; i<1num_ag; i++) {
+			cTakeOff[i]->sendGoal(tOff_goal[0], &tOff_Done_CB, &tOff_Active_CB, &tOff_Feedback_CB);
+			pos_inicial[i][0]=last_ual_state[i].ual_state.dynamic_state.position.x;
+			pos_inicial[i][1]=last_ual_state[i].ual_state.dynamic_state.position.y;
+			sleep(10);
+		}
+
 }
 
 void sendControlReferences(const ros::TimerEvent& te) {
