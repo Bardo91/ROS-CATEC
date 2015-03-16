@@ -86,14 +86,14 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
 void init(int _argc, char **_argv);
 
-int main(int argc, char** argv) {
+int main(int _argc, char** _argv) {
 	/*
 	//ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
 	*/
 
 	cout << "Initalizing main node" << endl;
 	node_name = "Patrolling_and_tracking";
-	ros::init(argc,argv,node_name);
+	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
 
 	UavCatecROS uav1("3");
@@ -167,7 +167,7 @@ void init(int _argc, char **_argv){
 		for (int i=0; i<num_intruders; i++) {
 			sprintf(nombre,"%s_pos",intruder_full_id[i].c_str());
 			pos_intruders[i].open(nombre, ofstream::out);
-			if (!pos_intruders[i]) { return -1; }
+			assert(pos_intruders[i]);
 		}
 
 		//-----------------------------------------------------------------------------------------------------------------
@@ -211,12 +211,6 @@ void init(int _argc, char **_argv){
 			topicname=uav_full_id[i];
 			topicname.append("/ual_state");
 			agente_sub[i] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack);
-			topicname = uav_full_id[i];
-			topicname.append("/land_action");
-			cLand[i] = new LandClient(topicname,true);
-			topicname = uav_full_id[i];
-			topicname.append("/take_off_action");
-			cTakeOff[i] = new TakeOffClient(topicname,true);
 			sleep(5);
 			agente[i]= new QuadPatrolling(i, last_ual_state[i].ual_state.dynamic_state.position.x, last_ual_state[i].ual_state.dynamic_state.position.y, 0.0, speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
 			agente[i]->init_cont(num_ag, 1.0);
@@ -224,21 +218,6 @@ void init(int _argc, char **_argv){
 			cambio[i]=0;
 			indice[i]=i+1;
 		}
-
-		// Waiting take off actions
-		cout << "Waiting taking off actions" << endl;
-		for (int i=0; i<num_ag; i++) {
-			cLand[i]->waitForServer();
-			cTakeOff[i]->waitForServer();
-		}
-
-		for (int i=0; i<1num_ag; i++) {
-			cTakeOff[i]->sendGoal(tOff_goal[0], &tOff_Done_CB, &tOff_Active_CB, &tOff_Feedback_CB);
-			pos_inicial[i][0]=last_ual_state[i].ual_state.dynamic_state.position.x;
-			pos_inicial[i][1]=last_ual_state[i].ual_state.dynamic_state.position.y;
-			sleep(10);
-		}
-
 }
 
 void sendControlReferences(const ros::TimerEvent& te) {
