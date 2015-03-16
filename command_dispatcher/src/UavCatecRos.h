@@ -24,10 +24,6 @@
 // CPP includes
 #include <string>
 
-
-typedef actionlib::SimpleActionClient<catec_actions_msgs::TakeOffAction> TakeOffClient;
-typedef actionlib::SimpleActionClient<catec_actions_msgs::LandAction> LandClient;
-
 class UavCatecROS{
 public:
 	UavCatecROS(std::string _uavId);
@@ -45,7 +41,10 @@ public:
 	bool hasTakeOff(){	return mHasTakeOff; };
 
 
-private:	// Private callbacks
+private:
+	typedef actionlib::SimpleActionClient<catec_actions_msgs::TakeOffAction> TakeOffClient;
+	typedef actionlib::SimpleActionClient<catec_actions_msgs::LandAction> LandClient;
+
 	void ualStateCallback(const catec_msgs::UALStateStamped::ConstPtr& s);
 
 

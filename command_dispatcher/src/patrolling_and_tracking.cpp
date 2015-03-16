@@ -1,15 +1,7 @@
 #include <ros/ros.h>
 #include <fstream>
 #include <actionlib/client/simple_action_client.h>
-#include <catec_actions_msgs/GoToWayPointsAction.h>
-#include <catec_actions_msgs/LandAction.h>
-#include <catec_actions_msgs/TakeOffAction.h>
-#include <catec_actions_msgs/TargetAction.h>
 #include <catec_msgs/UALStateStamped.h>
-#include <catec_msgs/Target.h>
-#include <catec_msgs/WayPoint.h>
-#include <catec_msgs/WayPointWithCruise.h>
-#include <catec_msgs/WayPointWithCruiseStamped.h>
 #include <catec_msgs/Position.h>
 #include <cassert>
 #include <geometry_msgs/Point.h>
@@ -21,10 +13,8 @@
 
 
 using namespace std;
-using namespace catec_actions_msgs;
 using namespace catec_msgs;
 
-#include "strings_tools.h"
 #include "quad.h"
 #include "radio.h"
 #include "UavCatecRos.h"
@@ -45,12 +35,8 @@ int dir_ini[2];
 double range;
 int mode;
 
-
-typedef actionlib::SimpleActionClient<LandAction> LandClient;
-typedef actionlib::SimpleActionClient<TakeOffAction> TakeOffClient;
-
 //My next waypoint
-WayPointWithCruiseStamped my_next_waypoint[2];
+//WayPointWithCruiseStamped my_next_waypoint[2];
 
 //nextWayPoint
 ros::Publisher my_waypoint_pub[2];
@@ -58,9 +44,6 @@ ros::Publisher my_waypoint_pub[2];
 //Last state of our uav
 UALStateStamped last_ual_state[2];
 UALStateStamped intruder_state[3];
-
-LandClient *cLand[2];
-TakeOffClient *cTakeOff[2];
 
 bool volando[2];
 int num_ag;
@@ -72,7 +55,6 @@ int tam_path = 4;
 int indice[2];
 double tasks_in [MAX_TASKS][TAM_TASKS];
 double pos_inicial[2][2];
-TakeOffGoal tOff_goal[2];
 
 ofstream pos_quads[2];
 ofstream pos_intruders[3];
@@ -205,10 +187,10 @@ void init(int _argc, char **_argv){
 	// Taking off and related...
 	cout << "Configuring quads" << endl;
 	for (int i=0; i<num_ag; i++) {
-		topicname= node_name;
-		topicname.append("/out_waypoint_");
-		topicname.append(uav_full_id[i]);
-		my_waypoint_pub[i] = n.advertise<WayPointWithCruiseStamped> (topicname.c_str(), 0);
+		//topicname= node_name;
+		//topicname.append("/out_waypoint_");
+		//topicname.append(uav_full_id[i]);
+		//my_waypoint_pub[i] = n.advertise<WayPointWithCruiseStamped> (topicname.c_str(), 0);
 		topicname=uav_full_id[i];
 		topicname.append("/ual_state");
 		agente_sub[i] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack);
@@ -339,16 +321,18 @@ void sendControlReferences(const ros::TimerEvent& te) {
 				mensaje_rcv.dir=agentes_before[agente[i]->id_contactado].dir;
 				mensaje_rcv.vel_max=agentes_before[agente[i]->id_contactado].vel_max;
 				mensaje_rcv.long_izq=agentes_before[agente[i]->id_contactado].long_izq;
-					mensaje_rcv.long_dcha=agentes_before[agente[i]->id_contactado].long_dcha;
+				mensaje_rcv.long_dcha=agentes_before[agente[i]->id_contactado].long_dcha;
 				mensaje_rcv.speed_izq=agentes_before[agente[i]->id_contactado].speed_izq;
-						mensaje_rcv.speed_dcha=agentes_before[agente[i]->id_contactado].speed_dcha;
+				mensaje_rcv.speed_dcha=agentes_before[agente[i]->id_contactado].speed_dcha;
 				mensaje_rcv.init_ind=agentes_before[agente[i]->id_contactado].init_ind;
-					mensaje_rcv.ind=agentes_before[agente[i]->id_contactado].ind;
+				mensaje_rcv.ind=agentes_before[agente[i]->id_contactado].ind;
 			} else{
 				mensaje_rcv.id=-1;
 			}
 			agente[i]->pathpartition_cv (mensaje_rcv);
 			indice[i]=agente[i]->ind;
+
+			cout << "Agente: " << i << " tiene indice: " << indice[i] << endl;
 
 			res.c_reference_rw.position.x=path[indice[i]][0];
 			res.c_reference_rw.position.y=path[indice[i]][1];
