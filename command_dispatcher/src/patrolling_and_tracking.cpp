@@ -223,6 +223,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 		agente[i]->x=uavs[i].ualState().ual_state.dynamic_state.position.x;
 		agente[i]->y=uavs[i].ualState().ual_state.dynamic_state.position.y;
 		agente[i]->z=uavs[i].ualState().ual_state.dynamic_state.position.z;
+		cout << "uav " << i << " state: " << agente[i]->x << ", " << agente[i]->y << ", " << agente[i]->z  << endl;
 		posiciones[i][POS_X]=agente[i]->x;
 		posiciones[i][POS_Y]=agente[i]->y;
 		posiciones[i][POS_Z]=agente[i]->z;
@@ -331,9 +332,6 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			}
 			agente[i]->pathpartition_cv (mensaje_rcv);
 			indice[i]=agente[i]->ind;
-
-			cout << "Agente: " << i << " tiene indice: " << indice[i] << endl;
-
 			res.c_reference_rw.position.x=path[indice[i]][0];
 			res.c_reference_rw.position.y=path[indice[i]][1];
 			res.c_reference_rw.position.z=h_des[i];
@@ -347,7 +345,6 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			//res.way_point.cruise = 0.5;
 
 			uavs[i].move(res);
-			cout << "Moving without plan" << endl;
 			//my_waypoint_pub[i].publish(res);
 		}
 	}
