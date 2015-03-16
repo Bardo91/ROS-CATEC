@@ -317,15 +317,15 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			agente[i]->estado=1;
 
 			if (agente[i]->id_contactado>0 && agentes_before[agente[i]->id_contactado].estado==1) {
-				mensaje_rcv.id=agente[i]->id_contactado;
-				mensaje_rcv.dir=agentes_before[agente[i]->id_contactado].dir;
-				mensaje_rcv.vel_max=agentes_before[agente[i]->id_contactado].vel_max;
-				mensaje_rcv.long_izq=agentes_before[agente[i]->id_contactado].long_izq;
-				mensaje_rcv.long_dcha=agentes_before[agente[i]->id_contactado].long_dcha;
-				mensaje_rcv.speed_izq=agentes_before[agente[i]->id_contactado].speed_izq;
-				mensaje_rcv.speed_dcha=agentes_before[agente[i]->id_contactado].speed_dcha;
-				mensaje_rcv.init_ind=agentes_before[agente[i]->id_contactado].init_ind;
-				mensaje_rcv.ind=agentes_before[agente[i]->id_contactado].ind;
+				mensaje_rcv.id			=agente[i]->id_contactado;
+				mensaje_rcv.dir			=agentes_before[agente[i]->id_contactado].dir;
+				mensaje_rcv.vel_max		=agentes_before[agente[i]->id_contactado].vel_max;
+				mensaje_rcv.long_izq	=agentes_before[agente[i]->id_contactado].long_izq;
+				mensaje_rcv.long_dcha	=agentes_before[agente[i]->id_contactado].long_dcha;
+				mensaje_rcv.speed_izq	=agentes_before[agente[i]->id_contactado].speed_izq;
+				mensaje_rcv.speed_dcha	=agentes_before[agente[i]->id_contactado].speed_dcha;
+				mensaje_rcv.init_ind	=agentes_before[agente[i]->id_contactado].init_ind;
+				mensaje_rcv.ind			=agentes_before[agente[i]->id_contactado].ind;
 			} else{
 				mensaje_rcv.id=-1;
 			}
