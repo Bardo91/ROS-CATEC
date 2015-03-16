@@ -57,17 +57,11 @@ ros::Publisher my_waypoint_pub[2];
 
 //Last state of our uav
 UALStateStamped last_ual_state[2];
-
 UALStateStamped intruder_state[3];
 
-//LandClient **cLand;
-//TakeOffClient **cTakeOff;
 LandClient *cLand[2];
 TakeOffClient *cTakeOff[2];
 
-
-bool LandGoalSended[2];
-bool TakeOffGoalSended[2];
 bool volando[2];
 int num_ag;
 int num_intruders;
@@ -85,14 +79,6 @@ ofstream pos_intruders[3];
 ofstream task_assigned[2];
 ofstream costes_totales[2];
 
-/*void land_Active_CB0();
-void land_Feedback_CB0(const LandFeedbackConstPtr& feedback);
-void land_Done_CB0(const actionlib::SimpleClientGoalState& state, const LandResultConstPtr& result);
-
-void tOff_Active_CB();
-void tOff_Feedback_CB(const TakeOffFeedbackConstPtr& feedback);
-void tOff_Done_CB(const actionlib::SimpleClientGoalState& state, const TakeOffResultConstPtr& result);*/
-
 void sendControlReferences(const ros::TimerEvent& te);
 
 void UAV_StateCallBack(const UALStateStamped::ConstPtr& state);
@@ -105,7 +91,7 @@ int main(int argc, char** argv) {
 	/*num_ag = 2;
 	uav_full_id[0] = "uav_3";
 	uav_full_id[1] = "uav_8";
-	
+
 	dir_ini[0] = 1;
 	dir_ini[1] = -1;
 
@@ -185,8 +171,6 @@ int main(int argc, char** argv) {
 		topicname.append("/out_waypoint_");
 		topicname.append(uav_full_id[i]);
 		my_waypoint_pub[i] = n.advertise<WayPointWithCruiseStamped> (topicname.c_str(), 0);
-		TakeOffGoalSended[i]=false;
-		LandGoalSended[i]=false;
 		topicname=uav_full_id[i];
 		topicname.append("/ual_state");
 		agente_sub[i] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack);
@@ -218,10 +202,6 @@ int main(int argc, char** argv) {
 		sleep(10);
 	}
 
-	for (int i=0; i<num_ag; i++){
-		TakeOffGoalSended[i] = true;
-	}
-
 	//ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
 	*/
 
@@ -233,89 +213,30 @@ int main(int argc, char** argv) {
 	UavCatecROS uav1("3");
 	UavCatecROS uav2("8");
 
+	std::vector<UavCatecROS> uavs;
+	uavs.push_back(uav1);
+	uavs.push_back(uav2);
+
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
-	while(ros::ok()) {
-		if(!uav1.hasTakeOff()){
-			cout << "Taking off drone 1" << endl;
-			uav1.takeOff();
-			cout << "Drone 1 took off" << endl;
-		}else{
-			ControlReferenceRwStamped reference = uav1.reference();
-
-			reference.c_reference_rw.position.x = -2.5;
-			reference.c_reference_rw.position.y = 0.0;
-			reference.c_reference_rw.position.z = 1.5;
-
-			uav1.move(reference);
+	for(unsigned i = 0; i < uavs.size(); i++){
+		if(!uavs[i].hasTakeOff()){
+			uavs[i].takeOff();
 		}
+	}
 
-		if(!uav2.hasTakeOff()){
-			cout << "Taking off drone 2" << endl;
-			uav2.takeOff();
-			cout << "Drone 2 took off" << endl;
-		}else{
-			ControlReferenceRwStamped reference = uav2.reference();
-
-			reference.c_reference_rw.position.x = 2.5;
+	while(ros::ok()) {
+		for(unsigned i = 0; i < uavs.size(); i++){
+			ControlReferenceRwStamped reference = uav1.reference();
+			reference.c_reference_rw.position.x = i*2;
 			reference.c_reference_rw.position.y = 0.0;
 			reference.c_reference_rw.position.z = 1.5;
-
-			uav2.move(reference);
+			uavs[i].move(reference);
 		}
 		sleep(10);
 	}
 }
-
-
-
-
-//Callbacks for Land
-
-/*void land_Active_CB()
-{
-	//Se ejecutara cuando la tarea pase al estado activo
-	ROS_INFO("Land Active.");
-}
-
-void land_Feedback_CB(const LandFeedbackConstPtr& feedback)
-{
-	//Se ejecutara cada vez que se cambie de etapa en el aterrizaje.
-	ROS_INFO("Land phase: %d", feedback->phase);
-}
-
-void land_Done_CB(const actionlib::SimpleClientGoalState& state, const LandResultConstPtr& result)
-{
-	//Se ejecutara cuando la tarea haya terminado, podemos comprobar el estado para saber si termino correctamente, cancelada o abortada.
-	//Podemos enviar la siguiente tarea desde aquí.
-	ROS_INFO("Land finished in state [%s]", state.toString().c_str());
-	ROS_INFO("Land task return: [%s]", landMessage(result).c_str());
-}
-
-
-// Callbacks for TakeOff
-
-void tOff_Active_CB()
-{
-	//Se ejecutara cuando la tarea pase al estado activo
-	ROS_INFO("Take Off Active.");
-}
-
-void tOff_Feedback_CB(const TakeOffFeedbackConstPtr& feedback)
-{
-	//Se ejecutara cada vez que se cambie de etapa en el despegue.
-	ROS_INFO("Take Off phase: %d", feedback->phase);
-}
-
-void tOff_Done_CB(const actionlib::SimpleClientGoalState& state, const TakeOffResultConstPtr& result)
-{
-	//Se ejecutara cuando la tarea haya terminado, podemos comprobar el estado para saber si termino correctamente, cancelada o abortada.
-	//Podemos enviar la siguiente tarea desde aquí.
-	ROS_INFO("Take off finished in state [%s]", state.toString().c_str());
-	ROS_INFO("Take off task return: [%s]", takeOffMessage(result).c_str());
-}
-*/
 
 void sendControlReferences(const ros::TimerEvent& te) {
 	cout << "Starting control" << endl;
@@ -332,12 +253,9 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	bool listo=true;
 	struct Mensaje mensaje_rcv;
 
-
 	t=t+dt;
 
-	
-	for (int i=0; i<num_ag; i++)
-	{
+	for (int i=0; i<num_ag; i++) {
 		agente[i]->x=last_ual_state[i].ual_state.dynamic_state.position.x;
 		agente[i]->y=last_ual_state[i].ual_state.dynamic_state.position.y;
 		agente[i]->z=last_ual_state[i].ual_state.dynamic_state.position.z;
@@ -357,7 +275,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	}
 
 
-	for (int i=0; i<num_intruders; i++){
+	for (int i=0; i<num_intruders; i++) {
 		tasks_in[i][1]=(intruder_state[i].ual_state.dynamic_state.position.x-tasks_in[i][3])/dt;
 		tasks_in[i][2]=(intruder_state[i].ual_state.dynamic_state.position.y-tasks_in[i][4])/dt;
 		tasks_in[i][3]=intruder_state[i].ual_state.dynamic_state.position.x;
@@ -366,120 +284,95 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	}
 
 
-	for (int i=0;i<num_ag;i++){
-		listo=listo && volando[i];
-	}
+	for (int i=0; i<num_ag; i++) {
+		tam=radio->receiving(i, posiciones, msg_env);
+		if (tam==0) {
+			msg_sent[0]=i;
+			msg_sent[1]=10;
+			msg_sent[2]=1;
+			radio->sending(i, msg_sent);
+		} else {
+			id_cont=agente[i]->decide_cont(msg_env,tam);
+			msg_sent[0]=i;
+			msg_sent[1]=id_cont;
+			msg_sent[2]=2;
+			radio->sending(i, msg_sent);
+			agente[i]->id_contactado=id_cont;
+		}
+		for (int k=0;k<AG_MAX;k++)
+			for (int j=0;j<MSG_LENGTH;j++)
+				msg_env[k][j]=VALOR_NULO;
 
-	if (listo==false) {
-	    for (int i=0;i<num_ag;i++){
-			if (volando[i]==false) {
-				res.way_point.x=pos_inicial[i][0];
-				res.way_point.y=pos_inicial[i][1];
+		agente[i]->incr_cont (dt);
+		quad_cont[i]=agente[i]->id_contactado;
+		for (int j=0;j<MAX_TASKS;j++){
+			for (int k=0;k<TAM_TASKS;k++){
+				tasks_before[i][j][k]=agente[i]->tasks[j][k];
+			}
+		}
+
+		agentes_before[i]=agente[i]->calculaAgente();
+	}
+	for (int i=0; i<num_ag; i++){
+		if (agente[i]->id_contactado>=0 && quad_cont[agente[i]->id_contactado]==i && mode==1) {
+			agente[i]->join_tasks(tasks_before[agente[i]->id_contactado],agente[i]->id_contactado);
+			agente[i]->task_allocation_one (agentes_before[agente[i]->id_contactado], t);
+		} else if (agente[i]->tarea_nueva==1) {
+			agente[i]->autoplan(t);
+			agente[i]->tarea_nueva=0;
+		}
+
+		tam_plan=0;
+		while(agente[i]->plan[tam_plan]>-1){
+			tam_plan++;
+		}
+		if (tam_plan>0) {
+				agente[i]->estado=2;
+				agente[i]->dir=-1;
+				agente[i]->ind=0;
+				res.way_point.x=agente[i]->tasks[agente[i]->plan[0]][3];
+				res.way_point.y=agente[i]->tasks[agente[i]->plan[0]][4];
 				res.way_point.z=h_des[i];
-				if ((agente[i]->z-h_des[i])>-0.2)
-					volando[i]=true;
-				cout << "quad z: " << agente[i]->z << "; desired z: " << h_des[i] << endl;
+
+				agente[i]->monitoring_tasks (tasks_in, t);
+
 				res.header.frame_id = node_name;
 				res.header.stamp = ros::Time::now();
 				res.way_point.cruise = 0.5;
+
 				my_waypoint_pub[i].publish(res);
-			}
-	    }
-	} else {
-		for (int i=0; i<num_ag; i++) {
-			if (volando[i]==true) {
-				tam=radio->receiving(i, posiciones, msg_env);
-				if (tam==0) {
-					msg_sent[0]=i;
-					msg_sent[1]=10;
-					msg_sent[2]=1;
-					radio->sending(i, msg_sent);
-				} else {
-					id_cont=agente[i]->decide_cont(msg_env,tam);
-					msg_sent[0]=i;
-					msg_sent[1]=id_cont;
-					msg_sent[2]=2;
-					radio->sending(i, msg_sent);
-					agente[i]->id_contactado=id_cont;
-				}
-				for (int k=0;k<AG_MAX;k++)
-					for (int j=0;j<MSG_LENGTH;j++)
-						msg_env[k][j]=VALOR_NULO;
+		} else {
+			agente[i]->estado=1;
 
-				agente[i]->incr_cont (dt);
-				quad_cont[i]=agente[i]->id_contactado;
-				for (int j=0;j<MAX_TASKS;j++){
-					for (int k=0;k<TAM_TASKS;k++){
-						tasks_before[i][j][k]=agente[i]->tasks[j][k];
-					}
-				}
+			if (agente[i]->id_contactado>0 && agentes_before[agente[i]->id_contactado].estado==1) {
+				mensaje_rcv.id=agente[i]->id_contactado;
+				mensaje_rcv.dir=agentes_before[agente[i]->id_contactado].dir;
+				mensaje_rcv.vel_max=agentes_before[agente[i]->id_contactado].vel_max;
+				mensaje_rcv.long_izq=agentes_before[agente[i]->id_contactado].long_izq;
+					mensaje_rcv.long_dcha=agentes_before[agente[i]->id_contactado].long_dcha;
+				mensaje_rcv.speed_izq=agentes_before[agente[i]->id_contactado].speed_izq;
+						mensaje_rcv.speed_dcha=agentes_before[agente[i]->id_contactado].speed_dcha;
+				mensaje_rcv.init_ind=agentes_before[agente[i]->id_contactado].init_ind;
+					mensaje_rcv.ind=agentes_before[agente[i]->id_contactado].ind;
+			} else
+				mensaje_rcv.id=-1;
 
-				agentes_before[i]=agente[i]->calculaAgente ();
-			}
-		}
-		for (int i=0; i<num_ag; i++){
-			if (volando[i]==true) {
-				if (agente[i]->id_contactado>=0 && quad_cont[agente[i]->id_contactado]==i && mode==1) {
-					agente[i]->join_tasks(tasks_before[agente[i]->id_contactado],agente[i]->id_contactado);
-					agente[i]->task_allocation_one (agentes_before[agente[i]->id_contactado], t);
-				} else if (agente[i]->tarea_nueva==1) {
-					agente[i]->autoplan(t);
-					agente[i]->tarea_nueva=0;
-				}
+			agente[i]->pathpartition_cv (mensaje_rcv);
+			indice[i]=agente[i]->ind;
 
-				tam_plan=0;
-				while(agente[i]->plan[tam_plan]>-1){
-					tam_plan++;
-				}
-				if (tam_plan>0) {
-						agente[i]->estado=2;
-						agente[i]->dir=-1;
-						agente[i]->ind=0;
-						res.way_point.x=agente[i]->tasks[agente[i]->plan[0]][3];
-						res.way_point.y=agente[i]->tasks[agente[i]->plan[0]][4];
-						res.way_point.z=h_des[i];
+			res.way_point.x=path[indice[i]][0];
+			res.way_point.y=path[indice[i]][1];
+			res.way_point.z=h_des[i];
 
-						agente[i]->monitoring_tasks (tasks_in, t);
+			agente[i]->camino();
 
-						res.header.frame_id = node_name;
-						res.header.stamp = ros::Time::now();
-						res.way_point.cruise = 0.5;
-		
-						my_waypoint_pub[i].publish(res);
-				} else {
-					agente[i]->estado=1;
+			agente[i]->monitoring_tasks (tasks_in, t);
 
-					if (agente[i]->id_contactado>0 && agentes_before[agente[i]->id_contactado].estado==1) {
-						mensaje_rcv.id=agente[i]->id_contactado;
-						mensaje_rcv.dir=agentes_before[agente[i]->id_contactado].dir;
-						mensaje_rcv.vel_max=agentes_before[agente[i]->id_contactado].vel_max;
-						mensaje_rcv.long_izq=agentes_before[agente[i]->id_contactado].long_izq;
-							mensaje_rcv.long_dcha=agentes_before[agente[i]->id_contactado].long_dcha;
-						mensaje_rcv.speed_izq=agentes_before[agente[i]->id_contactado].speed_izq;
-								mensaje_rcv.speed_dcha=agentes_before[agente[i]->id_contactado].speed_dcha;
-						mensaje_rcv.init_ind=agentes_before[agente[i]->id_contactado].init_ind;
-							mensaje_rcv.ind=agentes_before[agente[i]->id_contactado].ind;
-					} else
-						mensaje_rcv.id=-1;
+			res.header.frame_id = node_name;
+			res.header.stamp = ros::Time::now();
+			res.way_point.cruise = 0.5;
 
-					agente[i]->pathpartition_cv (mensaje_rcv);
-					indice[i]=agente[i]->ind;
-
-					res.way_point.x=path[indice[i]][0];
-					res.way_point.y=path[indice[i]][1];
-					res.way_point.z=h_des[i];
-
-					agente[i]->camino();
-
-					agente[i]->monitoring_tasks (tasks_in, t);
-
-					res.header.frame_id = node_name;
-					res.header.stamp = ros::Time::now();
-					res.way_point.cruise = 0.5;
-	
-					my_waypoint_pub[i].publish(res);
-				}
-			}
+			my_waypoint_pub[i].publish(res);
 		}
 	}
 }
