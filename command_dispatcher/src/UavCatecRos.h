@@ -49,7 +49,6 @@ private:
 
 
 private:	// Private Members
-	bool mFirstIter;
 	bool mHasTakeOff;
 	catec_msgs::UALStateStamped mLastUalState;
 	catec_msgs::ControlReferenceRwStamped mReference;

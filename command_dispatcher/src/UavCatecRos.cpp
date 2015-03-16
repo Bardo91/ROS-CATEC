@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "UavCatecRos.h"
+#include <iostream>
 
 using namespace std;
 using namespace catec_msgs;
@@ -21,7 +22,7 @@ void land_Done_CB(const actionlib::SimpleClientGoalState& state, const LandResul
 
 
 //---------------------------------------------------------------------------------------------------------------------
-UavCatecROS::UavCatecROS(string _uavId): mFirstIter(false), mHasTakeOff(false){
+UavCatecROS::UavCatecROS(string _uavId): mHasTakeOff(false){
 	ros::NodeHandle n;
 	
 	string topicname = "/uav_";
@@ -79,14 +80,6 @@ void UavCatecROS::land(){
 // Private Callbacks
 void UavCatecROS::ualStateCallback(const catec_msgs::UALStateStamped::ConstPtr& s){
 	mLastUalState = *s;
-
-	if (!mFirstIter) {
-		mFirstIter = true;
-		mReference.c_reference_rw.position.x	= mLastUalState.ual_state.dynamic_state.position.x;
-		mReference.c_reference_rw.position.y	= mLastUalState.ual_state.dynamic_state.position.y;
-		mReference.c_reference_rw.position.z	= mLastUalState.ual_state.dynamic_state.position.z;
-		mReference.c_reference_rw.heading		= mLastUalState.ual_state.dynamic_state.orientation.z;
-	}
 }
 
 
