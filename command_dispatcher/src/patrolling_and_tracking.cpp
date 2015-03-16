@@ -220,9 +220,9 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	t=t+dt;
 
 	for (int i=0; i<num_ag; i++) {
-		agente[i]->x=last_ual_state[i].ual_state.dynamic_state.position.x;
-		agente[i]->y=last_ual_state[i].ual_state.dynamic_state.position.y;
-		agente[i]->z=last_ual_state[i].ual_state.dynamic_state.position.z;
+		agente[i]->x=uavs[i].ualState().ual_state.dynamic_state.position.x;
+		agente[i]->y=uavs[i].ualState().ual_state.dynamic_state.position.y;
+		agente[i]->z=uavs[i].ualState().ual_state.dynamic_state.position.z;
 		posiciones[i][POS_X]=agente[i]->x;
 		posiciones[i][POS_Y]=agente[i]->y;
 		posiciones[i][POS_Z]=agente[i]->z;
