@@ -27,6 +27,7 @@
 class UavCatecROS{
 public:
 	UavCatecROS(std::string _uavId);
+	~UavCatecROS();
 
 	// Actions
 	void move(catec_msgs::ControlReferenceRwStamped _reference);
@@ -37,6 +38,17 @@ public:
 	// Getters
 	catec_msgs::ControlReferenceRwStamped	reference() { return mReference; };
 	catec_msgs::UALStateStamped	ualState()	{ return mLastUalState; };
+
+	void position(double * _position) volatile{
+		_position[0] = mPosition[0];
+		_position[1] = mPosition[1];
+		_position[2] = mPosition[2];
+	}
+	void orientation(double * _orientation) volatile{
+		_orientation[0] = mOrientation[0];
+		_orientation[1] = mOrientation[1];
+		_orientation[2] = mOrientation[2];
+	}
 
 	bool hasTakeOff(){	return mHasTakeOff; };
 
@@ -52,6 +64,9 @@ private:	// Private Members
 	bool mHasTakeOff;
 	catec_msgs::UALStateStamped mLastUalState;
 	catec_msgs::ControlReferenceRwStamped mReference;
+
+	double * volatile mPosition;		// 777 cant use classes as volatile.
+	double * volatile mOrientation;
 
 	ros::Publisher	mCommander;
 	ros::Subscriber mStateSubscriber;

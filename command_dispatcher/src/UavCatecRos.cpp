@@ -23,6 +23,9 @@ void land_Done_CB(const actionlib::SimpleClientGoalState& state, const LandResul
 
 //---------------------------------------------------------------------------------------------------------------------
 UavCatecROS::UavCatecROS(string _uavId): mHasTakeOff(false){
+	mPosition 		= new double[3];
+	mOrientation 	= new double[3];
+
 	ros::NodeHandle n;
 	
 	string topicname = "/uav_";
@@ -47,6 +50,12 @@ UavCatecROS::UavCatecROS(string _uavId): mHasTakeOff(false){
 	topicname.append("/land_action");
 	mLandAction = new LandClient(topicname, true);
 	mLandAction->waitForServer(ros::Duration(0));
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+UavCatecROS::~UavCatecROS(){
+	delete[] mPosition;
+	delete[] mOrientation;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -80,6 +89,14 @@ void UavCatecROS::land(){
 // Private Callbacks
 void UavCatecROS::ualStateCallback(const catec_msgs::UALStateStamped::ConstPtr& s){
 	mLastUalState = *s;
+
+	mPosition[0] = s->ual_state.dynamic_state.position.x;
+    mPosition[1] = s->ual_state.dynamic_state.position.y;
+	mPosition[2] = s->ual_state.dynamic_state.position.z;
+
+	mOrientation[0] = s->ual_state.dynamic_state.orientation.x;
+    mOrientation[1] = s->ual_state.dynamic_state.orientation.y;
+    mOrientation[2] = s->ual_state.dynamic_state.orientation.z;
 }
 
 
