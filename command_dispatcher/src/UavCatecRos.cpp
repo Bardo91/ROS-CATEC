@@ -88,8 +88,6 @@ void UavCatecROS::land(){
 //---------------------------------------------------------------------------------------------------------------------
 // Private Callbacks
 void UavCatecROS::ualStateCallback(const catec_msgs::UALStateStamped::ConstPtr& s){
-	mLastUalState = *s;
-
 	mPosition[0] = s->ual_state.dynamic_state.position.x;
     mPosition[1] = s->ual_state.dynamic_state.position.y;
 	mPosition[2] = s->ual_state.dynamic_state.position.z;

@@ -37,7 +37,6 @@ public:
 
 	// Getters
 	catec_msgs::ControlReferenceRwStamped	reference() { return mReference; };
-	catec_msgs::UALStateStamped	ualState()	{ return mLastUalState; };
 
 	void position(double * _position) volatile{
 		_position[0] = mPosition[0];
@@ -62,10 +61,9 @@ private:
 
 private:	// Private Members
 	bool mHasTakeOff;
-	catec_msgs::UALStateStamped mLastUalState;
 	catec_msgs::ControlReferenceRwStamped mReference;
 
-	double * volatile mPosition;		// 777 cant use classes as volatile.
+	double * volatile mPosition;		// 777 cant use ualstatestamped as volatile.
 	double * volatile mOrientation;
 
 	ros::Publisher	mCommander;
