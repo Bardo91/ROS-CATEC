@@ -44,6 +44,7 @@ ros::Publisher my_waypoint_pub[2];
 //Last state of our uav
 UALStateStamped last_ual_state[2];
 UALStateStamped intruder_state[3];
+double * volatile *intruder_position;
 
 bool volando[2];
 int num_ag;
@@ -85,6 +86,10 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
 void init(int _argc, char **_argv);
 
+void dummy(const UALStateStamped::ConstPtr& state){
+	cout << "Soy dummy lalalala" << endl;
+}
+
 int main(int _argc, char** _argv) {
 	cout << "Initalizing main node" << endl;
 	node_name = "Patrolling_and_tracking";
@@ -98,6 +103,8 @@ int main(int _argc, char** _argv) {
 
 	uavs.push_back(uav1);
 	uavs.push_back(uav2);
+
+	ros::Subscriber intruder = n.subscribe("uav_6/ual_state", 0, dummy);
 
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
@@ -146,6 +153,11 @@ void init(int _argc, char **_argv){
 	intruder_full_id[1] = "uav_6";
 
 	mode = 1;
+
+	intruder_position = new double *[3];
+	for(unsigned i = 0; i < 3 ;i++){
+		intruder_position[i] = new double[3];
+	}
 
 	//-----------------------------------------------------------------------------------------------------------------
 	// OutputFiles
@@ -197,6 +209,14 @@ void init(int _argc, char **_argv){
 		topicname=intruder_full_id[i];
 		topicname.append("/ual_state");
 		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
+		if(intruder_sub[i]){
+			cout << "Subscriber is valid" << endl;
+		}
+		else{
+			cout << "cant subscribe to " << topicname << endl;
+			assert(false);
+		}
+
 	}
 
 	// Taking off and related...
@@ -265,7 +285,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 		tasks_in[i][3]=intruder_state[i].ual_state.dynamic_state.position.x;
 		tasks_in[i][4]=intruder_state[i].ual_state.dynamic_state.position.y;
 		pos_intruders[i] << t << ", " << tasks_in[i][3] << ", " << tasks_in[i][4] << ", " << "0.0"<< ";" << endl;
-		cout << t << ", " << tasks_in[i][3] << ", " << tasks_in[i][4] << ", " << "0.0"<< ";" << endl;
+
 	}
 
 
@@ -376,8 +396,9 @@ void UAV_StateCallBack(const UALStateStamped::ConstPtr& state)
 
 	for (int i=0; i<num_ag; i++)
 	{
-		if (strcmp(name_node.c_str(),uav_full_id[i].c_str())==0)
+		if (strcmp(name_node.c_str(),uav_full_id[i].c_str())==0){
 			last_ual_state[i] = *state;
+		}
 	}
 
 }
@@ -385,14 +406,19 @@ void UAV_StateCallBack(const UALStateStamped::ConstPtr& state)
 
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) 
 {
-	const std::string& name_node = state->header.frame_id; //getPublisherName();
-
+	const std::string name_node = state->header.frame_id; //getPublisherName();
+	cout << "callback of " << name_node << endl;
 	for (int i=0; i<num_intruders; i++)
 	{
 		if (strcmp(name_node.c_str(),intruder_full_id[i].c_str())==0)
 		{
 			intruder_state[i] = *state;
 			tasks_in[i][0]=i;
+
+			intruder_position[i][0] = state->ual_state.dynamic_state.position.x;
+			intruder_position[i][1] = state->ual_state.dynamic_state.position.y;
+			intruder_position[i][2] = state->ual_state.dynamic_state.position.z;
+			cout << intruder_position[i][0] << ", " << intruder_position[i][1] << ", " << "0.0"<< ";" << endl;
 		}
 	}
 }
