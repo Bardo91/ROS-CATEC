@@ -242,7 +242,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 		agente[i]->x=position[0];
 		agente[i]->y=position[1];
 		agente[i]->z=position[2];
-		cout << "uav " << i << " state: " << agente[i]->x << ", " << agente[i]->y << ", " << agente[i]->z  << endl;
+
 		posiciones[i][POS_X]=agente[i]->x;
 		posiciones[i][POS_Y]=agente[i]->y;
 		posiciones[i][POS_Z]=agente[i]->z;
@@ -265,6 +265,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 		tasks_in[i][3]=intruder_state[i].ual_state.dynamic_state.position.x;
 		tasks_in[i][4]=intruder_state[i].ual_state.dynamic_state.position.y;
 		pos_intruders[i] << t << ", " << tasks_in[i][3] << ", " << tasks_in[i][4] << ", " << "0.0"<< ";" << endl;
+		cout << t << ", " << tasks_in[i][3] << ", " << tasks_in[i][4] << ", " << "0.0"<< ";" << endl;
 	}
 
 
