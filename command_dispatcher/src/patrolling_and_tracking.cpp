@@ -77,6 +77,8 @@ ofstream pos_intruders[3];
 ofstream task_assigned[2];
 ofstream costes_totales[2];
 
+ros::Subscriber agente_sub[2];
+ros::Subscriber intruder_sub[3];
 std::vector<UavCatecROS> uavs;
 
 void sendControlReferences(const ros::TimerEvent& te);
@@ -85,10 +87,6 @@ void UAV_StateCallBack(const UALStateStamped::ConstPtr& state);
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
 void init(int _argc, char **_argv);
-
-void dummy(const UALStateStamped::ConstPtr& state){
-	cout << "Soy dummy lalalala" << endl;
-}
 
 int main(int _argc, char** _argv) {
 	cout << "Initalizing main node" << endl;
@@ -103,8 +101,6 @@ int main(int _argc, char** _argv) {
 
 	uavs.push_back(uav1);
 	uavs.push_back(uav2);
-
-	ros::Subscriber intruder = n.subscribe("uav_6/ual_state", 0, dummy);
 
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
@@ -196,9 +192,6 @@ void init(int _argc, char **_argv){
 	ros::NodeHandle n;
 
 	string topicname;
-	ros::Subscriber agente_sub[2];
-	ros::Subscriber intruder_sub[3];
-
 	// Init radio
 	cout << "Initalizing radio" << endl;
 	radio = new class_radio(0, 10.0, num_ag);
@@ -404,14 +397,11 @@ void UAV_StateCallBack(const UALStateStamped::ConstPtr& state)
 }
 
 
-void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) 
-{
+void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) {
 	const std::string name_node = state->header.frame_id; //getPublisherName();
 	cout << "callback of " << name_node << endl;
-	for (int i=0; i<num_intruders; i++)
-	{
-		if (strcmp(name_node.c_str(),intruder_full_id[i].c_str())==0)
-		{
+	for (int i=0; i<num_intruders; i++) {
+		if (strcmp(name_node.c_str(),intruder_full_id[i].c_str())==0) {
 			intruder_state[i] = *state;
 			tasks_in[i][0]=i;
 
