@@ -408,7 +408,6 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) {
 			intruder_position[i][0] = state->ual_state.dynamic_state.position.x;
 			intruder_position[i][1] = state->ual_state.dynamic_state.position.y;
 			intruder_position[i][2] = state->ual_state.dynamic_state.position.z;
-			cout << intruder_position[i][0] << ", " << intruder_position[i][1] << ", " << "0.0"<< ";" << endl;
 		}
 	}
 }
