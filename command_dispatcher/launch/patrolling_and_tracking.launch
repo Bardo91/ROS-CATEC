@@ -1,25 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-
-	 <arg name="idFile" 		value="$(find command_dispatcher)/launch/uavIds"/> 
-	 <arg name="dirFile" 		value="$(find command_dispatcher)/launch/uavDirs"/>
-	 <arg name="speedFile" 		value="$(find command_dispatcher)/launch/uavSpeeds"/>
-	 <arg name="hFile" 			value="$(find command_dispatcher)/launch/uavHs"/>
-	 <arg name="radioRange" 	value="10"/>
-	 <arg name="intruderIdFile" value="$(find command_dispatcher)/launch/uavIntruderId"/>
-	 <arg name="waypointsFile" 	value="$(find command_dispatcher)/launch/uavWaypts"/>
-
 	<node 
 		name="patrolling_and_tracking_test" 
 		pkg="command_dispatcher" 
 		type="patrolling_and_tracking" 
-		args="	$(arg idFile) 
-				$(arg dirFile) 
-				$(arg speedFile) 
-				$(arg hFile) 
-				$(arg radioRange) 
-				$(arg intruderIdFile) 
-				$(arg waypointsFile)" 
 		output="screen"/>
 		
 </launch>

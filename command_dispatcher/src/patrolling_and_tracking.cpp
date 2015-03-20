@@ -89,7 +89,7 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 void init(int _argc, char **_argv);
 
 int main(int _argc, char** _argv) {
-	cout << "Initalizing main node" << endl;
+	cout << "Initializing main node" << endl;
 	node_name = "Patrolling_and_tracking";
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
@@ -102,6 +102,7 @@ int main(int _argc, char** _argv) {
 	uavs.push_back(uav1);
 	uavs.push_back(uav2);
 
+	cout << "Taking of agents" << endl;
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
@@ -111,6 +112,7 @@ int main(int _argc, char** _argv) {
 		}
 	}
 
+	cout << "Main loop" << endl;
 	ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
 
 	while(ros::ok()) {
