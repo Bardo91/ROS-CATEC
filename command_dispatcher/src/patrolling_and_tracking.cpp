@@ -73,8 +73,8 @@ int main(int _argc, char** _argv) {
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
 
-	UavCatecROS uav1("3");
-	UavCatecROS uav2("8");
+	UavCatecROS uav1("uav_3");
+	UavCatecROS uav2("uav_8");
 
 	uavs.push_back(uav1);
 	uavs.push_back(uav2);

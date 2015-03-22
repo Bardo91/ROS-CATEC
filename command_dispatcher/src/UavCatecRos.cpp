@@ -12,6 +12,7 @@
 using namespace std;
 using namespace catec_msgs;
 using namespace catec_actions_msgs;
+using namespace ros_catec;
 
 void tOff_Active_CB();
 void tOff_Feedback_CB(const TakeOffFeedbackConstPtr& feedback);
@@ -22,40 +23,23 @@ void land_Done_CB(const actionlib::SimpleClientGoalState& state, const LandResul
 
 
 //---------------------------------------------------------------------------------------------------------------------
-UavCatecROS::UavCatecROS(string _uavId): mHasTakeOff(false){
-	mPosition 		= new double[3];
-	mOrientation 	= new double[3];
-
+UavCatecROS::UavCatecROS(string _uavId): RosAgent(_uavId) ,mHasTakeOff(false){
 	ros::NodeHandle n;
 	
-	string topicname = "/uav_";
-	topicname.append(_uavId);
+	string topicname = _uavId;
 	topicname.append("/control_references_rw");
 	mCommander = n.advertise<ControlReferenceRwStamped>(topicname.c_str(), 0);
 
-	topicname = "/uav_";
-	topicname.append(_uavId);
-	topicname.append("/ual_state");
-	mStateSubscriber = n.subscribe(topicname.c_str(), 0, &UavCatecROS::ualStateCallback, this);
-
 	//Create takeoff and land clients
-	topicname = "/uav_";
-	topicname.append(_uavId);
+	topicname = _uavId;
 	topicname.append("/take_off_action");
 	mTakeOffAction = new TakeOffClient(topicname, true);
 	mTakeOffAction->waitForServer(ros::Duration(0));
 
-	topicname = "/uav_";
-	topicname.append(_uavId);
+	topicname = _uavId;
 	topicname.append("/land_action");
 	mLandAction = new LandClient(topicname, true);
 	mLandAction->waitForServer(ros::Duration(0));
-}
-
-//---------------------------------------------------------------------------------------------------------------------
-UavCatecROS::~UavCatecROS(){
-	delete[] mPosition;
-	delete[] mOrientation;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -83,18 +67,6 @@ void UavCatecROS::land(){
 	//Wait untill land is completed
 	mLandAction->waitForResult();
 	mHasTakeOff = false;
-}
-
-//---------------------------------------------------------------------------------------------------------------------
-// Private Callbacks
-void UavCatecROS::ualStateCallback(const catec_msgs::UALStateStamped::ConstPtr& s){
-	mPosition[0] = s->ual_state.dynamic_state.position.x;
-    mPosition[1] = s->ual_state.dynamic_state.position.y;
-	mPosition[2] = s->ual_state.dynamic_state.position.z;
-
-	mOrientation[0] = s->ual_state.dynamic_state.orientation.x;
-    mOrientation[1] = s->ual_state.dynamic_state.orientation.y;
-    mOrientation[2] = s->ual_state.dynamic_state.orientation.z;
 }
 
 
