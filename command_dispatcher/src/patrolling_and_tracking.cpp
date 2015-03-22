@@ -187,7 +187,6 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	double tasks_before[AG_MAX][MAX_TASKS][TAM_TASKS];
 	struct Agente agentes_before[AG_MAX];
 	int tam_plan=0;
-	bool listo=true;
 	struct Mensaje mensaje_rcv;
 
 	t=t+dt;
@@ -203,17 +202,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 		posiciones[i][POS_X]=agente[i]->x;
 		posiciones[i][POS_Y]=agente[i]->y;
 		posiciones[i][POS_Z]=agente[i]->z;
-		pos_quads[i] << t << ", " << agente[i]->x << ", " << agente[i]->y << ", " << agente[i]->z << ";" << endl;
-		task_assigned[i] << t;
-		for (int j=0; j<MAX_TASKS; j++)
-			if (agente[i]->plan[j]>-1)
-				task_assigned[i] << ", " << agente[i]->tasks[agente[i]->plan[j]][0];
-			else
-				task_assigned[i] << ", " << "-1";
-		task_assigned[i] << ";" <<endl;
-
-		costes_totales[i] << t << ", " << agente[i]->coste_mision << ";" <<endl;
-	}
+		}
 
 
 	for (int i=0; i<num_intruders; i++) {
@@ -221,8 +210,6 @@ void sendControlReferences(const ros::TimerEvent& te) {
 		tasks_in[i][2]=(intruder_state[i].ual_state.dynamic_state.position.y-tasks_in[i][4])/dt;
 		tasks_in[i][3]=intruder_state[i].ual_state.dynamic_state.position.x;
 		tasks_in[i][4]=intruder_state[i].ual_state.dynamic_state.position.y;
-		pos_intruders[i] << t << ", " << tasks_in[i][3] << ", " << tasks_in[i][4] << ", " << "0.0"<< ";" << endl;
-
 	}
 
 
