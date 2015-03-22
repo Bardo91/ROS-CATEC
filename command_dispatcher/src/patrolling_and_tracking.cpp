@@ -26,8 +26,9 @@ string intruder_full_id[5];
 int uav_id[2];
 QuadPatrolling *agente[2];
 class_radio *radio;
+
 double t;
-double dt=1.0/10.0;
+const double dt=1.0/10.0;
 double h_des[2];
 double speed_max[2];
 int dir_ini[2];
@@ -35,18 +36,9 @@ int dir_ini[2];
 double range;
 int mode;
 
-//My next waypoint
-//WayPointWithCruiseStamped my_next_waypoint[2];
-
-//nextWayPoint
-ros::Publisher my_waypoint_pub[2];
-
 //Last state of our uav
-UALStateStamped last_ual_state[2];
 UALStateStamped intruder_state[3];
-double * volatile *intruder_position;
 
-bool volando[2];
 int num_ag;
 int num_intruders;
 int cambio[2];
@@ -65,18 +57,12 @@ int indice[2];
 double tasks_in [MAX_TASKS][TAM_TASKS];
 double pos_inicial[2][2];
 
-ofstream pos_quads[2];
-ofstream pos_intruders[3];
-ofstream task_assigned[2];
-ofstream costes_totales[2];
-
 ros::Subscriber agente_sub[2];
 ros::Subscriber intruder_sub[3];
 std::vector<UavCatecROS> uavs;
 
 void sendControlReferences(const ros::TimerEvent& te);
 
-void UAV_StateCallBack(const UALStateStamped::ConstPtr& state);
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
 void init(int _argc, char **_argv);
@@ -87,13 +73,13 @@ int main(int _argc, char** _argv) {
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
 
-	init(_argc, _argv);
-
 	UavCatecROS uav1("3");
 	UavCatecROS uav2("8");
 
 	uavs.push_back(uav1);
 	uavs.push_back(uav2);
+
+	init(_argc, _argv);
 
 	cout << "Taking of agents" << endl;
 	ros::AsyncSpinner spinner(0);
@@ -145,32 +131,6 @@ void init(int _argc, char **_argv){
 
 	mode = 1;
 
-	intruder_position = new double *[3];
-	for(unsigned i = 0; i < 3 ;i++){
-		intruder_position[i] = new double[3];
-	}
-
-	//-----------------------------------------------------------------------------------------------------------------
-	// OutputFiles
-	cout << "Opening output files" << endl;
-	char nombre[50];
-	for (int i=0; i<num_ag; i++) {
-		sprintf(nombre,"%s_pos",uav_full_id[i].c_str());
-		pos_quads[i].open(nombre, ofstream::out);
-		assert(pos_quads[i]);
-		sprintf(nombre,"%s_tasks",uav_full_id[i].c_str());
-		task_assigned[i].open(nombre, ofstream::out);
-		assert(task_assigned[i]);
-		sprintf(nombre,"%s_costs",uav_full_id[i].c_str());
-		costes_totales[i].open(nombre, ofstream::out);
-		assert(costes_totales[i]);
-	}
-	for (int i=0; i<num_intruders; i++) {
-		sprintf(nombre,"%s_pos",intruder_full_id[i].c_str());
-		pos_intruders[i].open(nombre, ofstream::out);
-		assert(pos_intruders[i]);
-	}
-
 	//-----------------------------------------------------------------------------------------------------------------
 	// Initializing tasks
 	for (int i=0; i<MAX_TASKS; i++){
@@ -197,14 +157,6 @@ void init(int _argc, char **_argv){
 		topicname=intruder_full_id[i];
 		topicname.append("/ual_state");
 		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
-		if(intruder_sub[i]){
-			cout << "Subscriber is valid" << endl;
-		}
-		else{
-			cout << "cant subscribe to " << topicname << endl;
-			assert(false);
-		}
-
 	}
 
 	// Taking off and related...
@@ -214,13 +166,11 @@ void init(int _argc, char **_argv){
 		//topicname.append("/out_waypoint_");
 		//topicname.append(uav_full_id[i]);
 		//my_waypoint_pub[i] = n.advertise<WayPointWithCruiseStamped> (topicname.c_str(), 0);
-		topicname=uav_full_id[i];
-		topicname.append("/ual_state");
-		agente_sub[i] = n.subscribe(topicname.c_str(), 0,UAV_StateCallBack);
 		sleep(5);
-		agente[i]= new QuadPatrolling(i, last_ual_state[i].ual_state.dynamic_state.position.x, last_ual_state[i].ual_state.dynamic_state.position.y, 0.0, speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
+		double position[3];
+		uavs[i].position(position);
+		agente[i]= new QuadPatrolling(i, position[0], position[1], position[2], speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
 		agente[i]->init_cont(num_ag, 1.0);
-		volando[i]=false;
 		cambio[i]=0;
 		indice[i]=i+1;
 	}
@@ -243,9 +193,8 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	t=t+dt;
 
 	for (int i=0; i<num_ag; i++) {
-		double position[3], orientation[3];
+		double position[3];
 		uavs[i].position(position);
-		uavs[i].orientation(orientation);
 
 		agente[i]->x=position[0];
 		agente[i]->y=position[1];
@@ -378,20 +327,6 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	}
 }
 
-void UAV_StateCallBack(const UALStateStamped::ConstPtr& state) 
-{
-	const std::string& name_node = state->header.frame_id; //getPublisherName();
-
-	for (int i=0; i<num_ag; i++)
-	{
-		if (strcmp(name_node.c_str(),uav_full_id[i].c_str())==0){
-			last_ual_state[i] = *state;
-		}
-	}
-
-}
-
-
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) {
 	const std::string name_node = state->header.frame_id; //getPublisherName();
 	cout << "callback of " << name_node << endl;
@@ -399,10 +334,6 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) {
 		if (strcmp(name_node.c_str(),intruder_full_id[i].c_str())==0) {
 			intruder_state[i] = *state;
 			tasks_in[i][0]=i;
-
-			intruder_position[i][0] = state->ual_state.dynamic_state.position.x;
-			intruder_position[i][1] = state->ual_state.dynamic_state.position.y;
-			intruder_position[i][2] = state->ual_state.dynamic_state.position.z;
 		}
 	}
 }
