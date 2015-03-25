@@ -21,20 +21,15 @@ using namespace catec_msgs;
 
 string node_name;
 
-string uav_full_id[5];
 string intruder_full_id[5];
-int uav_id[2];
 QuadPatrolling *agente[2];
 class_radio *radio;
+
+
 
 double t;
 const double dt=1.0/10.0;
 double h_des[2];
-double speed_max[2];
-int dir_ini[2];
-
-double range;
-int mode;
 
 //Last state of our uav
 UALStateStamped intruder_state[3];
@@ -75,7 +70,6 @@ int main(int _argc, char** _argv) {
 
 	UavCatecROS uav1(_argv[1]);
 	UavCatecROS uav2(_argv[2]);
-
 	uavs.push_back(uav1);
 	uavs.push_back(uav2);
 
@@ -108,16 +102,18 @@ int main(int _argc, char** _argv) {
 
 void init(int _argc, char **_argv){
 	num_ag = 2;
+	int dir_ini[2];
 	dir_ini[0] = 1;
 	dir_ini[1] = -1;
 
+	double speed_max[2];
 	speed_max[0] = 0.5;
 	speed_max[1] = 0.7;
 
 	h_des[0] = atoi(_argv[3]);
 	h_des[1] = atoi(_argv[4]);
 
-	range = 10;
+	double range = 10;
 
 	// Waypoints were defined previously
 
@@ -125,8 +121,6 @@ void init(int _argc, char **_argv){
 	num_intruders=2;
 	intruder_full_id[0] = _argv[5];
 	intruder_full_id[1] = _argv[6];
-
-	mode = 1;
 
 	//-----------------------------------------------------------------------------------------------------------------
 	// Initializing tasks
@@ -240,7 +234,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 	}
 
 	for (int i=0; i<num_ag; i++){
-		if (agente[i]->id_contactado>=0 && quad_cont[agente[i]->id_contactado]==i && mode==1) {
+		if (agente[i]->id_contactado>=0 && quad_cont[agente[i]->id_contactado]==i) {
 			agente[i]->join_tasks(tasks_before[agente[i]->id_contactado],agente[i]->id_contactado);
 			agente[i]->task_allocation_one (agentes_before[agente[i]->id_contactado], t);
 		} else if (agente[i]->tarea_nueva==1) {
