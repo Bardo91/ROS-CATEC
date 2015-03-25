@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <launch>
 	<!-- Include gazebo launch file -->
-	<include file="$(find uav)/launch/testbed_gazebo_4_quad.launch"/>
-
+	<param name="/use_sim_time" value="true" />
+	<node name="gazebo" pkg="gazebo" type="gazebo" args="$(find command_dispatcher)/world/testbed_4.world" respawn="false" output="screen">
+	   <env name="GAZEBO_RESOURCE_PATH" value="$(find uav)/models" />
+	</node>
+	
+	<node name="gazebo_gui" pkg="gazebo" type="gui" />
 
 	<!-- Here it is configured which quadrotors are going to be used -->
     <arg name="uav_8/flying" value="1" />
