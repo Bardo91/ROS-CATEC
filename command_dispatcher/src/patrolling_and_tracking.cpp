@@ -114,8 +114,8 @@ void init(int _argc, char **_argv){
 	speed_max[0] = 0.5;
 	speed_max[1] = 0.7;
 
-	h_des[0] = _argv[3];
-	h_des[1] = _argv[4];
+	h_des[0] = atoi(_argv[3]);
+	h_des[1] = atoi(_argv[4]);
 
 	range = 10;
 
@@ -309,7 +309,6 @@ void sendControlReferences(const ros::TimerEvent& te) {
 
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) {
 	const std::string name_node = state->header.frame_id; //getPublisherName();
-	cout << "callback of " << name_node << endl;
 	for (int i=0; i<num_intruders; i++) {
 		if (strcmp(name_node.c_str(),intruder_full_id[i].c_str())==0) {
 			intruder_state[i] = *state;
