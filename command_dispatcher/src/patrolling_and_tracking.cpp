@@ -54,7 +54,7 @@ double pos_inicial[2][2];
 
 ros::Subscriber agente_sub[2];
 ros::Subscriber intruder_sub[3];
-std::vector<UavCatecROS> uavs;
+UavCatecROS *agente1, *agente2;
 
 void sendControlReferences(const ros::TimerEvent& te);
 
@@ -68,10 +68,11 @@ int main(int _argc, char** _argv) {
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
 
-	UavCatecROS uav1(_argv[1]);
-	UavCatecROS uav2(_argv[2]);
-	uavs.push_back(uav1);
-	uavs.push_back(uav2);
+
+	agente1 = new UavCatecROS(_argv[1]);
+	agente2 = new UavCatecROS (_argv[2]);
+	//uavs.push_back(uav1);
+	//uavs.push_back(uav2);
 
 	init(_argc, _argv);
 
@@ -79,11 +80,8 @@ int main(int _argc, char** _argv) {
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
-	for(unsigned i = 0; i < uavs.size(); i++){
-		if(!uavs[i].hasTakeOff()){
-			uavs[i].takeOff();
-		}
-	}
+	agente1->takeOff();
+	agente2->takeOff();
 
 	cout << "Main loop" << endl;
 	ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
@@ -152,10 +150,13 @@ void init(int _argc, char **_argv){
 
 	// Taking off and related...
 	cout << "Configuring quads" << endl;
-	for (int i=0; i<num_ag; i++) {
+	for (int i=0; i<2; i++) {
 		sleep(5);
 		double position[3];
-		uavs[i].position(position);
+		if(i == 0)
+			agente1->position(position);
+		else
+			agente2->position(position);
 		agente[i]= new QuadPatrolling(i, position[0], position[1], position[2], speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
 		agente[i]->init_cont(num_ag, 1.0);
 		cambio[i]=0;
@@ -178,9 +179,12 @@ void sendControlReferences(const ros::TimerEvent& te) {
 
 	t=t+dt;
 
-	for (int i=0; i<num_ag; i++) {
+	for (int i=0; i<2; i++) {
 		double position[3];
-		uavs[i].position(position);
+		if(i == 0)
+			agente1->position(position);
+		else
+			agente2->position(position);
 
 		agente[i]->x=position[0];
 		agente[i]->y=position[1];
@@ -263,7 +267,10 @@ void sendControlReferences(const ros::TimerEvent& te) {
 				//res.way_point.cruise = 0.5;
 
 				cout << "Moving as planned" << endl;
-				uavs[i].move(res);
+				if(i == 0)
+					agente1->move(res);
+				else
+					agente2->move(res);
 				//my_waypoint_pub[i].publish(res);
 		} else {
 			agente[i]->estado=1;
@@ -295,7 +302,10 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			res.header.stamp = ros::Time::now();
 			//res.way_point.cruise = 0.5;
 
-			uavs[i].move(res);
+			if(i == 0)
+				agente1->move(res);
+			else
+				agente2->move(res);
 			//my_waypoint_pub[i].publish(res);
 		}
 	}
