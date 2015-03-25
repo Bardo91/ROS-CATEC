@@ -1,9 +1,17 @@
 <?xml version="1.0"?>
 <launch>
+	<arg name="uavId1" 			value="uav_3" />
+	<arg name="uavId2" 			value="uav_8" />
+	<arg name="uavH1" 			value="2" />
+	<arg name="uavH2"			value="1.5" />
+	<arg name="intruderId1" 	value="uav_5" />
+	<arg name="intruderId2" 	value="uav_6" />
+
 	<node 
 		name="patrolling_and_tracking_test" 
 		pkg="command_dispatcher" 
 		type="patrolling_and_tracking" 
-		output="screen"/>
+		output="screen"
+		args="$(arg uavId1) $(arg uavId2) $(arg uavH1) $(arg uavH2) $(arg intruderId1) $(arg intruderId2)"/>
 		
 </launch>

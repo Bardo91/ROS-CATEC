@@ -73,8 +73,8 @@ int main(int _argc, char** _argv) {
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
 
-	UavCatecROS uav1("uav_3");
-	UavCatecROS uav2("uav_8");
+	UavCatecROS uav1(_argv[1]);
+	UavCatecROS uav2(_argv[2]);
 
 	uavs.push_back(uav1);
 	uavs.push_back(uav2);
@@ -108,17 +108,14 @@ int main(int _argc, char** _argv) {
 
 void init(int _argc, char **_argv){
 	num_ag = 2;
-	uav_full_id[0] = "uav_3";
-	uav_full_id[1] = "uav_8";
-
 	dir_ini[0] = 1;
 	dir_ini[1] = -1;
 
 	speed_max[0] = 0.5;
 	speed_max[1] = 0.7;
 
-	h_des[0] = 1.5;
-	h_des[1] = 2;
+	h_des[0] = _argv[3];
+	h_des[1] = _argv[4];
 
 	range = 10;
 
@@ -126,8 +123,8 @@ void init(int _argc, char **_argv){
 
 	// Intruder Data
 	num_intruders=2;
-	intruder_full_id[0] = "uav_5";
-	intruder_full_id[1] = "uav_6";
+	intruder_full_id[0] = _argv[5];
+	intruder_full_id[1] = _argv[6];
 
 	mode = 1;
 
@@ -162,10 +159,6 @@ void init(int _argc, char **_argv){
 	// Taking off and related...
 	cout << "Configuring quads" << endl;
 	for (int i=0; i<num_ag; i++) {
-		//topicname= node_name;
-		//topicname.append("/out_waypoint_");
-		//topicname.append(uav_full_id[i]);
-		//my_waypoint_pub[i] = n.advertise<WayPointWithCruiseStamped> (topicname.c_str(), 0);
 		sleep(5);
 		double position[3];
 		uavs[i].position(position);
