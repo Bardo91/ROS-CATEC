@@ -264,14 +264,11 @@ void sendControlReferences(const ros::TimerEvent& te) {
 
 				res.header.frame_id = node_name;
 				res.header.stamp = ros::Time::now();
-				//res.way_point.cruise = 0.5;
 
-				cout << "Moving as planned" << endl;
 				if(i == 0)
 					agente1->move(res);
 				else
 					agente2->move(res);
-				//my_waypoint_pub[i].publish(res);
 		} else {
 			agente[i]->estado=1;
 
@@ -300,13 +297,11 @@ void sendControlReferences(const ros::TimerEvent& te) {
 
 			res.header.frame_id = node_name;
 			res.header.stamp = ros::Time::now();
-			//res.way_point.cruise = 0.5;
 
 			if(i == 0)
 				agente1->move(res);
 			else
 				agente2->move(res);
-			//my_waypoint_pub[i].publish(res);
 		}
 	}
 }
