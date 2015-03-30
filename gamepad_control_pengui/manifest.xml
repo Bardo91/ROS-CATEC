@@ -1,7 +1,7 @@
 <package>
   <description brief="gamepad_control_pengui">
 
-	 gamepad_control_pengui
+    gamepad_control_pengui
 
   </description>
   <author>Jonathan Ruiz Páez</author>
@@ -14,6 +14,8 @@
   <depend package="actionlib" />
   <depend package="actionlib_msgs" />
   <depend package="tf" />
+  <depend package="CATEC_ugv" />
+  <depend package="CATEC_uav" />
 
 </package>
 

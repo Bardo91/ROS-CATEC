@@ -1,0 +1,40 @@
+<gazebo version="1.0">
+<model name="quadrotor" static="false">
+
+<link name="base_link" gravity='false' >
+<inertial mass="1.316">
+  <inertia ixx="0.0128" ixy="0" ixz="0" iyy="0.0128" iyz="0" izz="0.0218"/>
+</inertial>
+<origin pose='0.0 0.0 0.03 0.0 0.0 0.0'/>
+    <visual name="visual"  cast_shadows="true">
+    <geometry>
+    <!--box size="0.075 0.28 0.03"/-->
+    <mesh filename="cars/Lincoln/lincoln_chasis.dae" scale="0.02 0.02 0.02"/>
+    </geometry>
+    </visual>
+    </link>
+
+<joint name="jwheel0" type="revolute">
+<parent link="base_link"/>
+<child link="wheels_0"/>
+<axis xyz="1 0 0">
+<limit effort="10000000000" lower="-1000" upper="1000" velocity="1000000.0" />
+<dynamics damping="0.0" friction="0.0"/>
+</axis>
+<origin pose="0 0 0.0 0.0 0.0 0.0"/>
+</joint>
+
+  <link name="wheels_0" gravity="1">
+      <inertial mass="0.05">
+         <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
+      </inertial>
+  <origin pose='-0.035 0.0575 0.015 0.0 0.0 0.0'/>
+    <visual name="visual">
+    <geometry>
+    <mesh filename="cars/Lincoln/wheelCentered.dae" scale="0.02 0.02 0.02"/>
+    </geometry>
+    </visual>
+  </link>
+
+</model>
+</gazebo>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<launch>
+
+   <!-- Simulator -->
+   <param name="use_sim_time" type="bool" value="true" />
+
+   <node name="gazebo" pkg="gazebo" type="gazebo" args="$(find CATEC_uav)/world/testbed_catec.world" respawn="false" output="screen">
+         <env name="GAZEBO_RESOURCE_PATH" value="$(find CATEC_ugv)/models/cars/Lincoln:$(find CATEC_ugv)/Media/models:$(find CATEC_ugv)/Media/models/cars:$(find CATEC_ugv)/Media/models/cars/Lincoln:$(find CATEC_ugv)/models:$(find CATEC_uav)/models" />
+   </node>
+
+   <node name="gazebo_gui" pkg="gazebo" type="gui" />
+
+   <!-- Abstraction Layers -->
+   <include file="$(find CATEC_uav)/launch/config_vehicles.launch" />
+
+   <!-- Spawn cars in Gazebo -->
+   <include file="$(find CATEC_ugv)/launch/spawn_car.launch" />
+
+   <!-- Publish stuff to RViz -->
+   <node name="dynamic_tf" pkg="CATEC_ugv" type="dynamic_tf" args="11" output="screen" />
+
+</launch>

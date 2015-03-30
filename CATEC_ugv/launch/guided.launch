@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+   <node name="CATEC_guided_11" pkg="CATEC_ugv" type="sendWP" args="11 $(find CATEC_ugv)/config/track0.txt" output="screen"/>
+
+   <node name="CATEC_guided_12" pkg="CATEC_ugv" type="sendWP" args="12 $(find CATEC_ugv)/config/track7.txt" output="screen"/>
+
+   <node name="CATEC_guided_13" pkg="CATEC_ugv" type="sendWP" args="13 $(find CATEC_ugv)/config/track1.txt" output="screen"/>
+
+   <node name="CATEC_guided_14" pkg="CATEC_ugv" type="sendWP" args="14 $(find CATEC_ugv)/config/track2.txt" output="screen"/>
+
+   <node name="CATEC_guided_15" pkg="CATEC_ugv" type="sendWP" args="15 $(find CATEC_ugv)/config/track3.txt" output="screen"/>
+
+   <node name="CATEC_guided_16" pkg="CATEC_ugv" type="sendWP" args="16 $(find CATEC_ugv)/config/track4.txt" output="screen"/>
+
+   <node name="CATEC_guided_17" pkg="CATEC_ugv" type="sendWP" args="17 $(find CATEC_ugv)/config/track5.txt" output="screen"/>
+
+   <node name="CATEC_guided_18" pkg="CATEC_ugv" type="sendWP" args="18 $(find CATEC_ugv)/config/track6.txt" output="screen"/>
+
+</launch>
+

@@ -1,0 +1,159 @@
+Background\ ColorB=0.254902
+Background\ ColorG=0.254902
+Background\ ColorR=0.254902
+Camera\ Config=1.4598 2.62149 7.03163 -0.986173 3.64623 0.764569
+Camera\ Type=rviz::OrbitViewController
+Fixed\ Frame=/map
+Grid.Alpha=0.5
+Grid.Cell\ Size=1
+Grid.ColorB=0
+Grid.ColorG=0
+Grid.ColorR=0
+Grid.Enabled=1
+Grid.Line\ Style=0
+Grid.Line\ Width=0.03
+Grid.Normal\ Cell\ Count=0
+Grid.OffsetX=0
+Grid.OffsetY=0
+Grid.OffsetZ=0
+Grid.Plane=0
+Grid.Plane\ Cell\ Count=10
+Grid.Reference\ Frame=<Fixed Frame>
+Marker.Enabled=1
+Marker.Marker\ Topic=/visualization_traj_11
+Marker.Queue\ Size=100
+Marker10.Enabled=1
+Marker10.Marker\ Topic=/visualization_traj_15
+Marker10.Queue\ Size=100
+Marker11.Enabled=1
+Marker11.Marker\ Topic=/visualization_traj_16
+Marker11.Queue\ Size=100
+Marker12.Enabled=1
+Marker12.Marker\ Topic=/visualization_traj_17
+Marker12.Queue\ Size=100
+Marker13.Enabled=1
+Marker13.Marker\ Topic=/visualization_traj_18
+Marker13.Queue\ Size=100
+Marker14.Enabled=1
+Marker14.Marker\ Topic=/visualization_current_wp_14
+Marker14.Queue\ Size=100
+Marker15.Enabled=1
+Marker15.Marker\ Topic=/visualization_current_wp_15
+Marker15.Queue\ Size=100
+Marker16.Enabled=1
+Marker16.Marker\ Topic=/visualization_current_wp_16
+Marker16.Queue\ Size=100
+Marker17.Enabled=1
+Marker17.Marker\ Topic=/visualization_current_wp_17
+Marker17.Queue\ Size=100
+Marker18.Enabled=1
+Marker18.Marker\ Topic=/visualization_current_wp_18
+Marker18.Queue\ Size=100
+Marker2.Enabled=1
+Marker2.Marker\ Topic=/visualization_current_wp_11
+Marker2.Queue\ Size=100
+Marker3.Enabled=0
+Marker3.Marker\ Topic=/visualization_uav
+Marker3.Queue\ Size=100
+Marker4.Enabled=1
+Marker4.Marker\ Topic=/visualization_world
+Marker4.Queue\ Size=100
+Marker5.Enabled=1
+Marker5.Marker\ Topic=/visualization_traj_12
+Marker5.Queue\ Size=100
+Marker6.Enabled=1
+Marker6.Marker\ Topic=/visualization_current_wp_12
+Marker6.Queue\ Size=100
+Marker7.Enabled=1
+Marker7.Marker\ Topic=/visualization_current_wp_13
+Marker7.Queue\ Size=100
+Marker8.Enabled=1
+Marker8.Marker\ Topic=/visualization_traj_13
+Marker8.Queue\ Size=100
+Marker9.Enabled=1
+Marker9.Marker\ Topic=/visualization_traj_14
+Marker9.Queue\ Size=100
+Property\ Grid\ Splitter=674,240
+Property\ Grid\ State=expanded=.Global Options,Grid.Enabled,Marker.Enabled,Marker2.Enabled,Marker3.Enabled,Marker4.Enabled,Marker5.Enabled,Marker6.Enabled,Marker7.Enabled,Marker8.Enabled,Marker9.Enabled,Marker10.Enabled,Marker11.Enabled,Marker12.Enabled,Marker13.Enabled,Marker14.Enabled,Marker15.Enabled,Marker16.Enabled,Marker17.Enabled,Marker18.Enabled;splitterratio=0.366053
+QMainWindow=000000ff00000000fd00000003000000000000018b000003e4fc0200000001fb000000100044006900730070006c0061007900730100000034000003e4000000f400ffffff0000000100000128000002e8fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730000000034000001710000006a00fffffffb0000000a0056006900650077007300000000fc00000158000000be00fffffffb0000001200530065006c0065006300740069006f006e0000000034000002e80000006a00ffffff00000003000006440000003efc0100000001fb0000000800540069006d00650100000000000006440000022800ffffff000004b3000003e400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+TF.All\ Enabled=1
+TF.Enabled=1
+TF.Frame\ Timeout=15
+TF.Marker\ Scale=1
+TF.Show\ Arrows=1
+TF.Show\ Axes=1
+TF.Show\ Names=1
+TF.Update\ Interval=0
+Target\ Frame=<Fixed Frame>
+Tool\ 2D\ Nav\ GoalTopic=/move_base_simple/goal
+Tool\ 2D\ Pose\ EstimateTopic=initialpose
+[Display0]
+ClassName=rviz::GridDisplay
+Name=Grid
+[Display1]
+ClassName=rviz::TFDisplay
+Name=TF
+[Display10]
+ClassName=rviz::MarkerDisplay
+Name=Marker9
+[Display11]
+ClassName=rviz::MarkerDisplay
+Name=Marker10
+[Display12]
+ClassName=rviz::MarkerDisplay
+Name=Marker11
+[Display13]
+ClassName=rviz::MarkerDisplay
+Name=Marker12
+[Display14]
+ClassName=rviz::MarkerDisplay
+Name=Marker13
+[Display15]
+ClassName=rviz::MarkerDisplay
+Name=Marker14
+[Display16]
+ClassName=rviz::MarkerDisplay
+Name=Marker15
+[Display17]
+ClassName=rviz::MarkerDisplay
+Name=Marker16
+[Display18]
+ClassName=rviz::MarkerDisplay
+Name=Marker17
+[Display19]
+ClassName=rviz::MarkerDisplay
+Name=Marker18
+[Display2]
+ClassName=rviz::MarkerDisplay
+Name=Marker
+[Display3]
+ClassName=rviz::MarkerDisplay
+Name=Marker2
+[Display4]
+ClassName=rviz::MarkerDisplay
+Name=Marker3
+[Display5]
+ClassName=rviz::MarkerDisplay
+Name=Marker4
+[Display6]
+ClassName=rviz::MarkerDisplay
+Name=Marker5
+[Display7]
+ClassName=rviz::MarkerDisplay
+Name=Marker6
+[Display8]
+ClassName=rviz::MarkerDisplay
+Name=Marker7
+[Display9]
+ClassName=rviz::MarkerDisplay
+Name=Marker8
+[TF.Frames.]
+base_footprint.Enabled=1
+base_ugv.Enabled=1
+map.Enabled=1
+odom.Enabled=1
+[Window]
+Height=1142
+Width=1606
+X=878
+Y=-121

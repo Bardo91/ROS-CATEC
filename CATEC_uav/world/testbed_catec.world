@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<gazebo version="1.0">
+    <world name="testbed">
+   <scene>
+      <shadows enabled="false" />
+   </scene>
+   <physics type="ode" update_rate="1000">
+         <gravity xyz="0 0 -9.8"/>
+         <ode>
+           <solver type="quick" dt="0.001" iters="10" sor="1.3"/>
+           <constraints cfm="0.0" erp="0.2" contact_max_correcting_vel="100.0" contact_surface_layer="0.001"/>
+         </ode>
+       </physics>
+   <include filename="sun.light" />
+         <light type="directional" name="sun" cast_shadows="true">
+         <origin pose="0 0 100 0 0 0"/>
+         <diffuse rgba="1.0 1.0 1.0 1"/>
+         <specular rgba="1 1 1 1"/>
+         <attenuation range="1000" constant="0.9" linear="0.01" quadratic="0.0"/>
+         <direction xyz="0 0.0 -1.0"/>
+         </light>
+   <light type="directional" name="sun2" cast_shadows="true">
+         <origin pose="0 -50 0.01 0 0 0"/>
+         <diffuse rgba="1.0 1.0 1.0 1"/>
+         <specular rgba="1 1 1 1"/>
+         <attenuation range="1000" constant="0.9" linear="0.01" quadratic="0.0"/>
+         <direction xyz="0 1 0"/>
+         </light>
+   <light type="directional" name="sun3" cast_shadows="true">
+         <origin pose="0 50 0.01 0 0 0"/>
+         <diffuse rgba="1.0 1.0 1.0 1"/>
+         <specular rgba="1 1 1 1"/>
+         <attenuation range="1000" constant="0.9" linear="0.01" quadratic="0.0"/>
+         <direction xyz="0 -1 0"/>
+         </light>
+   <light type="directional" name="sun4" cast_shadows="true">
+         <origin pose="-50 0 0.01 0 0 0"/>
+         <diffuse rgba="1.0 1.0 1.0 1"/>
+         <specular rgba="1 1 1 1"/>
+         <attenuation range="1000" constant="0.9" linear="0.01" quadratic="0.0"/>
+         <direction xyz="1 0 0"/>
+         </light>
+   <light type="directional" name="sun5" cast_shadows="true">
+         <origin pose="50 0 0.01 0 0 0"/>
+         <diffuse rgba="1.0 1.0 1.0 1"/>
+         <specular rgba="1 1 1 1"/>
+         <attenuation range="1000" constant="0.9" linear="0.01" quadratic="0.0"/>
+         <direction xyz="-1 0 0"/>
+         </light>
+
+   <!-- UAVs -->
+   <include filename="quadrotor_nog_red.model" model_pose="4.5 -2.0 0.2 0 0 0" model_name="uav_1" link_gravity="false"/>
+   <include filename="quadrotor_nog_purple.model" model_pose="0.5 2.0 0.2 0 0 0" model_name="uav_2" link_gravity="false"/>
+   <include filename="quadrotor_nog_yellow.model" model_pose="3.5 -1.0 0.2 0 0 0" model_name="uav_4" link_gravity="false"/>
+
+   <include filename="quadrotor_nog_purple.model" model_pose="-1.5 1.0 0.2 0 0 0" model_name="uav_5" link_gravity="false" />
+   <include filename="quadrotor_nog_green.model" model_pose="0.0 0.1 1.2 0 0 0" model_name="uav_6" link_gravity="false"/>
+   <include filename="quadrotor_nog_yellow.model" model_pose="2.0 -1.5 0.2 0 0 0" model_name="uav_7" link_gravity="false"/>
+
+   <!-- UGVs -->
+   <!--include filename="lincoln.model" model_pose="-0.7735 4.1110 0.03 0 0 4.12" model_name="ugv_11" link_gravity="false"/>
+   <include filename="wdr.model" model_pose="-0.7385 4.176 0.03 0 0 4.12" model_name="ugv_11_wdr" link_gravity="false"/>
+   <include filename="audi.model" model_pose="0.2 0.2 0.000 0 0 0" model_name="ugv_12" link_gravity="false"/-->
+
+   <!-- Ground Plane -->
+    <model name="plane1_model" static="true">
+      <link name="body">
+        <collision name="geom_1">
+          <geometry>
+            <plane normal="0 0 1"/>
+          </geometry>
+          <surface>
+            <friction>
+              <ode mu="50.0" mu2="50.0" fdir1="0 0 0" slip1="0" slip2="0"/>
+            </friction>
+            <bounce restitution_coefficient="0" threshold="1000000.0"/>
+            <contact>
+              <ode soft_cfm="0" soft_erp="0.2" kp="1e10" kd="1" max_vel="100.0" min_depth="0.0001"/>
+            </contact>
+          </surface>
+        </collision>
+        <!--visual name="visual_1" cast_shadows="false">
+          <geometry>
+            <plane normal="0 0 1"/>
+          </geometry>
+          <material script="Gazebo/Red"/>
+        </visual-->
+      </link>
+    </model>
+
+        <!-- Environment -->
+   <model name="city" static="true">
+        <link name="city">
+        <origin pose='0.0 0.0 -0.01 0.0 0.0 0.0'/>
+      <visual name="visual" cast_shadows="true">
+         <geometry>
+         <mesh filename="scenario5/testbedTrakingLona.dae" />
+         </geometry>
+      </visual>
+      <collision name='collision'>
+      <geometry>
+      <mesh filename="scenario5/testbedTrakingLona.dae"/>
+      </geometry>
+      </collision>
+        </link>
+   </model>
+   <model name="testbed_frame" static="true">
+        <link name="test_bed_frame">
+      <visual name="visual">
+         <geometry>
+         <mesh filename="testbed_frame.stl" />
+         </geometry>
+         <material script="CATEC/GrayTransparent" />
+      </visual>
+        </link>
+   </model>
+   <model name="testbed_cameras" static="true">
+        <link name="test_bed_cameras">
+      <visual name="visual">
+         <geometry>
+         <mesh filename="testbed_cameras.stl" />
+         </geometry>
+         <material script="CATEC/RedTransparent" />
+      </visual>
+        </link>
+   </model>
+    </world>
+</gazebo>

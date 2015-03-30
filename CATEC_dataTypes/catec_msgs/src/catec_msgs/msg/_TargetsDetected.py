@@ -7,24 +7,18 @@ import struct
 import catec_msgs.msg
 
 class TargetsDetected(genpy.Message):
-  _md5sum = "85cdfc6fa09a5594f19d51c8ce45b0ea"
+  _md5sum = "5e9fc6bcb01b5581d60f8236e6581589"
   _type = "catec_msgs/TargetsDetected"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """Target[] targets
 uint32 size
 ================================================================================
 MSG: catec_msgs/Target
-#BOTH = First and second
 uint8 BOTH=0
 uint8 FIRST=1
 uint8 SECOND=2
-uint8 THIRD=3
-uint8 FIRST_THIRD=4
-uint8 SECOND_THIRD=5
-uint8 ALL=6
 uint8 target
 Position position
-
 ================================================================================
 MSG: catec_msgs/Position
 float64 x

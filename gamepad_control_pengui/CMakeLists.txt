@@ -31,9 +31,13 @@ rosbuild_add_boost_directories()
 
 rosbuild_add_library(joystick src/joystick/joystick.cpp)
 
-rosbuild_add_executable(gamepad_control_node src/gamepad_control_node.cpp)
-target_link_libraries(gamepad_control_node joystick)
-rosbuild_link_boost(gamepad_control_node thread)
+#rosbuild_add_executable(gamepad_control_node src/gamepad_control_node.cpp)
+#target_link_libraries(gamepad_control_node joystick)
+#rosbuild_link_boost(gamepad_control_node thread)
+
+rosbuild_add_executable(gamepad_control_vector_node_u src/gamepad_control_vector_node_u.cpp)
+target_link_libraries(gamepad_control_vector_node_u joystick)
+rosbuild_link_boost(gamepad_control_vector_node_u thread)
 
 rosbuild_add_executable(gamepad_control_vector_node src/gamepad_control_vector_node.cpp)
 target_link_libraries(gamepad_control_vector_node joystick)

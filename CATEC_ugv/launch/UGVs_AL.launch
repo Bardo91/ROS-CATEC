@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+   <node name="CATEC_11" pkg="CATEC_ugv" type="CATEC_ugv" args="11" output="screen"/>
+
+   <node name="CATEC_12" pkg="CATEC_ugv" type="CATEC_ugv" args="12" output="screen"/>
+
+   <node name="CATEC_13" pkg="CATEC_ugv" type="CATEC_ugv" args="13" output="screen"/>
+
+   <node name="CATEC_14" pkg="CATEC_ugv" type="CATEC_ugv" args="14" output="screen"/>
+
+   <node name="CATEC_15" pkg="CATEC_ugv" type="CATEC_ugv" args="15" output="screen"/>
+
+   <node name="CATEC_16" pkg="CATEC_ugv" type="CATEC_ugv" args="16" output="screen"/>
+
+   <node name="CATEC_17" pkg="CATEC_ugv" type="CATEC_ugv" args="17" output="screen"/>
+
+   <node name="CATEC_18" pkg="CATEC_ugv" type="CATEC_ugv" args="18" output="screen"/>
+
+</launch>
+

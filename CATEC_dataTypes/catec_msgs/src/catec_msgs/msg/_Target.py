@@ -7,20 +7,14 @@ import struct
 import catec_msgs.msg
 
 class Target(genpy.Message):
-  _md5sum = "f2a926a763c54809004db9c84a7d0df8"
+  _md5sum = "a07904cf7101abf20944eadd431d5639"
   _type = "catec_msgs/Target"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """#BOTH = First and second
-uint8 BOTH=0
+  _full_text = """uint8 BOTH=0
 uint8 FIRST=1
 uint8 SECOND=2
-uint8 THIRD=3
-uint8 FIRST_THIRD=4
-uint8 SECOND_THIRD=5
-uint8 ALL=6
 uint8 target
 Position position
-
 ================================================================================
 MSG: catec_msgs/Position
 float64 x
@@ -31,10 +25,6 @@ float64 z
   BOTH = 0
   FIRST = 1
   SECOND = 2
-  THIRD = 3
-  FIRST_THIRD = 4
-  SECOND_THIRD = 5
-  ALL = 6
 
   __slots__ = ['target','position']
   _slot_types = ['uint8','catec_msgs/Position']

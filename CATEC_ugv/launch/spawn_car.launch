@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+
+ <launch>
+   <arg name="modelFile" default="$(find CATEC_ugv)/urdf/car_lincoln.urdf.xacro"/>
+   <!-- send the robot XML to param server -->
+   <param name="robot_description" command="$(find xacro)/xacro.py '$(arg modelFile)'" />
+
+   <arg name="modelFileGolf" default="$(find CATEC_ugv)/urdf/car_golf.urdf.xacro"/>
+   <param name="robot_description_golf" command="$(find xacro)/xacro.py '$(arg modelFileGolf)'" />
+
+   <arg name="modelFileGolf_Blue" default="$(find CATEC_ugv)/urdf/car_golf_blue.urdf.xacro"/>
+   <param name="robot_description_golf_blue" command="$(find xacro)/xacro.py '$(arg modelFileGolf_Blue)'" />
+
+   <arg name="modelFileGolf_Green" default="$(find CATEC_ugv)/urdf/car_golf_green.urdf.xacro"/>
+   <param name="robot_description_golf_green" command="$(find xacro)/xacro.py '$(arg modelFileGolf_Green)'" />
+
+   <arg name="modelFileGolf_Yellow" default="$(find CATEC_ugv)/urdf/car_golf_yellow.urdf.xacro"/>
+   <param name="robot_description_golf_yellow" command="$(find xacro)/xacro.py '$(arg modelFileGolf_Yellow)'" />
+
+
+   <arg name="modelFileMini" default="$(find CATEC_ugv)/urdf/car_mini.urdf.xacro"/>
+   <param name="robot_description_mini" command="$(find xacro)/xacro.py '$(arg modelFileMini)'" />
+
+   <!-- push robot_description to factory and spawn robot in gazebo -->
+   <node name="spawn_robot" pkg="gazebo" type="spawn_model"
+   args="-param robot_description
+   -urdf
+   -z 0.30
+   -x -0.6841
+   -y 4.1
+   -R 0
+   -P 0
+   -Y 2.75
+   -model ugv_11"
+     respawn="false" output="screen"/>
+
+   <node name="spawn_robot12" pkg="gazebo" type="spawn_model"
+   args="-param robot_description_mini
+   -urdf
+   -z 0.30
+   -x -3.7887
+   -y -2.5645
+   -R 0
+   -P 0
+   -Y 0
+   -model ugv_12"
+     respawn="false" output="screen"/>
+
+   <node name="spawn_robot13" pkg="gazebo" type="spawn_model"
+   args="-param robot_description_golf_blue
+   -urdf
+   -z 0.30
+   -x 1.7094
+   -y 4.7329
+   -R 0
+   -P 0
+   -Y 3
+   -model ugv_13"
+     respawn="false" output="screen"/>
+
+   <node name="spawn_robot14" pkg="gazebo" type="spawn_model"
+   args="-param robot_description_mini
+   -urdf
+   -z 0.30
+   -x 4.3309
+   -y 3.0025
+   -R 0
+   -P 0
+   -Y 3
+   -model ugv_14"
+     respawn="false" output="screen"/>
+
+   <node name="spawn_robot15" pkg="gazebo" type="spawn_model"
+   args="-param robot_description_golf_yellow
+   -urdf
+   -z 0.30
+   -x 2.8244
+   -y 1.5188
+   -R 0
+   -P 0
+   -Y -1.57
+   -model ugv_15"
+     respawn="false" output="screen"/>
+
+   <node name="spawn_robot16" pkg="gazebo" type="spawn_model"
+   args="-param robot_description_golf_green
+   -urdf
+   -z 0.30
+   -x -1.1930
+   -y 2.3040
+   -R 0
+   -P 0
+   -Y 0
+   -model ugv_16"
+     respawn="false" output="screen"/>
+
+   <node name="spawn_robot17" pkg="gazebo" type="spawn_model"
+   args="-param robot_description
+   -urdf
+   -z 0.30
+   -x -1.4091
+   -y 0.5240
+   -R 0
+   -P 0
+   -Y 0.7
+   -model ugv_17"
+     respawn="false" output="screen"/>
+
+   <node name="spawn_robot18" pkg="gazebo" type="spawn_model"
+   args="-param robot_description_golf
+   -urdf
+   -z 0.30
+   -x 2.1064
+   -y -1.5703
+   -R 0
+   -P 0
+   -Y 3
+   -model ugv_18"
+     respawn="false" output="screen"/>
+
+ </launch>
+

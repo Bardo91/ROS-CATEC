@@ -8,7 +8,7 @@ import catec_msgs.msg
 import std_msgs.msg
 
 class TargetsDetectedStamped(genpy.Message):
-  _md5sum = "4f9b488f1e1ebb563d445b9fbc7c35fa"
+  _md5sum = "4eec53625663b400eb2a57857361a4c2"
   _type = "catec_msgs/TargetsDetectedStamped"
   _has_header = True #flag to mark the presence of a Header object
   _full_text = """Header header
@@ -37,17 +37,11 @@ Target[] targets
 uint32 size
 ================================================================================
 MSG: catec_msgs/Target
-#BOTH = First and second
 uint8 BOTH=0
 uint8 FIRST=1
 uint8 SECOND=2
-uint8 THIRD=3
-uint8 FIRST_THIRD=4
-uint8 SECOND_THIRD=5
-uint8 ALL=6
 uint8 target
 Position position
-
 ================================================================================
 MSG: catec_msgs/Position
 float64 x

@@ -1,0 +1,15 @@
+<package>
+  <description brief="art_msgs">
+
+     art_msgs
+
+  </description>
+  <author>jonathan</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/art_msgs</url>
+  <depend package="rosmsg"/>
+
+</package>
+
+
