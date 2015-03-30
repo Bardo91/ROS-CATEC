@@ -54,7 +54,6 @@ double pos_inicial[2][2];
 
 ros::Subscriber agente_sub[2];
 ros::Subscriber intruder_sub[3];
-ros_catec::UavCatecROS *agente1, *agente2;
 
 void sendControlReferences(const ros::TimerEvent& te);
 
@@ -62,15 +61,17 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
 void init(int _argc, char **_argv);
 
+std::vector<ros_catec::UavCatecROS*> agents;
+
 int main(int _argc, char** _argv) {
 	cout << "Initializing main node" << endl;
 	node_name = "Patrolling_and_tracking";
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
 
+	agents.push_back(new ros_catec::UavCatecROS(_argv[1]));
+	agents.push_back(new ros_catec::UavCatecROS(_argv[2]));
 
-	agente1 = new ros_catec::UavCatecROS(_argv[1]);
-	agente2 = new ros_catec::UavCatecROS (_argv[2]);
 	//uavs.push_back(uav1);
 	//uavs.push_back(uav2);
 
@@ -80,8 +81,10 @@ int main(int _argc, char** _argv) {
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
-	agente1->takeOff();
-	agente2->takeOff();
+
+	for(unsigned i = 0; i < agents.size(); i++){
+		agents[i]->takeOff();
+	}
 
 	cout << "Main loop" << endl;
 	ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
@@ -153,10 +156,9 @@ void init(int _argc, char **_argv){
 	for (int i=0; i<2; i++) {
 		sleep(5);
 		double position[3];
-		if(i == 0)
-			agente1->position(position);
-		else
-			agente2->position(position);
+
+		agents[i]->position(position);
+
 		agente[i]= new QuadPatrolling(i, position[0], position[1], position[2], speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
 		agente[i]->init_cont(num_ag, 1.0);
 		cambio[i]=0;
@@ -181,10 +183,8 @@ void sendControlReferences(const ros::TimerEvent& te) {
 
 	for (int i=0; i<2; i++) {
 		double position[3];
-		if(i == 0)
-			agente1->position(position);
-		else
-			agente2->position(position);
+
+		agents[i]->position(position);
 
 		agente[i]->x=position[0];
 		agente[i]->y=position[1];
@@ -265,10 +265,8 @@ void sendControlReferences(const ros::TimerEvent& te) {
 				res.header.frame_id = node_name;
 				res.header.stamp = ros::Time::now();
 
-				if(i == 0)
-					agente1->move(res);
-				else
-					agente2->move(res);
+				agents[i]->move(res);
+
 		} else {
 			agente[i]->estado=1;
 
@@ -298,10 +296,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			res.header.frame_id = node_name;
 			res.header.stamp = ros::Time::now();
 
-			if(i == 0)
-				agente1->move(res);
-			else
-				agente2->move(res);
+			agents[i]->move(res);
 		}
 	}
 }
