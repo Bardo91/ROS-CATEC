@@ -1,15 +1,13 @@
 #include <ros/ros.h>
-#include <fstream>
-#include <actionlib/client/simple_action_client.h>
 #include <catec_msgs/UALStateStamped.h>
 #include <catec_msgs/Position.h>
-#include <cassert>
 #include <geometry_msgs/Point.h>
 
-#include <ros/ros.h>
 
-#include <iostream>
+#include <cassert>
 #include <cmath>
+#include <fstream>
+#include <iostream>
 #include <string>
 
 
@@ -18,7 +16,7 @@ using namespace catec_msgs;
 
 #include "quad.h"
 #include "radio.h"
-#include "UavCatecRos.h"
+#include <testbed/control/UavCatecRos.h>
 
 string node_name;
 

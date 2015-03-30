@@ -495,22 +495,13 @@
 		<pathentry kind="mac" name="__GXX_RTTI" path="" value="1"/>
 		<pathentry kind="mac" name="__EXCEPTIONS" path="" value="1"/>
 		<pathentry kind="mac" name="_GNU_SOURCE" path="" value="1"/>
-		<pathentry include="/home/catec-ros/fuerte_workspace/navigation/command_dispatcher/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/fuerte/share/actionlib/include" kind="inc" path="" system="true"/>
+		<pathentry kind="mac" name="INCLUDE_ROS_LIBRARY" path="" value=""/>
 		<pathentry include="/opt/ros/fuerte/include" kind="inc" path="" system="true"/>
-		<pathentry include="/home/catec-ros/fuerte_workspace/catec_data_types/catec_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/home/catec-ros/fuerte_workspace/catec_data_types/catec_actions_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/local/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/x86_64-linux-gnu" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/c++/4.6" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/c++/4.6/x86_64-linux-gnu" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/c++/4.6/backward" kind="inc" path="" system="true"/>
 		<pathentry include="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
 		<pathentry include="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_srvs/srv_gen/cpp/include" kind="inc" path="" system="true"/>
 		<pathentry include="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_actions_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
+		<pathentry include="/home/bardo91/programming/ROS-CATEC/libs/grvc_catec/library/src" kind="inc" path="" system="true"/>
+		<pathentry include="/usr/include/c++/4.6.3" kind="inc" path="" system="true"/>
 		<pathentry excluding="**/CMakeFiles/" kind="out" path=""/>
 		<pathentry kind="src" path=""/>
 	</storageModule>
