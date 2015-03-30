@@ -54,7 +54,7 @@ double pos_inicial[2][2];
 
 ros::Subscriber agente_sub[2];
 ros::Subscriber intruder_sub[3];
-UavCatecROS *agente1, *agente2;
+ros_catec::UavCatecROS *agente1, *agente2;
 
 void sendControlReferences(const ros::TimerEvent& te);
 
@@ -69,8 +69,8 @@ int main(int _argc, char** _argv) {
 	ros::NodeHandle n;
 
 
-	agente1 = new UavCatecROS(_argv[1]);
-	agente2 = new UavCatecROS (_argv[2]);
+	agente1 = new ros_catec::UavCatecROS(_argv[1]);
+	agente2 = new ros_catec::UavCatecROS (_argv[2]);
 	//uavs.push_back(uav1);
 	//uavs.push_back(uav2);
 

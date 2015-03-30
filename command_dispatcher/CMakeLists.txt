@@ -48,7 +48,7 @@ rosbuild_add_executable(${prjName} 	src/patrolling_and_tracking.cpp
 									src/radio.cpp 
 									src/quad.cpp )
 
-target_link_libraries	(${prjName}	libgrvc)
+target_link_libraries	(${prjName}	grvc)
 
 rosbuild_link_boost	(${prjName} 	thread	
 					signals	
