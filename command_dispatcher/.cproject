@@ -28,8 +28,9 @@
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.544525919" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="INCLUDE_ROS_LIBRARY"/>
 								</option>
-								<option id="gnu.c.compiler.option.include.paths.1920758985" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+								<option id="gnu.c.compiler.option.include.paths.1920758985" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/opt/ros/fuerte/include"/>
+									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/libs/grvc_catec/library/src"/>
 									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_actions_msgs/msg_gen/cpp/include"/>
 									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_msgs/msg_gen/cpp/include"/>
 									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_srvs/srv_gen/cpp/include"/>
@@ -43,8 +44,9 @@
 								<option id="gnu.cpp.compiler.option.preprocessor.def.872998186" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="INCLUDE_ROS_LIBRARY"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.include.paths.175788236" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+								<option id="gnu.cpp.compiler.option.include.paths.175788236" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/opt/ros/fuerte/include"/>
+									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/libs/grvc_catec/library/src"/>
 									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_actions_msgs/msg_gen/cpp/include"/>
 									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_srvs/srv_gen/cpp/include"/>
 									<listOptionValue builtIn="false" value="/home/bardo91/programming/ROS-CATEC/CATEC_dataTypes/catec_msgs/msg_gen/cpp/include"/>

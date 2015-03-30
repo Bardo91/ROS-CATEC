@@ -30,6 +30,9 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
+## Add define to tell library that will use ROS definition
+ add_definitions(-DINCLUDE_ROS_LIBRARY)
+
 ## Compiling GRVC library
 set(INCLUDE_GRVC ../libs/grvc_catec/library/src)
 rosbuild_add_library(grvc 	${INCLUDE_GRVC}/testbed/control/RosAgent.cpp 
@@ -38,7 +41,7 @@ rosbuild_add_library(grvc 	${INCLUDE_GRVC}/testbed/control/RosAgent.cpp
 
 ## Compiling Patrolling and tracking test
 set(prjName patrolling_and_tracking)
-include_directories(${INCLUDE_GRVC})
+include_directories( ${INCLUDE_GRVC} )
 
 rosbuild_add_boost_directories()
 rosbuild_add_executable(${prjName} 	src/patrolling_and_tracking.cpp 
