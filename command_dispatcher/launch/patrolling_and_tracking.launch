@@ -3,9 +3,9 @@
 	<arg name="uavId1" 			value="uav_4" />
 	<arg name="uavId2" 			value="uav_7" />
 	<arg name="uavH1" 			value="2" />
-	<arg name="uavH2"			value="1.5" />
-	<arg name="intruderId1" 	value="uav_17" />
-	<arg name="intruderId2" 	value="uav_16" />
+	<arg name="uavH2"			value="2.5" />
+	<arg name="intruderId1" 	value="ugv_17" />
+	<arg name="intruderId2" 	value="ugv_16" />
 
 	<node 
 		name="patrolling_and_tracking_test" 
