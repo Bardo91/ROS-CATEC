@@ -1,0 +1,3 @@
+[submodule "libs/grvc_catec"]
+	path = libs/grvc_catec
+	url = https://github.com/Bardo91/grvc_catec.git
