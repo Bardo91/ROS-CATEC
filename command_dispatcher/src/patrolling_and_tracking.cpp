@@ -37,6 +37,7 @@ UALStateStamped intruder_state[3];
 int num_ag;
 int num_intruders;
 int cambio[2];
+double speed_max[2];
 // double path[4][2]; <--- Changed
 double path[][2] = {	{-5.0, 	-5.0},
 						{-5.0, 	5.0},
@@ -104,7 +105,7 @@ void init(int _argc, char **_argv){
 	dir_ini[0] = 1;
 	dir_ini[1] = -1;
 
-	double speed_max[2];
+	
 	speed_max[0] = 0.5;
 	speed_max[1] = 0.7;
 
@@ -259,7 +260,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 				res.c_reference_rw.position.x=agente[i]->tasks[agente[i]->plan[0]][3];
 				res.c_reference_rw.position.y=agente[i]->tasks[agente[i]->plan[0]][4];
 				res.c_reference_rw.position.z=h_des[i];
-
+				res.c_reference_rw.cruise = speed_max[i];
 				agente[i]->monitoring_tasks (tasks_in, t);
 
 				res.header.frame_id = node_name;
@@ -290,7 +291,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			res.c_reference_rw.position.x=path[indice[i]][0];
 			res.c_reference_rw.position.y=path[indice[i]][1];
 			res.c_reference_rw.position.z=h_des[i];
-
+			res.c_reference_rw.cruise = speed_max[i];
 			agente[i]->camino();
 
 			agente[i]->monitoring_tasks (tasks_in, t);
