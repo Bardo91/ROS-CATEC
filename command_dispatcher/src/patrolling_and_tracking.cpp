@@ -263,9 +263,6 @@ void sendControlReferences(const ros::TimerEvent& te) {
 				res.c_reference_rw.position.z=h_des[i];
 				res.c_reference_rw.cruise = speed_max[i];
 				agente[i]->monitoring_tasks (tasks_in, t);
-				cout << "uav: " << i << " Following: " << res.c_reference_rw.position.x << ", " << res.c_reference_rw.position.y << ", " << res.c_reference_rw.position.z << endl;
-
-
 
 				res.header.frame_id = node_name;
 				res.header.stamp = ros::Time::now();
