@@ -36,8 +36,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 ## Compiling GRVC library
 set(INCLUDE_GRVC ../libs/grvc_catec/library/src)
 rosbuild_add_library(grvc 	${INCLUDE_GRVC}/testbed/control/RosAgent.cpp 
-				${INCLUDE_GRVC}/testbed/control/UavCatecRos.cpp 
-				${INCLUDE_GRVC}/testbed/control/UgvCatecRos.cpp )
+							${INCLUDE_GRVC}/testbed/control/UavCatecRos.cpp 
+							${INCLUDE_GRVC}/testbed/control/UgvCatecRos.cpp )
 
 ## Compiling Patrolling and tracking test
 set(prjName patrolling_and_tracking)
@@ -45,10 +45,8 @@ include_directories( ${INCLUDE_GRVC} )
 
 rosbuild_add_boost_directories()
 rosbuild_add_executable(${prjName} 	src/patrolling_and_tracking.cpp 
-					src/radio.cpp 
-					src/quad.cpp 
-					src/UavCatecRos.cpp
-					src/core/agents/RosAgent.cpp)
+									src/radio.cpp 
+									src/quad.cpp )
 
 target_link_libraries	(${prjName}	libgrvc)
 
