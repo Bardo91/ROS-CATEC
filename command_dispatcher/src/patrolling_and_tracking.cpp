@@ -21,47 +21,43 @@ using namespace catec_msgs;
 string node_name;
 
 string intruder_full_id[5];
-//QuadPatrolling *agente[2];
+ros::Subscriber intruder_sub[3];
+UALStateStamped intruder_state[3];
+
 std::vector<QuadPatrolling *> agents;
 std::vector<ros_catec::UavCatecROS*> controlAgents;
 class_radio *radio;
-ros::Subscriber intruder_sub[3];
-
-
 
 double t;
 const double dt=1.0/10.0;
-double h_des[2];
 
 //Last state of our uav
-UALStateStamped intruder_state[3];
 
 int num_ag;
 int num_intruders;
+
+double h_des[2];
 int cambio[2];
 double speed_max[2];
-// double path[4][2]; <--- Changed
+int indice[2];
+int tam_path = 9;
 double path[][2] = {	{-5.0, 	-5.0},
 						{-5.0, 	5.0},
 						{0.0,	-5.0},
+						{0.0, 	0.0},
+						{5.0, 	0.0},
 						{5.0,	5.0},
 						{5.0,	-5.0},
 						{0.0, 	5.0},
 						{-5.0,	-5.0}
 					};
-
-int tam_path = 7;
-int indice[2];
-double tasks_in [MAX_TASKS][TAM_TASKS];
 double pos_inicial[2][2];
+double tasks_in [MAX_TASKS][TAM_TASKS];
 
 
 void sendControlReferences(const ros::TimerEvent& te);
-
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
-
 void init(int _argc, char **_argv);
-
 
 int main(int _argc, char** _argv) {
 	cout << "Initializing main node" << endl;
@@ -74,11 +70,10 @@ int main(int _argc, char** _argv) {
 
 	init(_argc, _argv);
 
-	cout << "Taking of controlAgents" << endl;
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
-
+	cout << "Taking off controlAgents" << endl;
 	for(unsigned i = 0; i < controlAgents.size(); i++){
 		controlAgents[i]->takeOff();
 	}
