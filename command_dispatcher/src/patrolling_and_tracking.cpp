@@ -74,7 +74,17 @@ int main(int _argc, char** _argv) {
 	cout << "Taking off controlAgents" << endl;
 	for(unsigned i = 0; i < controlAgents.size(); i++){
 		controlAgents[i]->takeOff();
+
+		double position[3];
+		controlAgents[i]->position(position);
+		ControlReferenceRwStamped res = controlAgents[i]->reference();
+		res.c_reference_rw.position.x = position[0];
+		res.c_reference_rw.position.y = position[1];
+		res.c_reference_rw.position.z = h_des[i];
+		controlAgents[i]->move(res);
+
 	}
+	usleep(2000000);
 
 	cout << "Main loop" << endl;
 	ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
