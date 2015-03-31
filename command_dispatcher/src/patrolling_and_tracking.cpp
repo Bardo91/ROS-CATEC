@@ -20,9 +20,9 @@ using namespace catec_msgs;
 
 string node_name;
 
-string intruder_full_id[5];
-ros::Subscriber intruder_sub[3];
-UALStateStamped intruder_state[3];
+string 			*intruder_full_id;
+ros::Subscriber *intruder_sub;
+UALStateStamped *intruder_state;
 
 std::vector<QuadPatrolling *> agents;
 std::vector<ros_catec::UavCatecROS*> controlAgents;
@@ -171,9 +171,14 @@ void init(int _argc, char **_argv){
 	intruderIds.getline(buffer, BUFF_SIZE);
 	num_intruders = atoi(buffer);
 
+	intruder_full_id 	= new std::string[num_intruders];
+	intruder_sub 		= new ros::Subscriber[num_intruders];
+	intruder_state		= new UALStateStamped[num_intruders];
+
 	for (int i=0; i<num_intruders; i++) {
 		intruderIds.getline(buffer, BUFF_SIZE);
 		std::string topicname(buffer);
+		intruder_full_id[i] = topicname;
 		topicname.append("/ual_state");
 		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
 	}
@@ -266,19 +271,19 @@ void sendControlReferences(const ros::TimerEvent& te) {
 		}
 
 		if (tam_plan>0) {
-				agents[i]->estado=2;
-				agents[i]->dir=-1;
-				agents[i]->ind=0;
-				res.c_reference_rw.position.x=agents[i]->tasks[agents[i]->plan[0]][3];
-				res.c_reference_rw.position.y=agents[i]->tasks[agents[i]->plan[0]][4];
-				res.c_reference_rw.position.z=h_des[i];
-				res.c_reference_rw.cruise = speed_max[i];
-				agents[i]->monitoring_tasks (tasks_in, t);
+			agents[i]->estado=2;
+			agents[i]->dir=-1;
+			agents[i]->ind=0;
+			res.c_reference_rw.position.x=agents[i]->tasks[agents[i]->plan[0]][3];
+			res.c_reference_rw.position.y=agents[i]->tasks[agents[i]->plan[0]][4];
+			res.c_reference_rw.position.z=h_des[i];
+			res.c_reference_rw.cruise = speed_max[i];
+			agents[i]->monitoring_tasks (tasks_in, t);
 
-				res.header.frame_id = node_name;
-				res.header.stamp = ros::Time::now();
+			res.header.frame_id = node_name;
+			res.header.stamp = ros::Time::now();
 
-				controlAgents[i]->move(res);
+			controlAgents[i]->move(res);
 
 		} else {
 			agents[i]->estado=1;
@@ -317,7 +322,7 @@ void sendControlReferences(const ros::TimerEvent& te) {
 void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state) {
 	const std::string name_node = state->header.frame_id; //getPublisherName();
 	for (int i=0; i<num_intruders; i++) {
-		if (strcmp(name_node.c_str(),intruder_full_id[i].c_str())==0) {
+		if (strcmp(name_node.c_str(),intruder_full_id[i].c_str())==0) { // 666 TODO check if necessary
 			intruder_state[i] = *state;
 			tasks_in[i][0]=i;
 		}
