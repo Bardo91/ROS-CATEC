@@ -1,62 +1,66 @@
 <?xml version="1.0"?>
 <launch>
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_1/flying" value="1" />
+	<param name="uav_1/amax" value="16" type="double" />
+	<param name="uav_1/vmax" value="2" type="double" />
+	<param name="uav_1/anglemax" value="90" type="double" />
+	<param name="uav_1/transition_time" value="15.0" type="double" />
 
-   <!-- Here it is configured which quadrotors are going to be used -->
-   <arg name="uav_1/flying" value="1" />
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_2/flying" value="1" />
+	<param name="uav_2/amax" value="16" type="double" />
+	<param name="uav_2/vmax" value="2" type="double" />
+	<param name="uav_2/anglemax" value="90" type="double" />
+	<param name="uav_2/transition_time" value="15.0" type="double" />
 
-     <!-- maximum velocity and acceleration for each quadrotor -->
-     <param name="uav_1/amax" value="16" type="double" />
-     <param name="uav_1/vmax" value="2" type="double" />
-     <param name="uav_1/anglemax" value="90" type="double" />
-     <param name="uav_1/transition_time" value="15.0" type="double" />
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_4/flying" value="1" />
+	<param name="uav_4/amax" value="16" type="double" />
+	<param name="uav_4/vmax" value="2" type="double" />
+	<param name="uav_4/anglemax" value="90" type="double" />
+	<param name="uav_4/transition_time" value="15.0" type="double" />
 
-   <!-- Here it is configured which quadrotors are going to be used -->
-   <arg name="uav_5/flying" value="1" />
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_5/flying" value="1" />
+	<param name="uav_5/amax" value="16" type="double" />
+	<param name="uav_5/vmax" value="2" type="double" />
+	<param name="uav_5/anglemax" value="90" type="double" />
+	<param name="uav_5/transition_time" value="15.0" type="double" />
 
-     <!-- maximum velocity and acceleration for each quadrotor -->
-     <param name="uav_5/amax" value="16" type="double" />
-     <param name="uav_5/vmax" value="2" type="double" />
-     <param name="uav_5/anglemax" value="90" type="double" />
-     <param name="uav_5/transition_time" value="15.0" type="double" />
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_6/flying" value="1" />
+	<param name="uav_6/amax" value="16" type="double" />
+	<param name="uav_6/vmax" value="2" type="double" />
+	<param name="uav_6/anglemax" value="90" type="double" />
+	<param name="uav_6/transition_time" value="15.0" type="double" />
 
-   <!-- Here it is configured which quadrotors are going to be used -->
-   <arg name="uav_7/flying" value="1" />
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_7/flying" value="1" />
+	<param name="uav_7/amax" value="50" type="double" />
+	<param name="uav_7/vmax" value="10" type="double" />
+	<param name="uav_7/anglemax" value="90" type="double" />
+	<param name="uav_7/transition_time" value="15.0" type="double" />
 
-     <!-- maximum velocity and acceleration for each quadrotor -->
-     <param name="uav_7/amax" value="50" type="double" />
-     <param name="uav_7/vmax" value="10" type="double" />
-     <param name="uav_7/anglemax" value="90" type="double" />
-     <param name="uav_7/transition_time" value="15.0" type="double" />
+	<!-- The configuration parameters are given their values -->
+	<param name="uav_1/flying" value="$(arg uav_1/flying)" type="bool" />
+	<param name="uav_2/flying" value="$(arg uav_2/flying)" type="bool" />
+	<param name="uav_4/flying" value="$(arg uav_4/flying)" type="bool" />
+	<param name="uav_5/flying" value="$(arg uav_5/flying)" type="bool" />
+	<param name="uav_6/flying" value="$(arg uav_6/flying)" type="bool" />
+	<param name="uav_7/flying" value="$(arg uav_7/flying)" type="bool" />
 
-   <!-- Here it is configured which quadrotors are going to be used -->
-   <arg name="uav_4/flying" value="1" />
+	<!--UAVs Abstraction Layers -->
+	<node name="uav_1" pkg="CATEC_uav" type="uav_gazebo" args="1 1" if="$(arg uav_1/flying)" output="screen"/>
+	<node name="uav_2" pkg="CATEC_uav" type="uav_gazebo" args="2 1" if="$(arg uav_2/flying)" output="screen"/>
+	<node name="uav_4" pkg="CATEC_uav" type="uav_gazebo" args="4 1" if="$(arg uav_4/flying)" output="screen"/>
+	<node name="uav_5" pkg="CATEC_uav" type="uav_gazebo" args="5 1" if="$(arg uav_5/flying)" output="screen"/>
+	<node name="uav_6" pkg="CATEC_uav" type="uav_gazebo" args="6 1" if="$(arg uav_6/flying)" output="screen"/>
+	<node name="uav_7" pkg="CATEC_uav" type="uav_gazebo" args="7 1" if="$(arg uav_7/flying)" output="screen"/>
 
-     <!-- maximum velocity and acceleration for each quadrotor -->
-     <param name="uav_4/amax" value="16" type="double" />
-     <param name="uav_4/vmax" value="2" type="double" />
-     <param name="uav_4/anglemax" value="90" type="double" />
-     <param name="uav_4/transition_time" value="15.0" type="double" />
 
-   <!-- The configuration parameters are given their values -->
-   <param name="uav_1/flying" value="$(arg uav_1/flying)" type="bool" />
-   <param name="uav_5/flying" value="$(arg uav_5/flying)" type="bool" />
-   <param name="uav_7/flying" value="$(arg uav_7/flying)" type="bool" />
-   <param name="uav_4/flying" value="$(arg uav_4/flying)" type="bool" />
-
-   <!-- Nodes will start if their /uav_i/flying parameter is true  -->
-   <!--<node name="uav_1" pkg="CATEC_uav" type="uav_gazebo" args="1 1" if="$(arg uav_1/flying)">
-   </node>-->
-
-   <!--UAVs Abstraction Layers -->
-   <node name="uav_5" pkg="CATEC_uav" type="uav_gazebo" args="5 1" if="$(arg uav_5/flying)" output="screen">
-   </node>
-   <node name="uav_7" pkg="CATEC_uav" type="uav_gazebo" args="7 1" if="$(arg uav_7/flying)" output="screen">
-   </node>
-   <node name="uav_4" pkg="CATEC_uav" type="uav_gazebo" args="4 1" if="$(arg uav_4/flying)" output="screen">
-   </node>
-
-   <!--UGVs Abstraction Layers -->
-   <include file="$(find CATEC_ugv)/launch/UGVs_AL.launch" />
+	<!--UGVs Abstraction Layers -->
+	<include file="$(find CATEC_ugv)/launch/UGVs_AL.launch" />
 
 </launch>
 
