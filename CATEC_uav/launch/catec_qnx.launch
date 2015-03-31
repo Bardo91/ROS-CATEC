@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<launch>
+
+   <!-- Simulator -->
+   <param name="use_sim_time" type="bool" value="true" />
+
+   <!-- Abstraction Layers -->
+   <include file="$(find CATEC_uav)/launch/config_vehicles_qnx.launch" />
+
+   <!-- Publish stuff to RViz -->
+   <node name="dynamic_tf" pkg="CATEC_ugv" type="dynamic_tf" args="11" output="screen" />
+
+</launch>

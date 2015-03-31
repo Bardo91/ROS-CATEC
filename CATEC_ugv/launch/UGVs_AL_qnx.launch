@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="ugv_2" pkg="CATEC_ugv" type="ugv_qnx_lineTracker" args="2 1"/>
+
+</launch>
+

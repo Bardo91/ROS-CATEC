@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<launch>
+
+	
+
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_1/flying" value="1" />
+
+	<!-- maximum velocity and acceleration for each quadrotor -->
+	<param name="uav_1/amax" value="16" type="double" />
+	<param name="uav_1/vmax" value="2" type="double" />
+	<param name="uav_1/anglemax" value="90" type="double" />
+	<param name="uav_1/transition_time" value="15.0" type="double" />
+
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_8/flying" value="1" />
+
+	<!-- maximum velocity and acceleration for each quadrotor -->
+	<param name="uav_8/amax" value="16" type="double" />
+	<param name="uav_8/vmax" value="2" type="double" />
+	<param name="uav_8/anglemax" value="90" type="double" />
+	<param name="uav_8/transition_time" value="15.0" type="double" />
+
+	<!-- Here it is configured which quadrotors are going to be used -->
+	<arg name="uav_3/flying" value="1" />
+
+	<!-- maximum velocity and acceleration for each quadrotor -->
+	<param name="uav_3/amax" value="16" type="double" />
+	<param name="uav_3/vmax" value="2" type="double" />
+	<param name="uav_3/anglemax" value="90" type="double" />
+	<param name="uav_3/transition_time" value="15.0" type="double" />
+
+
+
+	<!-- The configuration parameters are given their values -->
+	<param name="uav_1/flying" value="$(arg uav_1/flying)" type="bool" />
+	<param name="uav_8/flying" value="$(arg uav_8/flying)" type="bool" />
+	<param name="uav_3/flying" value="$(arg uav_3/flying)" type="bool" />
+
+	<!-- Nodes will start if their /uav_i/flying parameter is true  -->
+	<!--<node name="uav_1" pkg="CATEC_uav" type="uav_gazebo" args="1 1" if="$(arg uav_1/flying)">
+	</node>-->
+
+	<!--UAVs Abstraction Layers -->
+	<node name="uav_1" pkg="CATEC_uav" type="uav_qnx_hummingbird" args="1 1">
+	</node>
+	<!--node name="uav_8" pkg="CATEC_uav" type="uav_qnx_hummingbird" args="8 1" if="$(arg uav_8/flying)" output="screen">
+	</node>
+	<node name="uav_3" pkg="CATEC_uav" type="uav_qnx_hummingbird" args="3 1" if="$(arg uav_3/flying)" output="screen">
+	</node-->
+
+	<!--UGVs Abstraction Layers -->
+	<!--include file="$(find CATEC_ugv)/launch/UGVs_AL_qnx.launch" /-->
+
+<!--node name="qnx_receiver" pkg="CATEC_uav" type="qnx_hb_state_receiver"/-->
+
+</launch>
+
