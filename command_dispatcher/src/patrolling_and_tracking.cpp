@@ -33,15 +33,16 @@ const double dt=1.0/10.0;
 
 //Last state of our uav
 
-int num_ag;
+unsigned num_ag;
 int num_intruders;
 
-double h_des[2];
-int cambio[2];
-double speed_max[2];
-int indice[2];
-int tam_path = 9;
-double path[][2] = {	{-5.0, 	-5.0},
+double *h_des;
+double *speed_max;
+int *cambio;
+int *indice;
+
+int tam_path = 9;						// Not generalized
+double path[][2] = {	{-5.0, 	-5.0},	// Not generalized
 						{-5.0, 	5.0},
 						{0.0,	-5.0},
 						{0.0, 	0.0},
@@ -51,8 +52,8 @@ double path[][2] = {	{-5.0, 	-5.0},
 						{0.0, 	5.0},
 						{-5.0,	-5.0}
 					};
-double pos_inicial[2][2];
-double tasks_in [MAX_TASKS][TAM_TASKS];
+double pos_inicial[2][2];				// Not generalized
+double tasks_in [MAX_TASKS][TAM_TASKS];	// Not generalized
 
 
 void sendControlReferences(const ros::TimerEvent& te);
@@ -64,9 +65,6 @@ int main(int _argc, char** _argv) {
 	node_name = "Patrolling_and_tracking";
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
-
-	controlAgents.push_back(new ros_catec::UavCatecROS(_argv[1]));
-	controlAgents.push_back(new ros_catec::UavCatecROS(_argv[2]));
 
 	init(_argc, _argv);
 
@@ -87,19 +85,54 @@ int main(int _argc, char** _argv) {
 }
 
 void init(int _argc, char **_argv){
-	num_ag = 2;
-	int dir_ini[2];
-	dir_ini[0] = 1;
-	dir_ini[1] = -1;
+	std::string exePath(_argv[0]);
+	exePath = exePath.substr(0, exePath.find("patrolling_and_tracking"));
 
-	
-	speed_max[0] = 0.5;
-	speed_max[1] = 0.7;
+	// Open config files.
+	const int BUFF_SIZE = 1024;
+	char buffer[BUFF_SIZE];
 
-	h_des[0] = atoi(_argv[3]);
-	h_des[1] = atoi(_argv[4]);
+	cout << exePath + "agent_ids" << endl;
 
-	double range = 10;
+	ifstream agentIds((exePath + "agent_ids").c_str());
+	assert(agentIds.is_open());
+	agentIds.getline(buffer, BUFF_SIZE);
+	num_ag = atoi(buffer);
+
+	// Allocating.
+	h_des 		= new double[num_ag];
+	speed_max 	= new double[num_ag];
+	int *dir_ini = new int[num_ag];
+	cambio 		= new int[num_ag];
+	indice 		= new int[num_ag];
+
+	// Init agents
+	for(unsigned i = 0; i < num_ag ; i++){
+		agentIds.getline(buffer, BUFF_SIZE);
+		std::string agentInfo(buffer);
+
+		unsigned index 	= agentInfo.find('\t');
+		controlAgents.push_back(new ros_catec::UavCatecROS(agentInfo.substr(0, index)));
+		agentInfo 		= agentInfo.substr(index+1, agentInfo.size());
+		index 			= agentInfo.find('\t');
+
+		h_des[i] 		= atof(agentInfo.substr(0, index).c_str());
+		agentInfo 		= agentInfo.substr(index+1, agentInfo.size());
+		index 			= agentInfo.find('\n');
+
+		speed_max[i] 	= atof(agentInfo.substr(0, index).c_str());
+		dir_ini[i] 		= (i%2)*2 - 1;	// 1 or -1
+
+		double range = 10;
+
+		double position[3];
+		controlAgents[i]->position(position);
+
+		agents.push_back(new QuadPatrolling(i, position[0], position[1], position[2], speed_max[i], range, 1.0, path, tam_path, dir_ini[i]));
+		agents[i]->init_cont(num_ag, 1.0);
+		cambio[i]=0;
+		indice[i]=i+1;
+	}
 
 	// Waypoints were defined previously
 
@@ -134,19 +167,6 @@ void init(int _argc, char **_argv){
 		topicname=intruder_full_id[i];
 		topicname.append("/ual_state");
 		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
-	}
-
-	// Taking off and related...
-	cout << "Configuring quads" << endl;
-	for (int i=0; i<num_ag; i++) {
-		sleep(5);
-		double position[3];
-		controlAgents[i]->position(position);
-
-		agents.push_back(new QuadPatrolling(i, position[0], position[1], position[2], speed_max[i], range, 1.0, path, tam_path, dir_ini[i]));
-		agents[i]->init_cont(num_ag, 1.0);
-		cambio[i]=0;
-		indice[i]=i+1;
 	}
 }
 
