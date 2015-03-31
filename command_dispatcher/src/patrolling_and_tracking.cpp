@@ -21,8 +21,11 @@ using namespace catec_msgs;
 string node_name;
 
 string intruder_full_id[5];
-QuadPatrolling *agente[2];
+//QuadPatrolling *agente[2];
+std::vector<QuadPatrolling *> agents;
+std::vector<ros_catec::UavCatecROS*> controlAgents;
 class_radio *radio;
+ros::Subscriber intruder_sub[3];
 
 
 
@@ -52,8 +55,6 @@ int indice[2];
 double tasks_in [MAX_TASKS][TAM_TASKS];
 double pos_inicial[2][2];
 
-ros::Subscriber agente_sub[2];
-ros::Subscriber intruder_sub[3];
 
 void sendControlReferences(const ros::TimerEvent& te);
 
@@ -61,7 +62,6 @@ void Intruder_StateCallBack(const UALStateStamped::ConstPtr& state);
 
 void init(int _argc, char **_argv);
 
-std::vector<ros_catec::UavCatecROS*> agents;
 
 int main(int _argc, char** _argv) {
 	cout << "Initializing main node" << endl;
@@ -69,34 +69,24 @@ int main(int _argc, char** _argv) {
 	ros::init(_argc,_argv,node_name);
 	ros::NodeHandle n;
 
-	agents.push_back(new ros_catec::UavCatecROS(_argv[1]));
-	agents.push_back(new ros_catec::UavCatecROS(_argv[2]));
-
-	//uavs.push_back(uav1);
-	//uavs.push_back(uav2);
+	controlAgents.push_back(new ros_catec::UavCatecROS(_argv[1]));
+	controlAgents.push_back(new ros_catec::UavCatecROS(_argv[2]));
 
 	init(_argc, _argv);
 
-	cout << "Taking of agents" << endl;
+	cout << "Taking of controlAgents" << endl;
 	ros::AsyncSpinner spinner(0);
 	spinner.start();
 
 
-	for(unsigned i = 0; i < agents.size(); i++){
-		agents[i]->takeOff();
+	for(unsigned i = 0; i < controlAgents.size(); i++){
+		controlAgents[i]->takeOff();
 	}
 
 	cout << "Main loop" << endl;
 	ros::Timer timer = n.createTimer(ros::Duration(dt), sendControlReferences);
 
 	while(ros::ok()) {
-		/*for(unsigned i = 0; i < uavs.size(); i++){
-			ControlReferenceRwStamped reference = uav1.reference();
-			reference.c_reference_rw.position.x = i*2;
-			reference.c_reference_rw.position.y = 0.0;
-			reference.c_reference_rw.position.z = 1.5;
-			uavs[i].move(reference);
-		}*/
 		sleep(10);
 	}
 }
@@ -153,14 +143,13 @@ void init(int _argc, char **_argv){
 
 	// Taking off and related...
 	cout << "Configuring quads" << endl;
-	for (int i=0; i<2; i++) {
+	for (int i=0; i<num_ag; i++) {
 		sleep(5);
 		double position[3];
+		controlAgents[i]->position(position);
 
-		agents[i]->position(position);
-
-		agente[i]= new QuadPatrolling(i, position[0], position[1], position[2], speed_max[i], range, 1.0, path, tam_path, dir_ini[i]);
-		agente[i]->init_cont(num_ag, 1.0);
+		agents.push_back(new QuadPatrolling(i, position[0], position[1], position[2], speed_max[i], range, 1.0, path, tam_path, dir_ini[i]));
+		agents[i]->init_cont(num_ag, 1.0);
 		cambio[i]=0;
 		indice[i]=i+1;
 	}
@@ -181,19 +170,19 @@ void sendControlReferences(const ros::TimerEvent& te) {
 
 	t=t+dt;
 
-	for (int i=0; i<2; i++) {
+	for (int i=0; i<num_ag; i++) {
 		double position[3];
 
-		agents[i]->position(position);
+		controlAgents[i]->position(position);
 
-		agente[i]->x=position[0];
-		agente[i]->y=position[1];
-		agente[i]->z=position[2];
+		agents[i]->x=position[0];
+		agents[i]->y=position[1];
+		agents[i]->z=position[2];
 
-		posiciones[i][POS_X]=agente[i]->x;
-		posiciones[i][POS_Y]=agente[i]->y;
-		posiciones[i][POS_Z]=agente[i]->z;
-		}
+		posiciones[i][POS_X]=position[0];
+		posiciones[i][POS_Y]=position[1];
+		posiciones[i][POS_Z]=position[2];
+	}
 
 
 	for (int i=0; i<num_intruders; i++) {
@@ -212,12 +201,12 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			msg_sent[2]=1;
 			radio->sending(i, msg_sent);
 		} else {
-			id_cont=agente[i]->decide_cont(msg_env,tam);
+			id_cont=agents[i]->decide_cont(msg_env,tam);
 			msg_sent[0]=i;
 			msg_sent[1]=id_cont;
 			msg_sent[2]=2;
 			radio->sending(i, msg_sent);
-			agente[i]->id_contactado=id_cont;
+			agents[i]->id_contactado=id_cont;
 		}
 
 		for (int k=0;k<AG_MAX;k++){
@@ -226,77 +215,77 @@ void sendControlReferences(const ros::TimerEvent& te) {
 			}
 		}
 
-		agente[i]->incr_cont (dt);
-		quad_cont[i]=agente[i]->id_contactado;
+		agents[i]->incr_cont (dt);
+		quad_cont[i]=agents[i]->id_contactado;
 		for (int j=0;j<MAX_TASKS;j++){
 			for (int k=0;k<TAM_TASKS;k++){
-				tasks_before[i][j][k]=agente[i]->tasks[j][k];
+				tasks_before[i][j][k]=agents[i]->tasks[j][k];
 			}
 		}
 
-		agentes_before[i]=agente[i]->calculaAgente();
+		agentes_before[i]=agents[i]->calculaAgente();
 	}
 
 	for (int i=0; i<num_ag; i++){
-		if (agente[i]->id_contactado>=0 && quad_cont[agente[i]->id_contactado]==i) {
-			agente[i]->join_tasks(tasks_before[agente[i]->id_contactado],agente[i]->id_contactado);
-			agente[i]->task_allocation_one (agentes_before[agente[i]->id_contactado], t);
-		} else if (agente[i]->tarea_nueva==1) {
-			agente[i]->autoplan(t);
-			agente[i]->tarea_nueva=0;
+		if (agents[i]->id_contactado>=0 && quad_cont[agents[i]->id_contactado]==i) {
+			agents[i]->join_tasks(tasks_before[agents[i]->id_contactado],agents[i]->id_contactado);
+			agents[i]->task_allocation_one (agentes_before[agents[i]->id_contactado], t);
+		} else if (agents[i]->tarea_nueva==1) {
+			agents[i]->autoplan(t);
+			agents[i]->tarea_nueva=0;
 		}
 
 		tam_plan=0;
 
-		while(agente[i]->plan[tam_plan]>-1){
+		while(agents[i]->plan[tam_plan]>-1){
 			tam_plan++;
 		}
 
 		if (tam_plan>0) {
-				agente[i]->estado=2;
-				agente[i]->dir=-1;
-				agente[i]->ind=0;
-				res.c_reference_rw.position.x=agente[i]->tasks[agente[i]->plan[0]][3];
-				res.c_reference_rw.position.y=agente[i]->tasks[agente[i]->plan[0]][4];
+				agents[i]->estado=2;
+				agents[i]->dir=-1;
+				agents[i]->ind=0;
+				res.c_reference_rw.position.x=agents[i]->tasks[agents[i]->plan[0]][3];
+				res.c_reference_rw.position.y=agents[i]->tasks[agents[i]->plan[0]][4];
 				res.c_reference_rw.position.z=h_des[i];
 				res.c_reference_rw.cruise = speed_max[i];
-				agente[i]->monitoring_tasks (tasks_in, t);
+				agents[i]->monitoring_tasks (tasks_in, t);
 
 				res.header.frame_id = node_name;
 				res.header.stamp = ros::Time::now();
 
-				agents[i]->move(res);
+				controlAgents[i]->move(res);
 
 		} else {
-			agente[i]->estado=1;
+			agents[i]->estado=1;
 
-			if (agente[i]->id_contactado>0 && agentes_before[agente[i]->id_contactado].estado==1) {
-				mensaje_rcv.id			=agente[i]->id_contactado;
-				mensaje_rcv.dir			=agentes_before[agente[i]->id_contactado].dir;
-				mensaje_rcv.vel_max		=agentes_before[agente[i]->id_contactado].vel_max;
-				mensaje_rcv.long_izq	=agentes_before[agente[i]->id_contactado].long_izq;
-				mensaje_rcv.long_dcha	=agentes_before[agente[i]->id_contactado].long_dcha;
-				mensaje_rcv.speed_izq	=agentes_before[agente[i]->id_contactado].speed_izq;
-				mensaje_rcv.speed_dcha	=agentes_before[agente[i]->id_contactado].speed_dcha;
-				mensaje_rcv.init_ind	=agentes_before[agente[i]->id_contactado].init_ind;
-				mensaje_rcv.ind			=agentes_before[agente[i]->id_contactado].ind;
+			if (agents[i]->id_contactado>0 && agentes_before[agents[i]->id_contactado].estado==1) {
+				mensaje_rcv.id			=agents[i]->id_contactado;
+				mensaje_rcv.dir			=agentes_before[agents[i]->id_contactado].dir;
+				mensaje_rcv.vel_max		=agentes_before[agents[i]->id_contactado].vel_max;
+				mensaje_rcv.long_izq	=agentes_before[agents[i]->id_contactado].long_izq;
+				mensaje_rcv.long_dcha	=agentes_before[agents[i]->id_contactado].long_dcha;
+				mensaje_rcv.speed_izq	=agentes_before[agents[i]->id_contactado].speed_izq;
+				mensaje_rcv.speed_dcha	=agentes_before[agents[i]->id_contactado].speed_dcha;
+				mensaje_rcv.init_ind	=agentes_before[agents[i]->id_contactado].init_ind;
+				mensaje_rcv.ind			=agentes_before[agents[i]->id_contactado].ind;
 			} else{
 				mensaje_rcv.id=-1;
 			}
-			agente[i]->pathpartition_cv (mensaje_rcv);
-			indice[i]=agente[i]->ind;
+			agents[i]->pathpartition_cv (mensaje_rcv);
+			indice[i]=agents[i]->ind;
 			res.c_reference_rw.position.x=path[indice[i]][0];
 			res.c_reference_rw.position.y=path[indice[i]][1];
 			res.c_reference_rw.position.z=h_des[i];
 			res.c_reference_rw.cruise = speed_max[i];
-			agente[i]->camino();
+			agents[i]->camino();
 
-			agente[i]->monitoring_tasks (tasks_in, t);
+			agents[i]->monitoring_tasks (tasks_in, t);
 
 			res.header.frame_id = node_name;
 			res.header.stamp = ros::Time::now();
 
-			agents[i]->move(res);
+			controlAgents[i]->move(res);
 		}
 	}
 }
