@@ -85,14 +85,20 @@ int main(int _argc, char** _argv) {
 }
 
 void init(int _argc, char **_argv){
+	//-----------------------------------------------------------------------------------------------------------------
+	cout << "Initalizing main node" << endl;
+	node_name = "Patrolling_and_tracking";
+	ros::init(_argc,_argv,node_name);
+	ros::NodeHandle n;
+
+
 	std::string exePath(_argv[0]);
 	exePath = exePath.substr(0, exePath.find("patrolling_and_tracking"));
 
-	// Open config files.
+	//-----------------------------------------------------------------------------------------------------------------
+	// Init Agents
 	const int BUFF_SIZE = 1024;
 	char buffer[BUFF_SIZE];
-
-	cout << exePath + "agent_ids" << endl;
 
 	ifstream agentIds((exePath + "agent_ids").c_str());
 	assert(agentIds.is_open());
@@ -112,7 +118,8 @@ void init(int _argc, char **_argv){
 		std::string agentInfo(buffer);
 
 		unsigned index 	= agentInfo.find('\t');
-		controlAgents.push_back(new ros_catec::UavCatecROS(agentInfo.substr(0, index)));
+		std::string agentName = agentInfo.substr(0, index);
+		controlAgents.push_back(new ros_catec::UavCatecROS(agentName));
 		agentInfo 		= agentInfo.substr(index+1, agentInfo.size());
 		index 			= agentInfo.find('\t');
 
@@ -134,12 +141,10 @@ void init(int _argc, char **_argv){
 		indice[i]=i+1;
 	}
 
-	// Waypoints were defined previously
-
-	// Intruder Data
-	num_intruders=2;
-	intruder_full_id[0] = _argv[5];
-	intruder_full_id[1] = _argv[6];
+	//-----------------------------------------------------------------------------------------------------------------
+	// Init radio
+	cout << "Initalizing radio" << endl;
+	radio = new class_radio(0, 10.0, num_ag);
 
 	//-----------------------------------------------------------------------------------------------------------------
 	// Initializing tasks
@@ -150,21 +155,15 @@ void init(int _argc, char **_argv){
 	}
 
 	//-----------------------------------------------------------------------------------------------------------------
-	// Real main
-	cout << "Initalizing main node" << endl;
-	node_name = "Patrolling_and_tracking";
-	ros::init(_argc,_argv,node_name);
-	ros::NodeHandle n;
+	// Intruder Data
+	ifstream intruderIds((exePath + "intruder_ids").c_str());
+	assert(intruderIds.is_open());
+	intruderIds.getline(buffer, BUFF_SIZE);
+	num_intruders = atoi(buffer);
 
-	string topicname;
-	// Init radio
-	cout << "Initalizing radio" << endl;
-	radio = new class_radio(0, 10.0, num_ag);
-
-	// Subscribing to uav states
-	cout << "Subscribing to uav states" << endl;
 	for (int i=0; i<num_intruders; i++) {
-		topicname=intruder_full_id[i];
+		intruderIds.getline(buffer, BUFF_SIZE);
+		std::string topicname(buffer);
 		topicname.append("/ual_state");
 		intruder_sub[i]=n.subscribe(topicname.c_str(), 0,Intruder_StateCallBack);
 	}
